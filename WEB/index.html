@@ -57,7 +57,7 @@
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item">
-                        <div class="stat-value">2.1x - 21.5x</div>
+                        <div class="stat-value">2.1x - 9.8x</div>
                         <div class="stat-label">相比 Vector 性能提升</div>
                     </div>
                     <div class="stat-item">
@@ -126,12 +126,12 @@
             <!-- Key Metrics -->
             <div class="metrics-grid">
                 <div class="metric-card metric-primary">
-                    <div class="metric-value">2.1x - 21.5x</div>
+                    <div class="metric-value">2.1x - 9.8x</div>
                     <div class="metric-label">解析性能提升</div>
                     <div class="metric-desc">Parse Only 场景</div>
                 </div>
                 <div class="metric-card metric-secondary">
-                    <div class="metric-value">1.8x - 16.9x</div>
+                    <div class="metric-value">1.8x - 9.6x</div>
                     <div class="metric-label">解析+转换性能提升</div>
                     <div class="metric-desc">Parse+Transform 场景</div>
                 </div>
@@ -222,33 +222,6 @@
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">397,200</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 4.7%">
-                                        <span class="comp-value">18,500</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">21.5x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="perf-log-content" id="elb-parse">
@@ -307,33 +280,6 @@
                         </div>
                         <div class="comp-ratio">
                             <span class="ratio-badge">6.3x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">169,700</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 9.0%">
-                                        <span class="comp-value">15,300</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">11.1x</span>
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
@@ -398,33 +344,6 @@
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">104,900</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 13.0%">
-                                        <span class="comp-value">13,600</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">7.7x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="perf-log-content" id="apt-parse">
@@ -486,33 +405,6 @@
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">63,500</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 12.8%">
-                                        <span class="comp-value">8,100</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">7.8x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="perf-log-content" id="mixed-parse">
@@ -571,33 +463,6 @@
                         </div>
                         <div class="comp-ratio">
                             <span class="ratio-badge">4.4x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">159,900</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 9.3%">
-                                        <span class="comp-value">14,800</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">10.8x</span>
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
@@ -673,33 +538,6 @@
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">299,900</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 5.9%">
-                                        <span class="comp-value">17,700</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">16.9x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="perf-log-content" id="elb-transform">
@@ -758,33 +596,6 @@
                         </div>
                         <div class="comp-ratio">
                             <span class="ratio-badge">4.3x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">139,900</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 12.8%">
-                                        <span class="comp-value">17,900</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">7.8x</span>
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
@@ -849,33 +660,6 @@
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">84,900</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 17.3%">
-                                        <span class="comp-value">14,700</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">5.8x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="perf-log-content" id="apt-transform">
@@ -934,33 +718,6 @@
                         </div>
                         <div class="comp-ratio">
                             <span class="ratio-badge">7.3x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">58,700</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 15.7%">
-                                        <span class="comp-value">9,200</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">6.4x</span>
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
@@ -1025,33 +782,6 @@
                             <span class="ratio-text">WarpParse 更快</span>
                         </div>
                     </div>
-
-                    <!-- TCP -> File -->
-                    <div class="comparison-card">
-                        <div class="comp-topology">TCP → File</div>
-                        <div class="comp-charts">
-                            <div class="comp-chart-item">
-                                <div class="comp-label">WarpParse</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar wp-bar" style="width: 100%">
-                                        <span class="comp-value">134,900</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comp-chart-item">
-                                <div class="comp-label">Vector</div>
-                                <div class="comp-bar-wrapper">
-                                    <div class="comp-bar vector-bar" style="width: 14.4%">
-                                        <span class="comp-value">19,400</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comp-ratio">
-                            <span class="ratio-badge">7.0x</span>
-                            <span class="ratio-text">WarpParse 更快</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -1060,7 +790,7 @@
                 <div class="summary-card">
                     <div class="summary-icon">P</div>
                     <h4>追求极致性能</h4>
-                    <p>Linux 场景下提供 2-21.5x 性能优势，TCP -> File 端到端链路表现突出。</p>
+                    <p>Linux 场景下提供 2-9.8x 性能优势，File 与 TCP 接收链路表现突出。</p>
                 </div>
                 <div class="summary-card">
                     <div class="summary-icon">R</div>
