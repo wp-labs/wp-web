@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WarpParse - 面向可观测性、安全、实时风控、数据平台团队的高性能 ETL 引擎">
+    <title>WarpParse - 高性能 ETL 引擎</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                <img src="../logo/wp_logo.svg" alt="WarpParse Logo" class="logo-img">
+                <span>WarpParse</span>
+            </a>
+            <nav class="nav">
+                <a href="#features" class="nav-link">核心特性</a>
+                <a href="#performance" class="nav-link">性能对比</a>
+                <a href="#wpl" class="nav-link">WPL</a>
+                <a href="#oml" class="nav-link">OML</a>
+                <a href="#connectors" class="nav-link">连接器</a>
+            </nav>
+            <div class="btn-group">
+                <a href="https://github.com/wp-labs" target="_blank" class="btn btn-secondary">GitHub</a>
+                <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank" class="btn btn-primary">下载</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>NEW</span>
+                    <span>高性能 ETL 引擎</span>
+                </div>
+                <h1 class="hero-title">
+                    为<span class="gradient-text">可观测性与安全</span><br>
+                    打造的高性能 ETL 引擎
+                </h1>
+                <p class="hero-description">
+                    WarpParse 是面向可观测性、安全、实时风控、数据平台团队的高性能 ETL 引擎，
+                    专注于日志/事件接入、解析与转换，提供高吞吐解析（WPL）、转换（OML）、
+                    路由、统一连接器 API 及极简运维体验。
+                </p>
+                <div class="btn-group">
+                    <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank" class="btn btn-primary">
+                        立即开始
+                    </a>
+                    <a href="#performance" class="btn btn-secondary">
+                        查看性能
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">2.1x - 21.5x</div>
+                        <div class="stat-label">相比 Vector 性能提升</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">767K</div>
+                        <div class="stat-label">Nginx (239B) TCP->BlackHole EPS</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">10+</div>
+                        <div class="stat-label">内置连接器支持</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">核心特性</h2>
+                <p class="section-subtitle">专为高性能日志处理和数据转换而设计</p>
+            </div>
+            <div class="features-grid">
+                <div class="card">
+                    <div class="card-icon">F</div>
+                    <h3 class="card-title">极致吞吐</h3>
+                    <p class="card-description">众多场景下性能全面超越 Vector，提供行业领先的日志处理能力，满足高吞吐场景需求。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">W</div>
+                    <h3 class="card-title">规则易编写</h3>
+                    <p class="card-description">WPL（解析 DSL）+ OML（转换 DSL），可读性远超正则表达式和 Lua，让规则编写更简单。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">C</div>
+                    <h3 class="card-title">连接器统一</h3>
+                    <p class="card-description">基于 wp-connector-api，便于社区生态扩展，支持多种数据源和输出目标。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">O</div>
+                    <h3 class="card-title">运维友好</h3>
+                    <p class="card-description">单二进制部署，配置化；提供 wproj、wpgen、wprescue 工具套件，简化运维工作。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">D</div>
+                    <h3 class="card-title">知识转换</h3>
+                    <p class="card-description">通过内存数据库支持 SQL 查询，实现数据富化，让数据更有价值。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">R</div>
+                    <h3 class="card-title">数据路由</h3>
+                    <p class="card-description">基于规则和转换模型进行路由，支持多路复制与过滤器，灵活控制数据流向。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="section performance-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">性能对比</h2>
+                <p class="section-subtitle">WarpParse vs Vector 基准测试结果 (AWS EC2 / Ubuntu 24.04 / 8 vCPU / 16 GiB RAM)</p>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card metric-primary">
+                    <div class="metric-value">2.1x - 21.5x</div>
+                    <div class="metric-label">解析性能提升</div>
+                    <div class="metric-desc">Parse Only 场景</div>
+                </div>
+                <div class="metric-card metric-secondary">
+                    <div class="metric-value">1.8x - 16.9x</div>
+                    <div class="metric-label">解析+转换性能提升</div>
+                    <div class="metric-desc">Parse+Transform 场景</div>
+                </div>
+                <div class="metric-card metric-accent">
+                    <div class="metric-value">790K</div>
+                    <div class="metric-label">EPS 峰值吞吐</div>
+                    <div class="metric-desc">Nginx File->BlackHole</div>
+                </div>
+                <div class="metric-card metric-success">
+                    <div class="metric-value">53%</div>
+                    <div class="metric-label">规则体积减少</div>
+                    <div class="metric-desc">更易于分发和维护</div>
+                </div>
+            </div>
+
+            <!-- Performance Mode Tabs -->
+            <div class="perf-mode-tabs">
+                <button class="perf-mode-btn active" data-mode="parse-only">解析能力 (Parse Only)</button>
+                <button class="perf-mode-btn" data-mode="parse-transform">解析+转换 (Parse+Transform)</button>
+            </div>
+
+            <!-- Parse Only Content -->
+            <div class="perf-mode-content active" id="parse-only">
+                <div class="perf-log-tabs">
+                    <button class="perf-log-btn active" data-log="nginx-parse">Nginx (239B)</button>
+                    <button class="perf-log-btn" data-log="elb-parse">AWS ELB (411B)</button>
+                    <button class="perf-log-btn" data-log="sysmon-parse">Sysmon (1K)</button>
+                    <button class="perf-log-btn" data-log="apt-parse">APT (3K)</button>
+                    <button class="perf-log-btn" data-log="mixed-parse">Mixed (867B)</button>
+                </div>
+
+                <div class="perf-log-content active" id="nginx-parse">
+                    <div class="chart-header">
+                        <h3>Nginx Access Log (239B) - 解析能力</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">790,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 24.3%">
+                                        <span class="comp-value">192,015</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">4.1x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">767,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 48.4%">
+                                        <span class="comp-value">371,100</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">2.1x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">397,200</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 4.7%">
+                                        <span class="comp-value">18,500</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">21.5x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="perf-log-content" id="elb-parse">
+                    <div class="chart-header">
+                        <h3>AWS ELB Log (411B) - 解析能力</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">394,500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 13.4%">
+                                        <span class="comp-value">52,875</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">7.5x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">367,700</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 15.8%">
+                                        <span class="comp-value">58,200</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">6.3x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">169,700</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 9.0%">
+                                        <span class="comp-value">15,300</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">11.1x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="perf-log-content" id="sysmon-parse">
+                    <div class="chart-header">
+                        <h3>Sysmon JSON Log (1K) - 解析能力</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">152,500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 19.3%">
+                                        <span class="comp-value">29,444</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">5.1x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">149,800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 25.0%">
+                                        <span class="comp-value">37,400</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">4.0x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">104,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 13.0%">
+                                        <span class="comp-value">13,600</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">7.7x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="perf-log-content" id="apt-parse">
+                    <div class="chart-header">
+                        <h3>APT Threat Log (3K) - 解析能力</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">134,700</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 10.2%">
+                                        <span class="comp-value">13,780</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">9.8x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">129,600</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 13.4%">
+                                        <span class="comp-value">17,400</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">7.4x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">63,500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 12.8%">
+                                        <span class="comp-value">8,100</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">7.8x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="perf-log-content" id="mixed-parse">
+                    <div class="chart-header">
+                        <h3>Mixed Log (867B avg) - 解析能力</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">267,600</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 21.2%">
+                                        <span class="comp-value">56,774</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">4.7x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">259,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 22.6%">
+                                        <span class="comp-value">58,500</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">4.4x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">159,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 9.3%">
+                                        <span class="comp-value">14,800</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">10.8x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parse+Transform Content -->
+            <div class="perf-mode-content" id="parse-transform">
+                <div class="perf-log-tabs">
+                    <button class="perf-log-btn active" data-log="nginx-transform">Nginx (239B)</button>
+                    <button class="perf-log-btn" data-log="elb-transform">AWS ELB (411B)</button>
+                    <button class="perf-log-btn" data-log="sysmon-transform">Sysmon (1K)</button>
+                    <button class="perf-log-btn" data-log="apt-transform">APT (3K)</button>
+                    <button class="perf-log-btn" data-log="mixed-transform">Mixed (867B)</button>
+                </div>
+
+                <div class="perf-log-content active" id="nginx-transform">
+                    <div class="chart-header">
+                        <h3>Nginx Access Log (239B) - 解析+转换</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">649,100</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 28.0%">
+                                        <span class="comp-value">181,739</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">3.6x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">574,200</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 55.5%">
+                                        <span class="comp-value">318,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">1.8x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">299,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 5.9%">
+                                        <span class="comp-value">17,700</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">16.9x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="perf-log-content" id="elb-transform">
+                    <div class="chart-header">
+                        <h3>AWS ELB Log (411B) - 解析+转换</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">265,800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 19.7%">
+                                        <span class="comp-value">52,380</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">5.1x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">239,600</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 23.3%">
+                                        <span class="comp-value">55,800</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">4.3x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">139,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 12.8%">
+                                        <span class="comp-value">17,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">7.8x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="perf-log-content" id="sysmon-transform">
+                    <div class="chart-header">
+                        <h3>Sysmon JSON Log (1K) - 解析+转换</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">126,800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 22.2%">
+                                        <span class="comp-value">28,157</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">4.5x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">119,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 28.5%">
+                                        <span class="comp-value">34,200</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">3.5x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">84,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 17.3%">
+                                        <span class="comp-value">14,700</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">5.8x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="perf-log-content" id="apt-transform">
+                    <div class="chart-header">
+                        <h3>APT Threat Log (3K) - 解析+转换</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">122,500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 10.4%">
+                                        <span class="comp-value">12,783</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">9.6x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">114,800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 13.7%">
+                                        <span class="comp-value">15,700</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">7.3x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">58,700</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 15.7%">
+                                        <span class="comp-value">9,200</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">6.4x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="perf-log-content" id="mixed-transform">
+                    <div class="chart-header">
+                        <h3>Mixed Log (867B avg) - 解析+转换</h3>
+                        <p class="chart-subtitle">EPS (Events Per Second) 对比</p>
+                    </div>
+
+                    <!-- File -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">File → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">223,300</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 25.4%">
+                                        <span class="comp-value">56,666</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">3.9x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> BlackHole -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → BlackHole</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">209,300</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 27.4%">
+                                        <span class="comp-value">57,300</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">3.7x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+
+                    <!-- TCP -> File -->
+                    <div class="comparison-card">
+                        <div class="comp-topology">TCP → File</div>
+                        <div class="comp-charts">
+                            <div class="comp-chart-item">
+                                <div class="comp-label">WarpParse</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar wp-bar" style="width: 100%">
+                                        <span class="comp-value">134,900</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-chart-item">
+                                <div class="comp-label">Vector</div>
+                                <div class="comp-bar-wrapper">
+                                    <div class="comp-bar vector-bar" style="width: 14.4%">
+                                        <span class="comp-value">19,400</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comp-ratio">
+                            <span class="ratio-badge">7.0x</span>
+                            <span class="ratio-text">WarpParse 更快</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="perf-summary">
+                <div class="summary-card">
+                    <div class="summary-icon">P</div>
+                    <h4>追求极致性能</h4>
+                    <p>Linux 场景下提供 2-21.5x 性能优势，TCP -> File 端到端链路表现突出。</p>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">R</div>
+                    <h4>资源受限环境</h4>
+                    <p>峰值 CPU 较高，但完成同等数据量所需总 CPU 时间更少。</p>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">E</div>
+                    <h4>边缘/Agent 部署</h4>
+                    <p>规则文件小，便于快速热更新；单机处理能力强，减少中心端压力。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WPL Section -->
+    <section id="wpl" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">WPL - Warp Parse Language</h2>
+                <p class="section-subtitle">工业级数据治理的强类型解析 DSL，比正则表达式更精准、高效</p>
+            </div>
+            <div class="features-grid">
+                <div class="card">
+                    <h3 class="card-title">更简洁</h3>
+                    <p class="card-description">用更少的代码完成更复杂的解析任务，语法直观易读。</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">更强控制</h3>
+                    <p class="card-description">内置 alt（择一容错）、opt（可选匹配）、some_of（循环探测）等元信息，提供远超正则的容错能力。</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">集成化流水线</h3>
+                    <p class="card-description">将清洗与解析整合在一个表达式中，支持 decode/base64、unquote/unescape、decode/hex 等预处理。</p>
+                </div>
+            </div>
+            <div class="code-comparison">
+                <div class="code-block">
+                    <div class="code-header"><span class="code-title">WPL</span><span class="code-badge wpl">更简洁</span></div>
+                    <div class="code-content">
+<pre><code>rule nginx {
+    (ip:sip, _^2,
+     chars:timestamp&lt;[,]&gt;,
+     http/request:http_request",
+     chars:status,
+     chars:size,
+     chars:referer",
+     http/agent:http_agent",
+     _")
+}</code></pre>
+                    </div>
+                </div>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-title">VRL (Vector)</span><span class="code-badge vrl">更复杂</span></div>
+                    <div class="code-content">
+<pre><code>parsed = parse_regex!(.message,
+    r'^(?P&lt;client&gt;\S+) \S+ \S+ \[(?P&lt;time&gt;[^\]]+)\] \
+    "(?P&lt;request&gt;[^"]*)" (?P&lt;status&gt;\d{3}) \
+    (?P&lt;size&gt;\d+) "(?P&lt;referer&gt;[^"]*)" \
+    "(?P&lt;agent&gt;[^"]*)"')
+.sip = parsed.client
+.http_request = parsed.request
+.status = parsed.status
+.size = parsed.size
+.referer = parsed.referer
+.http_agent = parsed.agent
+.timestamp = parsed.time
+del(.message)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OML Section -->
+    <section id="oml" class="section" style="background: linear-gradient(180deg, #0f1419 0%, var(--bg-body) 100%);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">OML - Object Modeling Language</h2>
+                <p class="section-subtitle">声明式语法，自动重组数据字段为复杂的结构化业务模型</p>
+            </div>
+            <div class="features-grid">
+                <div class="card">
+                    <h3 class="card-title">声明式建模</h3>
+                    <p class="card-description">描述要什么，而不是如何做。只需定义最终输出的数据结构，无需编写底层处理逻辑。</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">精确数据处理</h3>
+                    <p class="card-description">read（非破坏性读取）和 take（破坏性读取）模式，支持强类型安全与自动推断。</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">SQL 集成</h3>
+                    <p class="card-description">原生 SQL 集成，在构建对象时直接查询数据库进行数据增强。</p>
+                </div>
+            </div>
+            <div class="code-comparison">
+                <div class="code-block">
+                    <div class="code-header"><span class="code-title">OML</span><span class="code-badge wpl">声明式</span></div>
+                    <div class="code-content">
+<pre><code>size : digit = take(size);
+status : digit = take(status);
+match_chars = match read(option:[wp_src_ip]) {
+    ip(127.0.0.1) => chars(localhost);
+    !ip(127.0.0.1) => chars(attack_ip);
+};
+str_status = match read(option:[status]) {
+    digit(500) => chars(Internal Server Error);
+    digit(404) => chars(Not Found);
+};
+* : auto = read();</code></pre>
+                    </div>
+                </div>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-title">VRL (Vector)</span><span class="code-badge vrl">命令式</span></div>
+                    <div class="code-content">
+<pre><code>.status = to_int!(parsed.status)
+.size = to_int!(parsed.size)
+if .host == "127.0.0.1" {
+    .match_chars = "localhost"
+} else if .host != "127.0.0.1" {
+    .match_chars = "attack_ip"
+}
+if .status == 500 {
+    .str_status = "Internal Server Error"
+} else if .status == 404 {
+    .str_status = "Not Found"
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connectors Section -->
+    <section id="connectors" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">连接器生态</h2>
+                <p class="section-subtitle">基于 wp-connector-api，支持多种数据源和输出目标</p>
+            </div>
+            <div class="connector-grid">
+                <div class="connector-card">
+                    <div class="connector-icon">K</div>
+                    <div class="connector-name">Kafka</div>
+                </div>
+                <div class="connector-card">
+                    <div class="connector-icon">M</div>
+                    <div class="connector-name">MySQL</div>
+                </div>
+                <div class="connector-card">
+                    <div class="connector-icon">E</div>
+                    <div class="connector-name">Elasticsearch</div>
+                </div>
+                <div class="connector-card">
+                    <div class="connector-icon">C</div>
+                    <div class="connector-name">ClickHouse</div>
+                </div>
+                <div class="connector-card">
+                    <div class="connector-icon">V</div>
+                    <div class="connector-name">VictoriaMetrics</div>
+                </div>
+                <div class="connector-card">
+                    <div class="connector-icon">L</div>
+                    <div class="connector-name">VictoriaLog</div>
+                </div>
+                <div class="connector-card">
+                    <div class="connector-icon">D</div>
+                    <div class="connector-name">Doris</div>
+                </div>
+                <div class="connector-card">
+                    <div class="connector-icon">+</div>
+                    <div class="connector-name">更多开发中...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background: linear-gradient(180deg, var(--bg-body) 0%, #0f1419 100%);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">开始使用 WarpParse</h2>
+                <p class="section-subtitle">立即体验高性能 ETL 引擎的强大能力</p>
+                <div class="btn-group justify-center mt-4">
+                    <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank" class="btn btn-primary">下载</a>
+                    <a href="https://wp-labs.github.io/wp-docs" target="_blank" class="btn btn-secondary">文档</a>
+                    <a href="https://github.com/wp-labs" target="_blank" class="btn btn-secondary">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <img src="../logo/wp_logo.svg" alt="WarpParse Logo" class="logo-img">
+                        <span>WarpParse</span>
+                    </a>
+                    <p>面向可观测性、安全、实时风控、数据平台团队的高性能 ETL 引擎</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">资源</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/wp-labs" target="_blank">GitHub</a></li>
+                        <li><a href="https://wp-labs.github.io/wp-docs" target="_blank">文档</a></li>
+                        <li><a href="https://github.com/wp-labs/warp-parse/releases" target="_blank">下载</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">语言</h4>
+                    <ul class="footer-links">
+                        <li><a href="#wpl">WPL 解析语言</a></li>
+                        <li><a href="#oml">OML 转换语言</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">连接器</h4>
+                    <ul class="footer-links">
+                        <li><a href="#connectors">所有连接器</a></li>
+                        <li><a href="#">开发指南</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2024 WP Labs. All rights reserved.</span>
+                <span>Built with Rust for Performance</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
