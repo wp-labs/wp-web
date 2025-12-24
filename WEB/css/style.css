@@ -542,6 +542,147 @@ a:hover {
 }
 
 /* ============================================
+   WPL Syntax Highlighting
+   ============================================ */
+
+.language-wpl {
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* WPL Keywords - Orange */
+.wpl-keyword {
+    color: #f97316;
+    font-weight: 600;
+}
+
+/* WPL Types - Purple */
+.wpl-type {
+    color: #a855f7;
+    font-weight: 500;
+}
+
+/* WPL Fields - Blue */
+.wpl-field {
+    color: #3b82f6;
+}
+
+/* WPL Names - Cyan */
+.wpl-name {
+    color: #22d3ee;
+    font-weight: 600;
+}
+
+/* WPL Strings - Green */
+.wpl-string {
+    color: #22c55e;
+}
+
+/* WPL Modifiers - Yellow */
+.wpl-mod {
+    color: #eab308;
+}
+
+/* WPL Delimiters - Gray */
+.wpl-delimiter {
+    color: #94a3b8;
+}
+
+/* ============================================
+   OML Syntax Highlighting
+   ============================================ */
+
+.language-oml {
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* OML Keywords - Orange */
+.oml-keyword {
+    color: #f97316;
+    font-weight: 600;
+}
+
+/* OML Types - Purple */
+.oml-type {
+    color: #a855f7;
+    font-weight: 500;
+}
+
+/* OML Fields - Blue */
+.oml-field {
+    color: #3b82f6;
+}
+
+/* OML Strings - Green */
+.oml-string {
+    color: #22c55e;
+}
+
+/* OML Numbers - Pink */
+.oml-number {
+    color: #ec4899;
+}
+
+/* OML Functions - Cyan */
+.oml-func {
+    color: #06b6d4;
+}
+
+/* OML Operators - Yellow */
+.oml-operator {
+    color: #eab308;
+}
+
+/* OML Options - Gray */
+.oml-option {
+    color: #94a3b8;
+}
+
+/* ============================================
+   VRL Syntax Highlighting
+   ============================================ */
+
+.language-vrl {
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* VRL Keywords - Orange */
+.vrl-keyword {
+    color: #f97316;
+    font-weight: 600;
+}
+
+/* VRL Fields - Gray */
+.vrl-field {
+    color: #94a3b8;
+}
+
+/* VRL Strings - Green */
+.vrl-string {
+    color: #22c55e;
+}
+
+/* VRL Numbers - Pink */
+.vrl-number {
+    color: #ec4899;
+}
+
+/* VRL Functions - Cyan */
+.vrl-func {
+    color: #06b6d4;
+}
+
+/* VRL Operators - Yellow */
+.vrl-operator {
+    color: #eab308;
+}
+
+/* ============================================
    Connector Grid
    ============================================ */
 
