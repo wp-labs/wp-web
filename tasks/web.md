@@ -10,6 +10,7 @@
 * contents/wpl.md
 * contents/oml.md 
 * contents/connector.md
+* contents/wpediter.md
 
 ## 输出目录
 `./WEB/`

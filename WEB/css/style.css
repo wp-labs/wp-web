@@ -1604,6 +1604,45 @@ a:hover {
 }
 
 /* ============================================
+   WpEditer Gallery
+   ============================================ */
+
+.wpediter-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.wpediter-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wpediter-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg), 0 0 30px rgba(59, 130, 246, 0.2);
+}
+
+.wpediter-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid var(--border);
+}
+
+.wpediter-caption {
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    background: var(--bg-card-hover);
+}
+
+/* ============================================
    Responsive Design
    ============================================ */
 
@@ -1836,6 +1875,12 @@ a:hover {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
+    }
+
+    /* WpEditer Gallery - Mobile */
+    .wpediter-gallery {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .test-env-banner {
