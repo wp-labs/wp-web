@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Active nav link on scroll
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinksForScroll = document.querySelectorAll('.nav-link');
 
     function updateActiveNav() {
         const scrollPos = window.scrollY + 100;
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const id = section.getAttribute('id');
 
             if (scrollPos >= top && scrollPos < top + height) {
-                navLinks.forEach(link => {
+                navLinksForScroll.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href') === `#${id}`) {
                         link.classList.add('active');
@@ -175,8 +175,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const perfModeBtns = document.querySelectorAll('.perf-mode-btn');
     const perfModeContents = document.querySelectorAll('.perf-mode-content');
 
+    console.log('Found perf mode buttons:', perfModeBtns.length);
+    console.log('Found perf mode contents:', perfModeContents.length);
+
     perfModeBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
             // Remove active class from all mode buttons and contents
             perfModeBtns.forEach(b => b.classList.remove('active'));
             perfModeContents.forEach(c => c.classList.remove('active'));
@@ -201,14 +207,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Re-animate bars when switching modes
             animatePerfBars();
+
+            console.log('Switched to mode:', modeId);
         });
     });
 
     // Performance Log Type Tabs Switching (within each mode)
     const perfLogBtns = document.querySelectorAll('.perf-log-btn');
 
+    console.log('Found perf log buttons:', perfLogBtns.length);
+
     perfLogBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
             // Find parent mode content
             const parentMode = this.closest('.perf-mode-content');
 
@@ -228,6 +241,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Re-animate bars when switching log types
                 animatePerfBars();
             }
+
+            console.log('Switched to log type:', logId);
         });
     });
 
