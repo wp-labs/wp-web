@@ -29,8 +29,17 @@
     --border-light: #484f58;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
-    --gradient-card: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    --gradient-primary: linear-gradient(
+        135deg,
+        #3b82f6 0%,
+        #8b5cf6 50%,
+        #a855f7 100%
+    );
+    --gradient-card: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.1) 0%,
+        rgba(168, 85, 247, 0.1) 100%
+    );
     --gradient-glow: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
 
     /* Shadows */
@@ -59,7 +68,9 @@ html {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica,
+        Arial, sans-serif;
     background-color: var(--bg-body);
     color: var(--text-primary);
     line-height: 1.6;
@@ -70,16 +81,29 @@ body {
    Typography
    ============================================ */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 600;
     line-height: 1.2;
     color: var(--text-primary);
 }
 
-h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
-h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
-h3 { font-size: clamp(1.2rem, 2vw, 1.75rem); }
-h4 { font-size: 1.25rem; }
+h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+h2 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+h3 {
+    font-size: clamp(1.2rem, 2vw, 1.75rem);
+}
+h4 {
+    font-size: 1.25rem;
+}
 
 p {
     color: var(--text-secondary);
@@ -176,7 +200,7 @@ a:hover {
 }
 
 .nav-link::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -4px;
     left: 0;
@@ -211,9 +235,21 @@ a:hover {
     right: 0;
     bottom: 0;
     background:
-        radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+        radial-gradient(
+            ellipse at 20% 20%,
+            rgba(59, 130, 246, 0.15) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse at 80% 80%,
+            rgba(168, 85, 247, 0.15) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse at 50% 50%,
+            rgba(139, 92, 246, 0.05) 0%,
+            transparent 70%
+        );
     z-index: -1;
 }
 
@@ -519,7 +555,7 @@ a:hover {
 
 .code-content pre {
     margin: 0;
-    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
     font-size: 0.85rem;
     line-height: 1.6;
     color: #e2e8f0;
@@ -546,7 +582,7 @@ a:hover {
    ============================================ */
 
 .language-wpl {
-    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
     font-size: 0.85rem;
     line-height: 1.6;
 }
@@ -594,7 +630,7 @@ a:hover {
    ============================================ */
 
 .language-oml {
-    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
     font-size: 0.85rem;
     line-height: 1.6;
 }
@@ -646,7 +682,7 @@ a:hover {
    ============================================ */
 
 .language-vrl {
-    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
     font-size: 0.85rem;
     line-height: 1.6;
 }
@@ -826,7 +862,8 @@ a:hover {
 }
 
 @keyframes pulse {
-    0%, 100% {
+    0%,
+    100% {
         opacity: 1;
     }
     50% {
@@ -902,22 +939,38 @@ a:hover {
 
 .metric-card.metric-primary {
     border-color: rgba(59, 130, 246, 0.3);
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.1) 0%,
+        rgba(59, 130, 246, 0.05) 100%
+    );
 }
 
 .metric-card.metric-secondary {
     border-color: rgba(139, 92, 246, 0.3);
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(139, 92, 246, 0.1) 0%,
+        rgba(139, 92, 246, 0.05) 100%
+    );
 }
 
 .metric-card.metric-accent {
     border-color: rgba(249, 115, 22, 0.3);
-    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(249, 115, 22, 0.1) 0%,
+        rgba(249, 115, 22, 0.05) 100%
+    );
 }
 
 .metric-card.metric-success {
     border-color: rgba(34, 197, 94, 0.3);
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(34, 197, 94, 0.1) 0%,
+        rgba(34, 197, 94, 0.05) 100%
+    );
 }
 
 .metric-value {
@@ -1237,7 +1290,11 @@ a:hover {
 .comparison-card .ratio-badge {
     display: inline-block;
     padding: 0.35rem 0.75rem;
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.1) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(34, 197, 94, 0.2) 0%,
+        rgba(34, 197, 94, 0.1) 100%
+    );
     border: 1px solid rgba(34, 197, 94, 0.3);
     color: #22c55e;
     border-radius: 100px;
@@ -1604,37 +1661,41 @@ a:hover {
 }
 
 /* ============================================
-   WpEditer Gallery
+   Wpeditor Gallery
    ============================================ */
 
-.wpediter-gallery {
+.wpeditor-gallery {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     margin: 2rem 0;
 }
 
-.wpediter-card {
+.wpeditor-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
-.wpediter-card:hover {
+.wpeditor-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg), 0 0 30px rgba(59, 130, 246, 0.2);
+    box-shadow:
+        var(--shadow-lg),
+        0 0 30px rgba(59, 130, 246, 0.2);
 }
 
-.wpediter-img {
+.wpeditor-img {
     width: 100%;
     height: auto;
     display: block;
     border-bottom: 1px solid var(--border);
 }
 
-.wpediter-caption {
+.wpeditor-caption {
     padding: 1rem;
     text-align: center;
     color: var(--text-secondary);
@@ -1901,8 +1962,8 @@ a:hover {
         text-align: center;
     }
 
-    /* WpEditer Gallery - Mobile */
-    .wpediter-gallery {
+    /* Wpeditor Gallery - Mobile */
+    .wpeditor-gallery {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
@@ -2040,28 +2101,72 @@ a:hover {
     background-clip: text;
 }
 
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mt-4 { margin-top: 2rem; }
-.mt-5 { margin-top: 2.5rem; }
+.mt-1 {
+    margin-top: 0.5rem;
+}
+.mt-2 {
+    margin-top: 1rem;
+}
+.mt-3 {
+    margin-top: 1.5rem;
+}
+.mt-4 {
+    margin-top: 2rem;
+}
+.mt-5 {
+    margin-top: 2.5rem;
+}
 
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-.mb-4 { margin-bottom: 2rem; }
-.mb-5 { margin-bottom: 2.5rem; }
+.mb-1 {
+    margin-bottom: 0.5rem;
+}
+.mb-2 {
+    margin-bottom: 1rem;
+}
+.mb-3 {
+    margin-bottom: 1.5rem;
+}
+.mb-4 {
+    margin-bottom: 2rem;
+}
+.mb-5 {
+    margin-bottom: 2.5rem;
+}
 
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
 
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.gap-1 { gap: 0.5rem; }
-.gap-2 { gap: 1rem; }
-.gap-3 { gap: 1.5rem; }
-.gap-4 { gap: 2rem; }
+.flex {
+    display: flex;
+}
+.flex-col {
+    flex-direction: column;
+}
+.items-center {
+    align-items: center;
+}
+.justify-center {
+    justify-content: center;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.gap-1 {
+    gap: 0.5rem;
+}
+.gap-2 {
+    gap: 1rem;
+}
+.gap-3 {
+    gap: 1.5rem;
+}
+.gap-4 {
+    gap: 2rem;
+}
