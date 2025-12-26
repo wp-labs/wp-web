@@ -352,6 +352,11 @@ a:hover {
     border-color: var(--primary);
 }
 
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
 .btn-group {
     display: flex;
     gap: 1rem;
