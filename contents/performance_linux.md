@@ -56,11 +56,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)  | 性能倍数  |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :-------------- | :-------- |
 | **WarpParse** | File -> BlackHole | **790,900** | 180.27 | 549% / 583%    | 66 MB / 67 MB   | **4.1x**  |
-| Vector        | File -> BlackHole | 192,015     | 43.77  | 350% / 364%    | 143 MB / 152 MB | 1.0x      |
+| Vector-VRL         | File -> BlackHole | 192,015     | 43.77  | 350% / 364%    | 143 MB / 152 MB | 1.0x      |
 | **WarpParse** | TCP -> BlackHole  | **767,000** | 174.82 | 468% / 605%    | 188 MB / 532 MB | **2.1x**  |
-| Vector        | TCP -> BlackHole  | 371,100     | 84.58  | 519% / 540%    | 153 MB / 157 MB | 1.0x      |
+| Vector-VRL         | TCP -> BlackHole  | 371,100     | 84.58  | 519% / 540%    | 153 MB / 157 MB | 1.0x      |
 | **WarpParse** | TCP -> File       | **397,200** | 90.53  | 616% / 666%    | 181 MB / 511 MB | **21.5x** |
-| Vector        | TCP -> File       | 18,500      | 4.22   | 186% / 195%    | 231 MB / 244 MB | 1.0x      |
+| Vector-VRL         | TCP -> File       | 18,500      | 4.22   | 186% / 195%    | 231 MB / 244 MB | 1.0x      |
 
 解析规则大小：
 - WarpParse：174B
@@ -71,11 +71,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)  | 性能倍数  |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :-------------- | :-------- |
 | **WarpParse** | File -> BlackHole | **394,500** | 154.63 | 757% / 775%    | 421 MB / 541 MB | **7.5x**  |
-| Vector        | File -> BlackHole | 52,875      | 20.72  | 534% / 585%    | 145 MB / 152 MB | 1.0x      |
+| Vector-VRL         | File -> BlackHole | 52,875      | 20.72  | 534% / 585%    | 145 MB / 152 MB | 1.0x      |
 | **WarpParse** | TCP -> BlackHole  | **367,700** | 144.12 | 686% / 724%    | 205 MB / 564 MB | **6.3x**  |
-| Vector        | TCP -> BlackHole  | 58,200      | 22.81  | 479% / 531%    | 172 MB / 183 MB | 1.0x      |
+| Vector-VRL         | TCP -> BlackHole  | 58,200      | 22.81  | 479% / 531%    | 172 MB / 183 MB | 1.0x      |
 | **WarpParse** | TCP -> File       | **169,700** | 66.52  | 704% / 731%    | 170 MB / 222 MB | **11.1x** |
-| Vector        | TCP -> File       | 15,300      | 6.00   | 249% / 269%    | 159 MB / 163 MB | 1.0x      |
+| Vector-VRL         | TCP -> File       | 15,300      | 6.00   | 249% / 269%    | 159 MB / 163 MB | 1.0x      |
 
 解析规则大小：
 - WarpParse：1153B
@@ -86,11 +86,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)  | 性能倍数 |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :-------------- | :------- |
 | **WarpParse** | File -> BlackHole | **152,500** | 143.40 | 726% / 776%    | 318 MB / 368 MB | **5.1x** |
-| Vector        | File -> BlackHole | 29,444      | 27.68  | 458% / 501%    | 202 MB / 213 MB | 1.0x     |
+| Vector-VRL         | File -> BlackHole | 29,444      | 27.68  | 458% / 501%    | 202 MB / 213 MB | 1.0x     |
 | **WarpParse** | TCP -> BlackHole  | **149,800** | 140.86 | 711% / 763%    | 221 MB / 678 MB | **4.0x** |
-| Vector        | TCP -> BlackHole  | 37,400      | 35.17  | 580% / 650%    | 236 MB / 246 MB | 1.0x     |
+| Vector-VRL         | TCP -> BlackHole  | 37,400      | 35.17  | 580% / 650%    | 236 MB / 246 MB | 1.0x     |
 | **WarpParse** | TCP -> File       | **104,900** | 98.64  | 750% / 764%    | 169 MB / 505 MB | **7.7x** |
-| Vector        | TCP -> File       | 13,600      | 12.79  | 323% / 352%    | 213 MB / 222 MB | 1.0x     |
+| Vector-VRL         | TCP -> File       | 13,600      | 12.79  | 323% / 352%    | 213 MB / 222 MB | 1.0x     |
 
 解析规则大小：
  - WarpParse：1552B
@@ -101,11 +101,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)   | 性能倍数 |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :--------------- | :------- |
 | **WarpParse** | File -> BlackHole | **134,700** | 455.65 | 465% / 565%    | 136 MB / 161 MB  | **9.8x** |
-| Vector        | File -> BlackHole | 13,780      | 46.61  | 534% / 614%    | 190 MB / 193 MB  | 1.0x     |
+| Vector-VRL         | File -> BlackHole | 13,780      | 46.61  | 534% / 614%    | 190 MB / 193 MB  | 1.0x     |
 | **WarpParse** | TCP -> BlackHole  | **129,600** | 438.40 | 502% / 606%    | 237 MB / 273 MB  | **7.4x** |
-| Vector        | TCP -> BlackHole  | 17,400      | 58.86  | 783% / 795%    | 228 MB / 246 MB  | 1.0x     |
+| Vector-VRL         | TCP -> BlackHole  | 17,400      | 58.86  | 783% / 795%    | 228 MB / 246 MB  | 1.0x     |
 | **WarpParse** | TCP -> File       | **63,500**  | 214.80 | 492% / 560%    | 423 MB / 1161 MB | **7.8x** |
-| Vector        | TCP -> File       | 8,100       | 27.40  | 457% / 528%    | 217 MB / 226 MB  | 1.0x     |
+| Vector-VRL         | TCP -> File       | 8,100       | 27.40  | 457% / 528%    | 217 MB / 226 MB  | 1.0x     |
 
 解析规则大小：
 - WarpParse：985B
@@ -116,11 +116,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)  | 性能倍数  |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :-------------- | :-------- |
 | **WarpParse** | File -> BlackHole | **267,600** | 221.26 | 649% / 758%    | 298 MB / 347 MB | **4.7x**  |
-| Vector        | File -> BlackHole | 56,774      | 46.94  | 794% / 800%    | 178 MB / 182 MB | 1.0x      |
+| Vector-VRL         | File -> BlackHole | 56,774      | 46.94  | 794% / 800%    | 178 MB / 182 MB | 1.0x      |
 | **WarpParse** | TCP -> BlackHole  | **259,000** | 214.15 | 706% / 822%    | 309 MB / 320 MB | **4.4x**  |
-| Vector        | TCP -> BlackHole  | 58,500      | 48.37  | 778% / 787%    | 205 MB / 216 MB | 1.0x      |
+| Vector-VRL         | TCP -> BlackHole  | 58,500      | 48.37  | 778% / 787%    | 205 MB / 216 MB | 1.0x      |
 | **WarpParse** | TCP -> File       | **159,900** | 132.21 | 696% / 728%    | 121 MB / 185 MB | **10.8x** |
-| Vector        | TCP -> File       | 14,800      | 12.24  | 294% / 318%    | 203 MB / 215 MB | 1.0x      |
+| Vector-VRL         | TCP -> File       | 14,800      | 12.24  | 294% / 318%    | 203 MB / 215 MB | 1.0x      |
 
 解析规则大小：
 - WarpParse：6102B
@@ -135,11 +135,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)  | 性能倍数  |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :-------------- | :-------- |
 | **WarpParse** | File -> BlackHole | **649,100** | 147.95 | 659% / 704%    | 194 MB / 505 MB | **3.6x**  |
-| Vector        | File -> BlackHole | 181,739     | 41.42  | 381% / 397%    | 156 MB / 169 MB | 1.0x      |
+| Vector-VRL         | File -> BlackHole | 181,739     | 41.42  | 381% / 397%    | 156 MB / 169 MB | 1.0x      |
 | **WarpParse** | TCP -> BlackHole  | **574,200** | 130.88 | 522% / 613%    | 138 MB / 383 MB | **1.8x**  |
-| Vector        | TCP -> BlackHole  | 318,900     | 72.69  | 462% / 538%    | 161 MB / 167 MB | 1.0x      |
+| Vector-VRL         | TCP -> BlackHole  | 318,900     | 72.69  | 462% / 538%    | 161 MB / 167 MB | 1.0x      |
 | **WarpParse** | TCP -> File       | **299,900** | 68.36  | 583% / 644%    | 145 MB / 348 MB | **16.9x** |
-| Vector        | TCP -> File       | 17,700      | 4.03   | 146% / 151%    | 137 MB / 140 MB | 1.0x      |
+| Vector-VRL         | TCP -> File       | 17,700      | 4.03   | 146% / 151%    | 137 MB / 140 MB | 1.0x      |
 
 解析+转换规则大小：
 - WarpParse：521B
@@ -150,11 +150,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)  | 性能倍数 |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :-------------- | :------- |
 | **WarpParse** | File -> BlackHole | **265,800** | 104.18 | 626% / 713%    | 248 MB / 362 MB | **5.1x** |
-| Vector        | File -> BlackHole | 52,380      | 20.53  | 495% / 551%    | 171 MB / 181 MB | 1.0x     |
+| Vector-VRL         | File -> BlackHole | 52,380      | 20.53  | 495% / 551%    | 171 MB / 181 MB | 1.0x     |
 | **WarpParse** | TCP -> BlackHole  | **239,600** | 93.91  | 576% / 628%    | 120 MB / 166 MB | **4.3x** |
-| Vector        | TCP -> BlackHole  | 55,800      | 21.87  | 483% / 520%    | 180 MB / 184 MB | 1.0x     |
+| Vector-VRL         | TCP -> BlackHole  | 55,800      | 21.87  | 483% / 520%    | 180 MB / 184 MB | 1.0x     |
 | **WarpParse** | TCP -> File       | **139,900** | 54.84  | 679% / 741%    | 183 MB / 284 MB | **7.8x** |
-| Vector        | TCP -> File       | 17,900      | 7.02   | 261% / 281%    | 169 MB / 174 MB | 1.0x     |
+| Vector-VRL         | TCP -> File       | 17,900      | 7.02   | 261% / 281%    | 169 MB / 174 MB | 1.0x     |
 
 解析+转换规则大小：
 - WarpParse：1694B
@@ -165,11 +165,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)  | 性能倍数 |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :-------------- | :------- |
 | **WarpParse** | File -> BlackHole | **126,800** | 119.23 | 748% / 793%    | 281 MB / 422 MB | **4.5x** |
-| Vector        | File -> BlackHole | 28,157      | 26.48  | 454% / 511%    | 221 MB / 232 MB | 1.0x     |
+| Vector-VRL         | File -> BlackHole | 28,157      | 26.48  | 454% / 511%    | 221 MB / 232 MB | 1.0x     |
 | **WarpParse** | TCP -> BlackHole  | **119,900** | 112.74 | 715% / 772%    | 180 MB / 563 MB | **3.5x** |
-| Vector        | TCP -> BlackHole  | 34,200      | 32.16  | 568% / 701%    | 255 MB / 266 MB | 1.0x     |
+| Vector-VRL         | TCP -> BlackHole  | 34,200      | 32.16  | 568% / 701%    | 255 MB / 266 MB | 1.0x     |
 | **WarpParse** | TCP -> File       | **84,900**  | 79.83  | 706% / 764%    | 170 MB / 384 MB | **5.8x** |
-| Vector        | TCP -> File       | 14,700      | 13.82  | 344% / 414%    | 240 MB / 252 MB | 1.0x     |
+| Vector-VRL         | TCP -> File       | 14,700      | 13.82  | 344% / 414%    | 240 MB / 252 MB | 1.0x     |
 
 解析+转换规则大小：
 - WarpParse：2249B
@@ -180,11 +180,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)   | 性能倍数 |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :--------------- | :------- |
 | **WarpParse** | File -> BlackHole | **122,500** | 414.38 | 542% / 637%    | 161 MB / 204 MB  | **9.6x** |
-| Vector        | File -> BlackHole | 12,783      | 43.24  | 546% / 580%    | 194 MB / 198 MB  | 1.0x     |
+| Vector-VRL         | File -> BlackHole | 12,783      | 43.24  | 546% / 580%    | 194 MB / 198 MB  | 1.0x     |
 | **WarpParse** | TCP -> BlackHole  | **114,800** | 388.33 | 534% / 543%    | 234 MB / 277 MB  | **7.3x** |
-| Vector        | TCP -> BlackHole  | 15,700      | 53.11  | 786% / 796%    | 236 MB / 249 MB  | 1.0x     |
+| Vector-VRL         | TCP -> BlackHole  | 15,700      | 53.11  | 786% / 796%    | 236 MB / 249 MB  | 1.0x     |
 | **WarpParse** | TCP -> File       | **58,700**  | 198.56 | 473% / 569%    | 682 MB / 1296 MB | **6.4x** |
-| Vector        | TCP -> File       | 9,200       | 31.12  | 487% / 521%    | 224 MB / 233 MB  | 1.0x     |
+| Vector-VRL         | TCP -> File       | 9,200       | 31.12  | 487% / 521%    | 224 MB / 233 MB  | 1.0x     |
 
 解析+转换规则大小：
 - WarpParse：1638B
@@ -195,11 +195,11 @@
 | 引擎          | 拓扑              | EPS         | MPS    | CPU (Avg/Peak) | MEM (Avg/Peak)  | 性能倍数 |
 | :------------ | :---------------- | :---------- | :----- | :------------- | :-------------- | :------- |
 | **WarpParse** | File -> BlackHole | **223,300** | 184.63 | 673% / 777%    | 328 MB / 387 MB | **3.9x** |
-| Vector        | File -> BlackHole | 56,666      | 46.85  | 792% / 798%    | 181 MB / 184 MB | 1.0x     |
+| Vector-VRL         | File -> BlackHole | 56,666      | 46.85  | 792% / 798%    | 181 MB / 184 MB | 1.0x     |
 | **WarpParse** | TCP -> BlackHole  | **209,300** | 173.06 | 659% / 701%    | 128 MB / 161 MB | **3.7x** |
-| Vector        | TCP -> BlackHole  | 57,300      | 47.38  | 782% / 787%    | 202 MB / 211 MB | 1.0x     |
+| Vector-VRL         | TCP -> BlackHole  | 57,300      | 47.38  | 782% / 787%    | 202 MB / 211 MB | 1.0x     |
 | **WarpParse** | TCP -> File       | **134,900** | 111.54 | 695% / 736%    | 121 MB / 154 MB | **7.0x** |
-| Vector        | TCP -> File       | 19,400      | 16.04  | 308% / 317%    | 209 MB / 213 MB | 1.0x     |
+| Vector-VRL         | TCP -> File       | 19,400      | 16.04  | 308% / 317%    | 209 MB / 213 MB | 1.0x     |
 
 解析+转换规则大小：
 - WarpParse：6102B
