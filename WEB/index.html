@@ -81,9 +81,13 @@
                         <span>高性能 ETL 引擎</span>
                     </div>
                     <h1 class="hero-title">
-                        为<span class="gradient-text">可观测性与安全</span
-                        ><br />
-                        打造的高性能 ETL 引擎
+                        <span class="hero-line-1"
+                            >WarpParse
+                            <span class="gradient-text"
+                                >快得难以想像</span
+                            ></span
+                        >
+                        <span class="hero-line-2"> 规则又如此简洁</span>
                     </h1>
                     <p class="hero-description">
                         WarpParse
@@ -1146,30 +1150,30 @@
                 <div class="section-header">
                     <h2 class="section-title">Mac 性能对比</h2>
                     <p class="section-subtitle">
-                        WarpParse vs Vector vs Vector-Fixed (Mac M4 Mini / 10C /
-                        16G RAM)
+                        WarpParse vs Vector-VRL vs Vector-Fixed vs Logstash (Mac M4 Mini / 10C / 16G
+                        RAM)
                     </p>
                 </div>
 
                 <!-- Key Metrics -->
                 <div class="metrics-grid">
                     <div class="metric-card metric-primary">
-                        <div class="metric-value">3.7x - 11.9x</div>
+                        <div class="metric-value">1.4x - 8.8x</div>
                         <div class="metric-label">解析性能提升</div>
                         <div class="metric-desc">Parse Only 场景</div>
                     </div>
                     <div class="metric-card metric-secondary">
-                        <div class="metric-value">1.4x - 11.3x</div>
+                        <div class="metric-value">1.4x - 8.4x</div>
                         <div class="metric-label">解析+转换性能提升</div>
                         <div class="metric-desc">Parse+Transform 场景</div>
                     </div>
                     <div class="metric-card metric-accent">
-                        <div class="metric-value">245.6W</div>
+                        <div class="metric-value">278.9W</div>
                         <div class="metric-label">EPS 峰值吞吐</div>
                         <div class="metric-desc">Nginx File->BlackHole</div>
                     </div>
                     <div class="metric-card metric-success">
-                        <div class="metric-value">1062 MiB/s</div>
+                        <div class="metric-value">1109 MiB/s</div>
                         <div class="metric-label">MPS 峰值</div>
                         <div class="metric-desc">APT File->BlackHole</div>
                     </div>
@@ -1237,7 +1241,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >2,456,100</span
+                                                >2,789,800</span
                                             >
                                         </div>
                                     </div>
@@ -1247,10 +1251,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 22%"
+                                            style="width: 20.5%"
                                         >
                                             <span class="comp-value"
-                                                >540,540</span
+                                                >572,076</span
                                             >
                                         </div>
                                     </div>
@@ -1260,7 +1264,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 20.9%"
+                                            style="width: 18.4%"
                                         >
                                             <span class="comp-value"
                                                 >513,181</span
@@ -1268,9 +1272,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 9.7%"
+                                        >
+                                            <span class="comp-value"
+                                                >270,270</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">4.5x</span>
+                                <span class="ratio-badge">4.88x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1287,7 +1304,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >1,737,200</span
+                                                >1,657,500</span
                                             >
                                         </div>
                                     </div>
@@ -1297,10 +1314,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 56.1%"
+                                            style="width: 70.2%"
                                         >
                                             <span class="comp-value"
-                                                >974,100</span
+                                                >1,163,700</span
                                             >
                                         </div>
                                     </div>
@@ -1310,7 +1327,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 42.1%"
+                                            style="width: 44.1%"
                                         >
                                             <span class="comp-value"
                                                 >730,700</span
@@ -1318,9 +1335,85 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 32.7%"
+                                        >
+                                            <span class="comp-value"
+                                                >541,403</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">1.8x</span>
+                                <span class="ratio-badge">1.42x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >789,000</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 11.4%"
+                                        >
+                                            <span class="comp-value"
+                                                >89,900</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 11.7%"
+                                        >
+                                            <span class="comp-value"
+                                                >92,300</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 64.4%"
+                                        >
+                                            <span class="comp-value"
+                                                >507,975</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">8.78x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1346,7 +1439,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >1,012,400</span
+                                                >1,124,500</span
                                             >
                                         </div>
                                     </div>
@@ -1356,10 +1449,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 15.7%"
+                                            style="width: 34.6%"
                                         >
                                             <span class="comp-value"
-                                                >158,730</span
+                                                >389,000</span
                                             >
                                         </div>
                                     </div>
@@ -1369,7 +1462,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 48.6%"
+                                            style="width: 43.7%"
                                         >
                                             <span class="comp-value"
                                                 >491,739</span
@@ -1377,9 +1470,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 18.5%"
+                                        >
+                                            <span class="comp-value"
+                                                >208,333</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">6.4x</span>
+                                <span class="ratio-badge">2.89x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1396,7 +1502,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >884,700</span
+                                                >947,300</span
                                             >
                                         </div>
                                     </div>
@@ -1406,10 +1512,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 18.5%"
+                                            style="width: 41.7%"
                                         >
                                             <span class="comp-value"
-                                                >163,600</span
+                                                >394,600</span
                                             >
                                         </div>
                                     </div>
@@ -1419,7 +1525,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 62.8%"
+                                            style="width: 58.6%"
                                         >
                                             <span class="comp-value"
                                                 >555,500</span
@@ -1427,9 +1533,85 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 44.9%"
+                                        >
+                                            <span class="comp-value"
+                                                >425,531</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">5.4x</span>
+                                <span class="ratio-badge">2.40x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >349,700</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 24.2%"
+                                        >
+                                            <span class="comp-value"
+                                                >84,700</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 24.8%"
+                                        >
+                                            <span class="comp-value"
+                                                >86,900</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >350,877</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">4.12x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1455,7 +1637,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >440,000</span
+                                                >542,200</span
                                             >
                                         </div>
                                     </div>
@@ -1465,10 +1647,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 17.4%"
+                                            style="width: 29.6%"
                                         >
                                             <span class="comp-value"
-                                                >76,717</span
+                                                >160,400</span
                                             >
                                         </div>
                                     </div>
@@ -1478,7 +1660,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 21.4%"
+                                            style="width: 17.4%"
                                         >
                                             <span class="comp-value"
                                                 >94,285</span
@@ -1486,9 +1668,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 22%"
+                                        >
+                                            <span class="comp-value"
+                                                >119,047</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">5.7x</span>
+                                <span class="ratio-badge">3.38x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1505,7 +1700,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >418,900</span
+                                                >448,900</span
                                             >
                                         </div>
                                     </div>
@@ -1515,10 +1710,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 26.7%"
+                                            style="width: 51.9%"
                                         >
                                             <span class="comp-value"
-                                                >111,900</span
+                                                >232,900</span
                                             >
                                         </div>
                                     </div>
@@ -1528,7 +1723,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 32.1%"
+                                            style="width: 29.9%"
                                         >
                                             <span class="comp-value"
                                                 >134,400</span
@@ -1536,9 +1731,85 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 40.9%"
+                                        >
+                                            <span class="comp-value"
+                                                >183,486</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">3.7x</span>
+                                <span class="ratio-badge">1.93x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >279,800</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 27.1%"
+                                        >
+                                            <span class="comp-value"
+                                                >75,800</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 24.1%"
+                                        >
+                                            <span class="comp-value"
+                                                >67,300</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 54.6%"
+                                        >
+                                            <span class="comp-value"
+                                                >152,671</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">3.69x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1564,7 +1835,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >314,200</span
+                                                >328,000</span
                                             >
                                         </div>
                                     </div>
@@ -1574,10 +1845,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 10.7%"
+                                            style="width: 11.5%"
                                         >
                                             <span class="comp-value"
-                                                >33,614</span
+                                                >37,777</span
                                             >
                                         </div>
                                     </div>
@@ -1587,7 +1858,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 12%"
+                                            style="width: 11.5%"
                                         >
                                             <span class="comp-value"
                                                 >37,857</span
@@ -1595,9 +1866,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 9.1%"
+                                        >
+                                            <span class="comp-value"
+                                                >29,940</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">9.3x</span>
+                                <span class="ratio-badge">8.68x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1614,7 +1898,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >298,200</span
+                                                >299,700</span
                                             >
                                         </div>
                                     </div>
@@ -1624,10 +1908,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 15.5%"
+                                            style="width: 17%"
                                         >
                                             <span class="comp-value"
-                                                >46,100</span
+                                                >51,000</span
                                             >
                                         </div>
                                     </div>
@@ -1637,7 +1921,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 17.3%"
+                                            style="width: 17.2%"
                                         >
                                             <span class="comp-value"
                                                 >51,500</span
@@ -1645,9 +1929,85 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 10.5%"
+                                        >
+                                            <span class="comp-value"
+                                                >31,446</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">6.5x</span>
+                                <span class="ratio-badge">5.88x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >99,900</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 37.2%"
+                                        >
+                                            <span class="comp-value"
+                                                >37,200</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 38.2%"
+                                        >
+                                            <span class="comp-value"
+                                                >38,200</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 30.2%"
+                                        >
+                                            <span class="comp-value"
+                                                >30,120</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">2.69x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1673,7 +2033,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >672,500</span
+                                                >768,800</span
                                             >
                                         </div>
                                     </div>
@@ -1683,10 +2043,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 21.4%"
+                                            style="width: 24.9%"
                                         >
                                             <span class="comp-value"
-                                                >143,608</span
+                                                >191,707</span
                                             >
                                         </div>
                                     </div>
@@ -1696,7 +2056,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 29.7%"
+                                            style="width: 26%"
                                         >
                                             <span class="comp-value"
                                                 >200,000</span
@@ -1704,9 +2064,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 15.5%"
+                                        >
+                                            <span class="comp-value"
+                                                >119,047</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">4.7x</span>
+                                <span class="ratio-badge">4.01x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1723,7 +2096,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >613,000</span
+                                                >623,200</span
                                             >
                                         </div>
                                     </div>
@@ -1733,10 +2106,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 26.3%"
+                                            style="width: 35.5%"
                                         >
                                             <span class="comp-value"
-                                                >161,000</span
+                                                >221,200</span
                                             >
                                         </div>
                                     </div>
@@ -1746,7 +2119,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 33.3%"
+                                            style="width: 32.8%"
                                         >
                                             <span class="comp-value"
                                                 >204,300</span
@@ -1754,9 +2127,85 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 23.3%"
+                                        >
+                                            <span class="comp-value"
+                                                >144,927</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">3.8x</span>
+                                <span class="ratio-badge">2.82x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >318,100</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 23.8%"
+                                        >
+                                            <span class="comp-value"
+                                                >75,600</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 23.6%"
+                                        >
+                                            <span class="comp-value"
+                                                >75,000</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 43.1%"
+                                        >
+                                            <span class="comp-value"
+                                                >136,986</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">4.21x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1821,7 +2270,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >1,749,200</span
+                                                >2,162,500</span
                                             >
                                         </div>
                                     </div>
@@ -1831,10 +2280,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 26.9%"
+                                            style="width: 26.5%"
                                         >
                                             <span class="comp-value"
-                                                >470,312</span
+                                                >572,941</span
                                             >
                                         </div>
                                     </div>
@@ -1844,17 +2293,30 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 26.1%"
+                                            style="width: 22.3%"
                                         >
                                             <span class="comp-value"
-                                                >456,500</span
+                                                >482,000</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 10.5%"
+                                        >
+                                            <span class="comp-value"
+                                                >227,272</span
                                             >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">3.7x</span>
+                                <span class="ratio-badge">3.77x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1871,7 +2333,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >1,219,100</span
+                                                >1,382,800</span
                                             >
                                         </div>
                                     </div>
@@ -1881,10 +2343,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 71.4%"
+                                            style="width: 74.1%"
                                         >
                                             <span class="comp-value"
-                                                >870,500</span
+                                                >1,024,300</span
                                             >
                                         </div>
                                     </div>
@@ -1894,17 +2356,93 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 47.2%"
+                                            style="width: 43.1%"
                                         >
                                             <span class="comp-value"
-                                                >575,500</span
+                                                >595,800</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 25.8%"
+                                        >
+                                            <span class="comp-value"
+                                                >357,142</span
                                             >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">1.4x</span>
+                                <span class="ratio-badge">1.35x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >788,900</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 11.9%"
+                                        >
+                                            <span class="comp-value"
+                                                >93,500</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 11.1%"
+                                        >
+                                            <span class="comp-value"
+                                                >87,500</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 43.7%"
+                                        >
+                                            <span class="comp-value"
+                                                >344,827</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">8.44x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1930,7 +2468,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >710,400</span
+                                                >913,300</span
                                             >
                                         </div>
                                     </div>
@@ -1940,10 +2478,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 18.3%"
+                                            style="width: 37.8%"
                                         >
                                             <span class="comp-value"
-                                                >129,743</span
+                                                >345,500</span
                                             >
                                         </div>
                                     </div>
@@ -1953,17 +2491,30 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 23.8%"
+                                            style="width: 48.8%"
                                         >
                                             <span class="comp-value"
-                                                >169,000</span
+                                                >446,111</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 16.1%"
+                                        >
+                                            <span class="comp-value"
+                                                >147,058</span
                                             >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">5.5x</span>
+                                <span class="ratio-badge">2.64x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1980,7 +2531,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >611,800</span
+                                                >757,600</span
                                             >
                                         </div>
                                     </div>
@@ -1990,10 +2541,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 25%"
+                                            style="width: 49%"
                                         >
                                             <span class="comp-value"
-                                                >152,900</span
+                                                >370,900</span
                                             >
                                         </div>
                                     </div>
@@ -2003,17 +2554,93 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 29.6%"
+                                            style="width: 63.6%"
                                         >
                                             <span class="comp-value"
-                                                >181,000</span
+                                                >481,700</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 29.3%"
+                                        >
+                                            <span class="comp-value"
+                                                >222,222</span
                                             >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">4.0x</span>
+                                <span class="ratio-badge">2.04x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >319,900</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 25.9%"
+                                        >
+                                            <span class="comp-value"
+                                                >82,700</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 26.1%"
+                                        >
+                                            <span class="comp-value"
+                                                >83,600</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 62.5%"
+                                        >
+                                            <span class="comp-value"
+                                                >200,000</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">3.87x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -2039,7 +2666,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >354,800</span
+                                                >432,200</span
                                             >
                                         </div>
                                     </div>
@@ -2049,10 +2676,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 16.4%"
+                                            style="width: 33.1%"
                                         >
                                             <span class="comp-value"
-                                                >58,200</span
+                                                >142,857</span
                                             >
                                         </div>
                                     </div>
@@ -2062,17 +2689,30 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 25.8%"
+                                            style="width: 20%"
                                         >
                                             <span class="comp-value"
-                                                >91,500</span
+                                                >86,600</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 22.5%"
+                                        >
+                                            <span class="comp-value"
+                                                >97,087</span
                                             >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">6.1x</span>
+                                <span class="ratio-badge">3.03x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -2089,7 +2729,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >299,500</span
+                                                >386,800</span
                                             >
                                         </div>
                                     </div>
@@ -2099,10 +2739,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 32.4%"
+                                            style="width: 55.9%"
                                         >
                                             <span class="comp-value"
-                                                >97,200</span
+                                                >216,100</span
                                             >
                                         </div>
                                     </div>
@@ -2112,17 +2752,93 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 42.7%"
+                                            style="width: 33.8%"
                                         >
                                             <span class="comp-value"
-                                                >128,000</span
+                                                >130,800</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 29.4%"
+                                        >
+                                            <span class="comp-value"
+                                                >113,636</span
                                             >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">3.1x</span>
+                                <span class="ratio-badge">1.79x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >239,000</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 32.1%"
+                                        >
+                                            <span class="comp-value"
+                                                >76,600</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 28.5%"
+                                        >
+                                            <span class="comp-value"
+                                                >68,100</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 46%"
+                                        >
+                                            <span class="comp-value"
+                                                >109,890</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">3.12x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -2148,7 +2864,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >280,000</span
+                                                >299,400</span
                                             >
                                         </div>
                                     </div>
@@ -2158,10 +2874,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 10.9%"
+                                            style="width: 12.3%"
                                         >
                                             <span class="comp-value"
-                                                >30,612</span
+                                                >36,857</span
                                             >
                                         </div>
                                     </div>
@@ -2171,15 +2887,30 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 100%"
+                                            style="width: 12.4%"
                                         >
-                                            <span class="comp-value">-</span>
+                                            <span class="comp-value"
+                                                >37,222</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 8.8%"
+                                        >
+                                            <span class="comp-value"
+                                                >26,315</span
+                                            >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">9.1x</span>
+                                <span class="ratio-badge">8.12x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -2196,7 +2927,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >238,900</span
+                                                >279,700</span
                                             >
                                         </div>
                                     </div>
@@ -2206,10 +2937,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 14.2%"
+                                            style="width: 18.6%"
                                         >
                                             <span class="comp-value"
-                                                >34,000</span
+                                                >52,000</span
                                             >
                                         </div>
                                     </div>
@@ -2219,15 +2950,93 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 100%"
+                                            style="width: 18.2%"
                                         >
-                                            <span class="comp-value">-</span>
+                                            <span class="comp-value"
+                                                >51,000</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 9.7%"
+                                        >
+                                            <span class="comp-value"
+                                                >27,027</span
+                                            >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">7.0x</span>
+                                <span class="ratio-badge">5.38x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >89,900</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 41.5%"
+                                        >
+                                            <span class="comp-value"
+                                                >37,300</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 41.2%"
+                                        >
+                                            <span class="comp-value"
+                                                >37,000</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 28.5%"
+                                        >
+                                            <span class="comp-value"
+                                                >25,641</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">2.41x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -2253,7 +3062,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >560,600</span
+                                                >659,700</span
                                             >
                                         </div>
                                     </div>
@@ -2263,10 +3072,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 24.6%"
+                                            style="width: 28.3%"
                                         >
                                             <span class="comp-value"
-                                                >138,157</span
+                                                >186,857</span
                                             >
                                         </div>
                                     </div>
@@ -2276,17 +3085,30 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 26.3%"
+                                            style="width: 26.6%"
                                         >
                                             <span class="comp-value"
-                                                >147,619</span
+                                                >175,769</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 15.6%"
+                                        >
+                                            <span class="comp-value"
+                                                >103,092</span
                                             >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">4.1x</span>
+                                <span class="ratio-badge">3.53x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -2303,7 +3125,7 @@
                                             style="width: 100%"
                                         >
                                             <span class="comp-value"
-                                                >515,300</span
+                                                >574,500</span
                                             >
                                         </div>
                                     </div>
@@ -2313,10 +3135,10 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 30.3%"
+                                            style="width: 37.4%"
                                         >
                                             <span class="comp-value"
-                                                >156,000</span
+                                                >215,000</span
                                             >
                                         </div>
                                     </div>
@@ -2326,17 +3148,93 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 31.2%"
+                                            style="width: 34.7%"
                                         >
                                             <span class="comp-value"
-                                                >161,000</span
+                                                >199,300</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 20%"
+                                        >
+                                            <span class="comp-value"
+                                                >114,942</span
                                             >
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">3.3x</span>
+                                <span class="ratio-badge">2.67x</span>
+                                <span class="ratio-text">WarpParse 更快</span>
+                            </div>
+                        </div>
+
+                        <!-- TCP -> File -->
+                        <div class="comparison-card">
+                            <div class="comp-topology">TCP → File</div>
+                            <div class="comp-charts">
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">WarpParse</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar wp-bar"
+                                            style="width: 100%"
+                                        >
+                                            <span class="comp-value"
+                                                >299,900</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-VRL</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vector-bar"
+                                            style="width: 24.9%"
+                                        >
+                                            <span class="comp-value"
+                                                >74,800</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Vector-Fixed</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar vectorfixed-bar"
+                                            style="width: 23.6%"
+                                        >
+                                            <span class="comp-value"
+                                                >70,900</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comp-chart-item">
+                                    <div class="comp-label">Logstash</div>
+                                    <div class="comp-bar-wrapper">
+                                        <div
+                                            class="comp-bar logstash-bar"
+                                            style="width: 35.9%"
+                                        >
+                                            <span class="comp-value"
+                                                >107,526</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comp-ratio">
+                                <span class="ratio-badge">4.01x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -2348,7 +3246,7 @@
                     <div class="summary-card">
                         <div class="summary-icon">P</div>
                         <h4>追求极致性能</h4>
-                        <p>Mac M4 平台场景下提供 3.7-11.9x 性能优势。</p>
+                        <p>Mac M4 平台场景下提供 1.4-8.8x 性能优势。</p>
                     </div>
                     <div class="summary-card">
                         <div class="summary-icon">R</div>

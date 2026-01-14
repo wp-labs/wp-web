@@ -7,7 +7,7 @@
 ## 内容来源：
 * contents/wparse.dm
 * contents/performance_linux.md 
-* contents/performance_mac.md 
+* contents/report_mac.md 
 * contents/wpl.md
 * contents/oml.md 
 * contents/connector.md
