@@ -6,7 +6,7 @@
 
 ## 内容来源：
 * contents/wparse.dm
-* contents/performance_linux.md 
+* contents/report_linux.md 
 * contents/report_mac.md 
 * contents/wpl.md
 * contents/oml.md 

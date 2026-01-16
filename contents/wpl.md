@@ -3,28 +3,122 @@ WPL (Warp Parse Language) 是为工业级数据治理设计的强类型领域特
 
 ## 更简洁
 
-示例： 解析Nginx日志
+示例： 解析AWS日志
 ### WPL:
+size 1132
 ```bash
-   rule nginx {
-        (ip:sip,_^2,chars:timestamp<[,]>,http/request:http_request",chars:status,chars:size,chars:referer",http/agent:http_agent",_")
+   rule aws {
+        (
+            symbol(http),
+            chars:timestamp,
+            chars:elb,
+            chars:client_host,
+            chars:target_host,
+            chars:request_processing_time,
+            chars:target_processing_time,
+            chars:response_processing_time,
+            chars:elb_status_code,
+            chars:target_status_code,
+            chars:received_bytes,
+            chars:sent_bytes,
+            chars:request | (chars:request_method, chars:request_url, chars:request_protocol),
+            chars:user_agent,
+            chars:ssl_cipher,
+            chars:ssl_protocol,
+            chars:target_group_arn,
+            chars:trace_id,
+            chars:domain_name,
+            chars:chosen_cert_arn,
+            chars:matched_rule_priority,
+            chars:request_creation_time,
+            chars:actions_executed,
+            chars:redirect_url,
+            chars:error_reason,
+            chars:target_port_list,
+            chars:target_status_code_list,
+            chars:classification,
+            chars:classification_reason,
+            chars:traceability_id,
+        )
    }
 ```
 
 ### VRL(Vector)
+size : 2285
 ```
 source = '''
-  parsed = parse_regex!(.message, r'^(?P<client>\S+) \S+ \S+ \[(?P<time>[^\]]+)\] "(?P<request>[^"]*)" (?P<status>\d{3}) (?P<size>\d+) "(?P<referer>[^"]*)" "(?P<agent>[^"]*)" "(?P<extra>[^"]*)"')
-  .sip = parsed.client
-  .http_request = parsed.request
-  .status = parsed.status
-  .size = parsed.size
-  .referer = parsed.referer
-  .http_agent = parsed.agent
-  .timestamp = parsed.time
+  parsed = parse_regex!(.message, r'^(?P<type>\S+) (?P<timestamp>\S+) (?P<elb>\S+) (?P<client_host>\S+) (?P<target_host>\S+) (?P<request_processing_time>[-\d\.]+) (?P<target_processing_time>[-\d\.]+) (?P<response_processing_time>[-\d\.]+) (?P<elb_status_code>\S+) (?P<target_status_code>\S+) (?P<received_bytes>\d+) (?P<sent_bytes>\d+) "(?P<request_method>\S+) (?P<request_url>[^ ]+) (?P<request_protocol>[^"]+)" "(?P<user_agent>[^"]*)" "(?P<ssl_cipher>[^"]*)" "(?P<ssl_protocol>[^"]*)" (?P<target_group_arn>\S+) "(?P<trace_id>[^"]*)" "(?P<domain_name>[^"]*)" "(?P<chosen_cert_arn>[^"]*)" (?P<matched_rule_priority>\S+) (?P<request_creation_time>\S+) "(?P<actions_executed>[^"]*)" "(?P<redirect_url>[^"]*)" "(?P<error_reason>[^"]*)" "(?P<target_port_list>[^"]*)" "(?P<target_status_code_list>[^"]*)" "(?P<classification>[^"]*)" "(?P<classification_reason>[^"]*)" (?P<traceability_id>\S+)$')
+  .timestamp = parsed.timestamp
+  .symbol = parsed.type
+  .elb = parsed.elb
+  .client_host = parsed.client_host
+  .target_host = parsed.target_host
+  .request_processing_time = parsed.request_processing_time
+  .target_processing_time = parsed.target_processing_time
+  .response_processing_time = parsed.response_processing_time
+  .elb_status_code = parsed.elb_status_code
+  .target_status_code = parsed.target_status_code
+  .received_bytes = parsed.received_bytes
+  .sent_bytes = parsed.sent_bytes
+  .request_method = parsed.request_method
+  .request_url = parsed.request_url
+  .request_protocol = parsed.request_protocol
+  .user_agent = parsed.user_agent
+  .ssl_cipher = parsed.ssl_cipher
+  .ssl_protocol = parsed.ssl_protocol
+  .target_group_arn = parsed.target_group_arn
+  .trace_id = parsed.trace_id
+  .domain_name = parsed.domain_name
+  .chosen_cert_arn = parsed.chosen_cert_arn
+  .matched_rule_priority = parsed.matched_rule_priority
+  .request_creation_time = parsed.request_creation_time
+  .actions_executed = parsed.actions_executed
+  .redirect_url = parsed.redirect_url
+  .error_reason = parsed.error_reason
+  .target_port_list = parsed.target_port_list
+  .target_status_code_list = parsed.target_status_code_list
+  .classification = parsed.classification
+  .classification_reason = parsed.classification_reason
+  .traceability_id = parsed.traceability_id
   del(.message)
 '''
 ```
+
+### Logstash
+
+size :1071
+```conf
+input {
+  file {
+    path => ["in_data/medium_aws_411B"]
+    start_position => "beginning"
+    sincedb_path => "/dev/null"
+  }
+}
+
+filter {
+  dissect {
+    mapping => {
+      "message" => '%{symbol} %{timestamp} %{elb} %{client_host} %{target_host} %{request_processing_time} %{target_processing_time} %{response_processing_time} %{elb_status_code} %{target_status_code} %{received_bytes} %{sent_bytes} "%{raw_request}" "%{user_agent}" "%{ssl_cipher}" "%{ssl_protocol}" %{target_group_arn} "%{trace_id}" "%{domain_name}" "%{chosen_cert_arn}" %{matched_rule_priority} %{request_creation_time} "%{actions_executed}" "%{redirect_url}" "%{error_reason}" "%{target_port_list}" "%{target_status_code_list}" "%{classification}" "%{classification_reason}" %{traceability_id}'
+    }
+  }
+
+  dissect {
+    mapping => {
+      "raw_request" => "%{request_method} %{request_url} %{request_protocol}"
+    }
+  }
+
+  mutate {
+  remove_field => ["message","@timestamp","@version","event","[event][original]","raw_request"]
+}
+}
+
+output {
+  file { path => "/dev/null" codec => "json_lines" }
+}
+```
+
 ## 更强控制
 内置元信息（Meta-info）提供了远超正则的容错能力：
 * alt (择一容错)： 处理“同位不同类型”的情况（例如同一位置有时是 IP，有时是数字）。
