@@ -285,7 +285,7 @@ a:hover {
 }
 
 .hero-title .hero-line-2 {
-    text-align: right;
+    text-align: center;
 }
 
 .hero-title .gradient-text {
@@ -453,7 +453,8 @@ a:hover {
 }
 
 .mini-bar.wp {
-    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
 }
 
 .mini-bar.vector {
@@ -1073,6 +1074,30 @@ a.connector-card {
     color: var(--text-secondary);
     max-width: 600px;
     margin: 0 auto;
+}
+
+.report-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--primary-light);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.report-link:hover {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--primary);
+}
+
+.perf-report-link {
+    text-align: center;
+    margin-top: 2rem;
 }
 
 /* ============================================
