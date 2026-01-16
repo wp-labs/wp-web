@@ -255,6 +255,9 @@ a:hover {
 
 .hero-content {
     max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .hero-badge {
@@ -322,6 +325,149 @@ a:hover {
     font-size: 0.875rem;
     color: var(--text-secondary);
     margin-top: 0.25rem;
+}
+
+/* Install Code */
+.install-code {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding: 0.875rem 1.25rem;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+}
+
+.install-code code {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    user-select: all;
+}
+
+/* Bash syntax highlighting */
+.install-code .cmd {
+    color: #79c0ff;
+}
+
+.install-code .flag {
+    color: #a5d6ff;
+}
+
+.install-code .url {
+    color: #7ee787;
+}
+
+.install-code .pipe {
+    color: #ff7b72;
+}
+
+.install-code .copy-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.install-code .copy-btn:hover {
+    background: var(--bg-card-hover);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.install-code .copy-btn.copied {
+    color: #10b981;
+    border-color: #10b981;
+}
+
+/* Hero Mini Charts */
+.hero-mini-charts {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    width: 100%;
+    max-width: 900px;
+}
+
+.mini-chart {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.mini-chart-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.mini-unit {
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+.mini-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.mini-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mini-label {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    width: 60px;
+    flex-shrink: 0;
+}
+
+.mini-bar {
+    height: 16px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 6px;
+    min-width: 32px;
+    transition: width 0.8s ease;
+}
+
+.mini-bar span {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: white;
+}
+
+.mini-bar.wp {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.mini-bar.vector {
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+}
+
+.mini-bar.logstash {
+    background: linear-gradient(90deg, #6b7280, #9ca3af);
+}
+
+.hero-chart-note {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
 }
 
 /* ============================================
@@ -885,6 +1031,11 @@ a:hover {
     border-color: var(--primary);
     transform: translateY(-4px);
     box-shadow: var(--shadow-glow);
+}
+
+a.connector-card {
+    text-decoration: none;
+    color: inherit;
 }
 
 .connector-icon {
@@ -2008,6 +2159,16 @@ a:hover {
 
     .hero-content {
         margin: 0 auto;
+    }
+
+    .hero-mini-charts {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .mini-label {
+        width: 55px;
+        font-size: 0.6rem;
     }
 
     .btn-group {

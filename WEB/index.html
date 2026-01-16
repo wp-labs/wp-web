@@ -96,143 +96,71 @@
                         专注于日志/事件接入、解析与转换，提供高吞吐解析（WPL）、转换（OML）、
                         路由、统一连接器 API 及极简运维体验。
                     </p>
-                    <div class="btn-group">
-                        <a
-                            href="https://github.com/wp-labs/warp-parse/releases"
-                            target="_blank"
-                            class="btn btn-primary"
-                        >
-                            立即开始
-                        </a>
-                        <a href="#performance" class="btn btn-secondary">
-                            查看性能
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Summary Comparison Section -->
-        <section class="section summary-comparison">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">轻量高效</h2>
-                    <p class="section-subtitle">
-                        TCP→BlackHole MixedLogs 场景对比 (AWS EC2 / 8C / 16G)
-                    </p>
-                </div>
-
-                <div class="summary-charts">
-                    <!-- MPS 对比 -->
-                    <div class="summary-chart-card">
-                        <div class="summary-chart-header">
-                            <h3>MPS 吞吐量</h3>
-                            <span class="summary-unit">MiB/s</span>
-                        </div>
-                        <div class="summary-chart-body">
-                            <div class="summary-bar-item">
-                                <div class="summary-bar-label">WarpParse</div>
-                                <div class="summary-bar-wrapper">
-                                    <div class="summary-bar wp-bar" style="width: 100%">
-                                        <span class="summary-bar-value">223</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="summary-bar-item">
-                                <div class="summary-bar-label">Vector</div>
-                                <div class="summary-bar-wrapper">
-                                    <div class="summary-bar vector-bar" style="width: 29.6%">
-                                        <span class="summary-bar-value">66</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="summary-bar-item">
-                                <div class="summary-bar-label">Logstash</div>
-                                <div class="summary-bar-wrapper">
-                                    <div class="summary-bar logstash-bar" style="width: 12.8%">
-                                        <span class="summary-bar-value">28.5</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="summary-chart-footer">
-                            <span class="highlight-badge">3.4x</span> 快于 Vector
-                        </div>
+                    <div class="install-code">
+                        <code><span class="cmd">curl</span> <span class="flag">-sSf</span> <span class="url">https://get.warpparse.ai/setup.sh</span> <span class="pipe">|</span> <span class="cmd">bash</span></code>
+                        <button class="copy-btn" onclick="copyInstallCode()" title="复制">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
                     </div>
 
-                    <!-- 内存对比 -->
-                    <div class="summary-chart-card">
-                        <div class="summary-chart-header">
-                            <h3>运行内存</h3>
-                            <span class="summary-unit">MiB (越小越好)</span>
-                        </div>
-                        <div class="summary-chart-body">
-                            <div class="summary-bar-item">
-                                <div class="summary-bar-label">WarpParse</div>
-                                <div class="summary-bar-wrapper">
-                                    <div class="summary-bar wp-bar" style="width: 10.5%">
-                                        <span class="summary-bar-value">141</span>
-                                    </div>
+                    <!-- Hero Mini Charts -->
+                    <div class="hero-mini-charts">
+                        <div class="mini-chart">
+                            <div class="mini-chart-title">MPS 吞吐 <span class="mini-unit">MiB/s</span></div>
+                            <div class="mini-bars">
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">WarpParse</span>
+                                    <div class="mini-bar wp" style="width: 100%"><span>223</span></div>
                                 </div>
-                            </div>
-                            <div class="summary-bar-item">
-                                <div class="summary-bar-label">Vector</div>
-                                <div class="summary-bar-wrapper">
-                                    <div class="summary-bar vector-bar" style="width: 13.6%">
-                                        <span class="summary-bar-value">183</span>
-                                    </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Vector</span>
+                                    <div class="mini-bar vector" style="width: 29.6%"><span>66</span></div>
                                 </div>
-                            </div>
-                            <div class="summary-bar-item">
-                                <div class="summary-bar-label">Logstash</div>
-                                <div class="summary-bar-wrapper">
-                                    <div class="summary-bar logstash-bar" style="width: 100%">
-                                        <span class="summary-bar-value">1343</span>
-                                    </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Logstash</span>
+                                    <div class="mini-bar logstash" style="width: 12.8%"><span>28</span></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="summary-chart-footer">
-                            <span class="highlight-badge">23%</span> 内存节省 vs Vector
+                        <div class="mini-chart">
+                            <div class="mini-chart-title">运行内存 <span class="mini-unit">MiB</span></div>
+                            <div class="mini-bars">
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">WarpParse</span>
+                                    <div class="mini-bar wp" style="width: 10.5%"><span>141</span></div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Vector</span>
+                                    <div class="mini-bar vector" style="width: 13.6%"><span>183</span></div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Logstash</span>
+                                    <div class="mini-bar logstash" style="width: 100%"><span>1343</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-chart">
+                            <div class="mini-chart-title">二进制大小 <span class="mini-unit">MiB</span></div>
+                            <div class="mini-bars">
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">WarpParse</span>
+                                    <div class="mini-bar wp" style="width: 4.2%"><span>30</span></div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Vector</span>
+                                    <div class="mini-bar vector" style="width: 15.8%"><span>112</span></div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Logstash</span>
+                                    <div class="mini-bar logstash" style="width: 100%"><span>710</span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- 二进制大小对比 -->
-                    <div class="summary-chart-card">
-                        <div class="summary-chart-header">
-                            <h3>二进制大小</h3>
-                            <span class="summary-unit">MiB (越小越好)</span>
-                        </div>
-                        <div class="summary-chart-body">
-                            <div class="summary-bar-item">
-                                <div class="summary-bar-label">WarpParse</div>
-                                <div class="summary-bar-wrapper">
-                                    <div class="summary-bar wp-bar" style="width: 4.2%">
-                                        <span class="summary-bar-value">30</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="summary-bar-item">
-                                <div class="summary-bar-label">Vector</div>
-                                <div class="summary-bar-wrapper">
-                                    <div class="summary-bar vector-bar" style="width: 15.8%">
-                                        <span class="summary-bar-value">112</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="summary-bar-item">
-                                <div class="summary-bar-label">Logstash</div>
-                                <div class="summary-bar-wrapper">
-                                    <div class="summary-bar logstash-bar" style="width: 100%">
-                                        <span class="summary-bar-value">710</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="summary-chart-footer">
-                            <span class="highlight-badge">73%</span> 体积减少 vs Vector
-                        </div>
-                    </div>
+                    <div class="hero-chart-note">TCP→BlackHole MixedLogs · AWS EC2 8C/16G</div>
                 </div>
             </div>
         </section>
@@ -4150,10 +4078,10 @@ del(.message)</code></pre>
                         <div class="connector-icon">D</div>
                         <div class="connector-name">Doris</div>
                     </div>
-                    <div class="connector-card">
+                    <a href="https://github.com/wp-labs/warp-parse/issues" target="_blank" class="connector-card connector-link">
                         <div class="connector-icon">+</div>
                         <div class="connector-name">更多开发中...</div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>

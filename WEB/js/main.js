@@ -267,3 +267,16 @@ function copyCode(button) {
         }, 2000);
     });
 }
+
+// Copy install code functionality
+function copyInstallCode() {
+    const code = 'curl -sSf https://get.warpparse.ai/setup.sh | bash';
+    const btn = document.querySelector('.install-code .copy-btn');
+
+    navigator.clipboard.writeText(code).then(() => {
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
