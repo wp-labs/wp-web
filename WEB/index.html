@@ -32,7 +32,12 @@
                     <a href="#oml" class="nav-link">OML</a>
                     <a href="#wpeditor" class="nav-link">Editor</a>
                     <a href="#connectors" class="nav-link">连接器</a>
-                    <a href="https://example.warpparse.ai" target="_blank" class="nav-link">Example</a>
+                    <a
+                        href="https://example.warpparse.ai"
+                        target="_blank"
+                        class="nav-link"
+                        >Example</a
+                    >
                 </nav>
                 <div class="btn-group desktop-only">
                     <a
@@ -78,14 +83,14 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-badge">
-                        <span>NEW</span>
-                        <span>高性能 ETL 引擎</span>
+                        <span>新一代</span>
+                        <span>高性能开源ETL 引擎</span>
                     </div>
                     <h1 class="hero-title">
                         <span class="hero-line-1"
                             >WarpParse
                             <span class="gradient-text"
-                                >快得难以想像</span
+                                >快得难以想象</span
                             ></span
                         >
                         <span class="hero-line-2"> 又如此轻量简洁</span>
@@ -98,11 +103,39 @@
                         路由、统一连接器 API 及极简运维体验。
                     </p>
                     <div class="install-code">
-                        <code><span class="cmd">curl</span> <span class="flag">-sSf</span> <span class="url">https://get.warpparse.ai/setup.sh</span> <span class="pipe">|</span> <span class="cmd">bash</span></code>
-                        <button class="copy-btn" onclick="copyInstallCode()" title="复制">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        <code
+                            ><span class="cmd">curl</span>
+                            <span class="flag">-sSf</span>
+                            <span class="url"
+                                >https://get.warpparse.ai/setup.sh</span
+                            >
+                            <span class="pipe">|</span>
+                            <span class="cmd">bash</span></code
+                        >
+                        <button
+                            class="copy-btn"
+                            onclick="copyInstallCode()"
+                            title="复制"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <rect
+                                    x="9"
+                                    y="9"
+                                    width="13"
+                                    height="13"
+                                    rx="2"
+                                    ry="2"
+                                ></rect>
+                                <path
+                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                ></path>
                             </svg>
                         </button>
                     </div>
@@ -110,58 +143,111 @@
                     <!-- Hero Mini Charts -->
                     <div class="hero-mini-charts">
                         <div class="mini-chart">
-                            <div class="mini-chart-title">MPS 吞吐 <span class="mini-unit">MiB/s</span></div>
+                            <div class="mini-chart-title">
+                                MPS 吞吐 <span class="mini-unit">MiB/s</span>
+                            </div>
                             <div class="mini-bars">
                                 <div class="mini-bar-row">
                                     <span class="mini-label">WarpParse</span>
-                                    <div class="mini-bar wp" style="width: 100%"><span>223</span></div>
+                                    <div
+                                        class="mini-bar wp"
+                                        style="width: 100%"
+                                    >
+                                        <span>223</span>
+                                    </div>
                                 </div>
                                 <div class="mini-bar-row">
                                     <span class="mini-label">Vector</span>
-                                    <div class="mini-bar vector" style="width: 29.6%"><span>66</span></div>
+                                    <div
+                                        class="mini-bar vector"
+                                        style="width: 29.6%"
+                                    >
+                                        <span>66</span>
+                                    </div>
                                 </div>
                                 <div class="mini-bar-row">
                                     <span class="mini-label">Logstash</span>
-                                    <div class="mini-bar logstash" style="width: 12.8%"><span>28</span></div>
+                                    <div
+                                        class="mini-bar logstash"
+                                        style="width: 12.8%"
+                                    >
+                                        <span>28</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="mini-chart">
-                            <div class="mini-chart-title">运行内存 <span class="mini-unit">MiB</span></div>
+                            <div class="mini-chart-title">
+                                运行内存 <span class="mini-unit">MiB</span>
+                            </div>
                             <div class="mini-bars">
                                 <div class="mini-bar-row">
                                     <span class="mini-label">WarpParse</span>
-                                    <div class="mini-bar wp" style="width: 10.5%"><span>141</span></div>
+                                    <div
+                                        class="mini-bar wp"
+                                        style="width: 10.5%"
+                                    >
+                                        <span>141</span>
+                                    </div>
                                 </div>
                                 <div class="mini-bar-row">
                                     <span class="mini-label">Vector</span>
-                                    <div class="mini-bar vector" style="width: 13.6%"><span>183</span></div>
+                                    <div
+                                        class="mini-bar vector"
+                                        style="width: 13.6%"
+                                    >
+                                        <span>183</span>
+                                    </div>
                                 </div>
                                 <div class="mini-bar-row">
                                     <span class="mini-label">Logstash</span>
-                                    <div class="mini-bar logstash" style="width: 100%"><span>1343</span></div>
+                                    <div
+                                        class="mini-bar logstash"
+                                        style="width: 100%"
+                                    >
+                                        <span>1343</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="mini-chart">
-                            <div class="mini-chart-title">二进制大小 <span class="mini-unit">MiB</span></div>
+                            <div class="mini-chart-title">
+                                二进制大小 <span class="mini-unit">MiB</span>
+                            </div>
                             <div class="mini-bars">
                                 <div class="mini-bar-row">
                                     <span class="mini-label">WarpParse</span>
-                                    <div class="mini-bar wp" style="width: 4.2%"><span>30</span></div>
+                                    <div
+                                        class="mini-bar wp"
+                                        style="width: 4.2%"
+                                    >
+                                        <span>30</span>
+                                    </div>
                                 </div>
                                 <div class="mini-bar-row">
                                     <span class="mini-label">Vector</span>
-                                    <div class="mini-bar vector" style="width: 15.8%"><span>112</span></div>
+                                    <div
+                                        class="mini-bar vector"
+                                        style="width: 15.8%"
+                                    >
+                                        <span>112</span>
+                                    </div>
                                 </div>
                                 <div class="mini-bar-row">
                                     <span class="mini-label">Logstash</span>
-                                    <div class="mini-bar logstash" style="width: 100%"><span>710</span></div>
+                                    <div
+                                        class="mini-bar logstash"
+                                        style="width: 100%"
+                                    >
+                                        <span>710</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="hero-chart-note">TCP→BlackHole MixedLogs · AWS EC2 8C/16G</div>
+                    <div class="hero-chart-note">
+                        TCP→BlackHole MixedLogs · AWS EC2 8C/16G
+                    </div>
                 </div>
             </div>
         </section>
@@ -487,7 +573,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar logstash-bar"
-                                            style="width: 22.0%"
+                                            style="width: 22%"
                                         >
                                             <span class="comp-value"
                                                 >87,719</span
@@ -609,7 +695,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vectorfixed-bar"
-                                            style="width: 25.0%"
+                                            style="width: 25%"
                                         >
                                             <span class="comp-value"
                                                 >38,196</span
@@ -731,7 +817,7 @@
                                     <div class="comp-bar-wrapper">
                                         <div
                                             class="comp-bar vector-bar"
-                                            style="width: 13.0%"
+                                            style="width: 13%"
                                         >
                                             <span class="comp-value"
                                                 >16,901</span
@@ -1680,8 +1766,8 @@
                         <div class="summary-icon">P</div>
                         <h4>追求极致性能</h4>
                         <p>
-                            Linux 混合日志场景下提供 3.4x 解析性能优势，File 与 TCP
-                            接收链路表现突出。
+                            Linux 混合日志场景下提供 3.4x 解析性能优势，File 与
+                            TCP 接收链路表现突出。
                         </p>
                     </div>
                     <div class="summary-card">
@@ -1701,7 +1787,12 @@
                 </div>
 
                 <div class="perf-report-link">
-                    <a href="https://example.warpparse.ai/benchmark/report/report_linux.html" target="_blank" class="report-link">查看完整性能报告 →</a>
+                    <a
+                        href="https://example.warpparse.ai/benchmark/report/report_linux.html"
+                        target="_blank"
+                        class="report-link"
+                        >查看完整性能报告 →</a
+                    >
                 </div>
             </div>
         </section>
@@ -3827,7 +3918,12 @@
                 </div>
 
                 <div class="perf-report-link">
-                    <a href="https://example.warpparse.ai/benchmark/report/report_mac.html" target="_blank" class="report-link">查看完整性能报告 →</a>
+                    <a
+                        href="https://example.warpparse.ai/benchmark/report/report_mac.html"
+                        target="_blank"
+                        class="report-link"
+                        >查看完整性能报告 →</a
+                    >
                 </div>
             </div>
         </section>
@@ -4083,7 +4179,11 @@ del(.message)</code></pre>
                         <div class="connector-icon">D</div>
                         <div class="connector-name">Doris</div>
                     </div>
-                    <a href="https://github.com/wp-labs/warp-parse/issues" target="_blank" class="connector-card connector-link">
+                    <a
+                        href="https://github.com/wp-labs/warp-parse/issues"
+                        target="_blank"
+                        class="connector-card connector-link"
+                    >
                         <div class="connector-icon">+</div>
                         <div class="connector-name">更多开发中...</div>
                     </a>
