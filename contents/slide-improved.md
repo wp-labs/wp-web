@@ -1,9 +1,9 @@
-# WarpParse
+# WarpParse {.page-1}
 突破性能边界的下一代 ETL 引擎
 
 ---
 
-## Logs 是数字世界运行的唯一痕迹
+## Logs 是数字世界运行的唯一痕迹 {.page-2}
 
 ### 代码可以说谎，日志不会
 系统实际发生的每一个事件、每一次交互、每一个错误，都以日志的形式被忠实记录
@@ -18,7 +18,7 @@
 
 ---
 
-## 日志处理：百亿美元级的关键基础设施市场
+## 日志处理：百亿美元级的关键基础设施市场 {.page-3}
 
 ### 市场规模（2024-2025）
 * **日志管理市场**：约 50 亿美元（CAGR 13.2%）
@@ -43,7 +43,7 @@ _数据来源：Gartner, MarketsandMarkets, Grand View Research_
 
 ---
 
-## Logstash —— 互联网时代的日志王者
+## Logstash —— 互联网时代的日志王者 {.page-4}
 
 ### 从个人项目到行业标准（2009-2013）
 * **2009 年**：工程师 Jordan Sissel 发起 Logstash 项目，解决日志收集痛点
@@ -65,7 +65,7 @@ _数据来源：Gartner, MarketsandMarkets, Grand View Research_
 
 ---
 
-## Vector —— 云原生时代的新霸主
+## Vector —— 云原生时代的新霸主 {.page-5}
 
 ### 从性能挑战者到被巨头收购（2018-2021）
 * **2018 年**：Timber.io 团队启动 Vector 项目，挑战 Logstash 性能瓶颈
@@ -88,7 +88,7 @@ _数据来源：Gartner, MarketsandMarkets, Grand View Research_
 
 ---
 
-## 日志爆炸：从 GB 到 PB 的挑战
+## 日志爆炸：从 GB 到 PB 的挑战 {.page-6}
 
 ### 数据量爆炸式增长
 * **2010 年**：典型企业日志量 GB/天 级别
@@ -112,13 +112,13 @@ _数据来源：Gartner, MarketsandMarkets, Grand View Research_
 
 ---
 
-# 传统技术的性能困局
+# 传统技术的性能困局 {.page-7}
 
 _为什么 Logstash 和 Vector 都不够快？_
 
 ---
 
-## 评估 ETL 工具的四大维度
+## 评估 ETL 工具的四大维度 {.page-8}
 
 ### 1. 表达能力
 能否处理复杂日志格式？
@@ -152,7 +152,7 @@ _为什么 Logstash 和 Vector 都不够快？_
 
 ---
 
-## 主流技术路线的性能矩阵
+## 主流技术路线的性能矩阵 {.page-9}
 
 | 维度 | 正则表达式<br>(Logstash GROK) | 分隔符解析<br>(Dissect) | Java/JVM 实现<br>(Logstash) | Rust/C 实现<br>(Vector) |
 |------|------|------|------|------|
@@ -171,7 +171,7 @@ _为什么 Logstash 和 Vector 都不够快？_
 
 ---
 
-## 正则表达式的三重"泥潭"
+## 正则表达式的三重"泥潭" {.page-10}
 
 ### 1. 可维护性灾难："只写不读"的语言
 * **实际案例**：解析一条 Nginx 日志的 GROK 模式超过 200 字符，嵌套 10+ 捕获组
@@ -184,18 +184,19 @@ _为什么 Logstash 和 Vector 都不够快？_
 * **实测数据**：解析 APT 日志（3KB），正则引擎 CPU 占用 **800%+**
 * **性能震荡**：同一规则在不同数据下性能差异可达 **100 倍**
 * ⚠️ **生产事故**：曾导致多起线上服务 CPU 打满
+* **根因限制**：Logstash/Grok 依赖 Oniguruma 等回溯引擎；虽然 RE2、Rust regex 等线性时间实现可以规避灾难性回溯，但会丢失回溯引用、递归等特性，目前难以直接替换
 
-### 3. 内存灾难：AST 构建成本指数级
-* **内存开销**：每条复杂规则临时内存峰值 **10-50MB**
+### 3. 内存灾难：事件对象与 GC 开销
+* **对象风暴**：每条日志都会在 JRuby 中生成 Event、FieldRef、Hash 等上千个对象，复杂规则会复制字段，瞬时对象堆积
 * **GC 压力**：Logstash 解析 10 万 EPS 时，GC 占用 **30%+ CPU**
-* **规模困境**：100 条复杂规则并发解析，内存占用轻松超过 **5GB**
-* 💸 **成本黑洞**：内存成本远超计算成本
+* **堆占用**：多 pipeline + Persistent Queue + 规则缓存需要常驻多 GB 堆，100 条复杂规则并发解析时堆占用常态化地超过 **5GB**
+* 💸 **成本黑洞**：为缓解 GC 和溢出需要堆扩容与更大实例，内存成本迅速上升
 
-**根本原因**：正则表达式设计初衷是**文本匹配**，而非**结构化数据解析**，用错了工具
+**根本原因**：正则表达式本是**文本匹配**工具，配合回溯引擎与 JRuby 事件模型来做**结构化解析**，会同时遭遇可维护性、性能与内存的多重瓶颈
 
 ---
 
-## 分隔符解析的"天花板"
+## 分隔符解析的"天花板" {.page-11}
 
 ### 1. 表达力严重受限：只能处理固定格式
 * **致命缺陷**：要求字段顺序固定、分隔符一致，现实日志很少满足
@@ -219,7 +220,7 @@ _为什么 Logstash 和 Vector 都不够快？_
 
 ---
 
-## 挑战者的困境
+## 挑战者的困境 {.page-12}
 
 互联网时代的王者（Logstash）与云原生的霸主（Vector）并不完美
 
@@ -237,13 +238,13 @@ _为什么 Logstash 和 Vector 都不够快？_
 
 ---
 
-# 性能对比：真实数据说话
+# 性能对比：真实数据说话 {.page-13}
 
 _WarpParse vs Vector vs Logstash 全面 Benchmark_
 
 ---
 
-## Benchmark 测试方案
+## Benchmark 测试方案 {.page-14}
 
 ### 🥊 参赛选手
 * **Logstash 9.2.3**（Java/JVM）
@@ -274,7 +275,7 @@ _WarpParse vs Vector vs Logstash 全面 Benchmark_
 
 ---
 
-## 测试环境
+## 测试环境 {.page-15}
 
 ### Linux 环境
 * **平台**：AWS EC2
@@ -289,7 +290,7 @@ _WarpParse vs Vector vs Logstash 全面 Benchmark_
 ---
 
 
-## Nginx 日志解析性能（Linux）
+## Nginx 日志解析性能（Linux） {.page-16}
 
 典型 Web 访问日志（239B）
 
@@ -335,7 +336,7 @@ _WarpParse vs Vector vs Logstash 全面 Benchmark_
 
 ---
 
-## AWS ELB 日志解析性能（Linux）
+## AWS ELB 日志解析性能（Linux） {.page-17}
 
 云负载均衡日志（411B）
 
@@ -373,7 +374,7 @@ _WarpParse vs Vector vs Logstash 全面 Benchmark_
 
 ---
 
-## Sysmon 日志解析性能（Linux）
+## Sysmon 日志解析性能（Linux） {.page-18}
 
 终端安全监控日志（1K）
 
@@ -411,7 +412,7 @@ _WarpParse vs Vector vs Logstash 全面 Benchmark_
 
 ---
 
-## APT 威胁日志解析性能（Linux）
+## APT 威胁日志解析性能（Linux） {.page-19}
 
 高级持续性威胁日志（3K）
 
@@ -449,7 +450,7 @@ _WarpParse vs Vector vs Logstash 全面 Benchmark_
 
 ---
 
-## 混合日志解析性能（Linux）
+## 混合日志解析性能（Linux） {.page-20}
 
 混合日志（Nginx + AWS + Sysmon + APT，平均 867B）
 
@@ -487,7 +488,7 @@ _WarpParse vs Vector vs Logstash 全面 Benchmark_
 
 ---
 
-## MPS 吞吐对比（TCP → BlackHole）
+## MPS 吞吐对比（TCP → BlackHole） {.page-21}
 
 不同引擎在各类日志下的数据吞吐能力（MiB/s）
 
@@ -517,7 +518,7 @@ _WarpParse vs Vector vs Logstash 全面 Benchmark_
 
 ---
 
-## 资源消耗对比（TCP → BlackHole）
+## 资源消耗对比（TCP → BlackHole） {.page-22}
 
 Parse Only 场景下的 CPU 与内存占用
 
@@ -547,7 +548,7 @@ Parse Only 场景下的 CPU 与内存占用
 
 ---
 
-## 规则体积对比
+## 规则体积对比 {.page-23}
 
 不同引擎的解析规则配置文件大小（字节）
 
@@ -577,7 +578,7 @@ Vector-Fixed 体积最小但表达力有限；Logstash 规则普遍最大
 
 ---
 
-## 性能测试总结（TCP → BlackHole）
+## 性能测试总结（TCP → BlackHole） {.page-24}
 
 WarpParse vs Vector-VRL vs Logstash 核心性能对比
 
@@ -623,13 +624,13 @@ APT (3K) 场景达到 **6.86x**，同时保持优异的内存效率（206-461 MB
 
 ---
 
-# 核心技术创新
+# 核心技术创新 {.page-25}
 
 _算法突破 × Rust 工程 × 领域 DSL_
 
 ---
 
-## 解析算法的根本性突破
+## 解析算法的根本性突破 {.page-26}
 
 从正则回溯到线性解析路径
 
@@ -658,7 +659,7 @@ _算法突破 × Rust 工程 × 领域 DSL_
 
 ---
 
-## WPL 解析语言
+## WPL 解析语言 {.page-27}
 
 WPL（Warp Programming Language）—— 专为日志解析设计的领域语言
 
@@ -698,7 +699,7 @@ alt / opt / some_of
 
 ---
 
-## OML 对象模型语言
+## OML 对象模型语言 {.page-28}
 
 OML（Object Modeling Language）—— 解析后的数据组装与富化
 
@@ -750,7 +751,7 @@ IP→Geo、ID→Name
 
 ---
 
-## OML 的独特优势
+## OML 的独特优势 {.page-29}
 
 一体化设计 vs 分散配置：为什么 OML 是更好的选择
 
@@ -766,7 +767,7 @@ IP→Geo、ID→Name
 
 ---
 
-## 核心技术创新 3：极致工程优化
+## 核心技术创新 3：极致工程优化 {.page-30}
 
 超越 Vector：架构设计层面的性能突破
 
@@ -813,13 +814,15 @@ CPU 利用率提升 **30%+**
 
 **三大技术协同效应**：并行架构 + IO/CPU 分离 + 零拷贝 = **吞吐提升 3-7x**（相对 Vector）
 
-# 开发者生态与工具链
+---
+
+# 开发者生态与工具链 {.page-31}
 
 _完整的工具支持 × 开放的扩展接口 × 活跃的社区_
 
 ---
 
-## 核心工具套件
+## 核心工具套件 {.page-32}
 
 从本地开发到在线调试，全流程工具支持
 
@@ -861,7 +864,7 @@ _完整的工具支持 × 开放的扩展接口 × 活跃的社区_
 
 ---
 
-## 扩展生态
+## 扩展生态 {.page-33}
 
 开放的 API 接口 + 活跃的社区资源
 
@@ -898,11 +901,11 @@ _完整的工具支持 × 开放的扩展接口 × 活跃的社区_
 
 ---
 
-# 为什么选择 WarpParse
+# 为什么选择 WarpParse {.page-34}
 
 ---
 
-## 四大核心优势
+## 四大核心优势 {.page-35}
 
 性能 × 成本 × 易用 × 生态，全方位领先
 
@@ -934,7 +937,7 @@ _完整的工具支持 × 开放的扩展接口 × 活跃的社区_
 
 ---
 
-## 适用场景
+## 适用场景 {.page-36}
 
 从云原生到边缘计算，从可观测性到安全合规
 
@@ -970,7 +973,7 @@ _完整的工具支持 × 开放的扩展接口 × 活跃的社区_
 
 ---
 
-## WarpParse —— 日志 ETL 的新标杆
+## WarpParse —— 日志 ETL 的新标杆 {.page-37}
 
 ### 性能 × 易用性 × 表达力
 突破传统 ETL 工具的三角难题
@@ -983,7 +986,7 @@ _完整的工具支持 × 开放的扩展接口 × 活跃的社区_
 
 ---
 
-# 谢谢
+# 谢谢 {.page-38}
 
 **WarpParse - 突破性能边界的下一代 ETL 引擎**
 
