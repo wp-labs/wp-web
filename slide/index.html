@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarpParse - 突破性能边界的下一代 ETL 引擎</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        /* ========== CSS Variables ========== */
+        :root {
+            /* Apple-inspired color palette */
+            --color-primary: #007AFF;
+            --color-primary-light: #5AC8FA;
+            --color-accent: #00C7BE;
+            --color-success: #34C759;
+            --color-warning: #FF9500;
+            --color-danger: #FF3B30;
+            --color-purple: #AF52DE;
+
+            /* Neutral colors */
+            --color-text: #FFFFFF;
+            --color-text-secondary: #E5E5EA;
+            --color-text-tertiary: #8E8E93;
+
+            /* Background */
+            --bg-primary: #000000;
+            --bg-secondary: #1C1C1E;
+            --bg-tertiary: #2C2C2E;
+
+            /* Glass effect */
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+
+            /* Shadows */
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%);
+            --gradient-accent: linear-gradient(135deg, #00C7BE 0%, #34C759 100%);
+            --gradient-danger: linear-gradient(135deg, #FF3B30 0%, #FF9500 100%);
+            --gradient-purple: linear-gradient(135deg, #AF52DE 0%, #007AFF 100%);
+        }
+
+        /* ========== Base Styles ========== */
+        .reveal {
+            background: var(--bg-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", sans-serif;
+            color: var(--color-text);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        /* ========== Typography ========== */
+        .reveal h1 {
+            font-size: 4.5em;
+            font-weight: 600;
+            margin-bottom: 0.3em;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+        }
+
+        .reveal h2 {
+            font-size: 2.8em;
+            font-weight: 500;
+            margin-bottom: 0.5em;
+            color: var(--color-text);
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+
+        .reveal h3 {
+            font-size: 1.6em;
+            font-weight: 500;
+            margin-bottom: 0.4em;
+            color: var(--color-text-secondary);
+            letter-spacing: -0.02em;
+        }
+
+        .reveal p {
+            margin: 0.5em 0;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+            font-size: 1.1em;
+        }
+
+        .reveal ul {
+            margin-top: 0.8em;
+            list-style: none;
+        }
+
+        .reveal li {
+            margin-bottom: 0.5em;
+            font-size: 1em;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        .reveal li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+            font-weight: bold;
+        }
+
+        .reveal strong {
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .subtitle {
+            font-size: 1.8em;
+            margin-top: 0.5em;
+            color: var(--color-text-secondary);
+            font-weight: 300;
+            letter-spacing: -0.01em;
+        }
+
+        .highlight {
+            color: var(--color-primary-light);
+            font-weight: 500;
+        }
+
+        .number-emphasis {
+            font-size: 3em;
+            font-weight: 600;
+            background: var(--gradient-danger);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            line-height: 1;
+            margin: 0.2em 0;
+        }
+
+        /* ========== Glass Card System ========== */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2em 2.5em;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* ========== Layout System ========== */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            margin: 1.5em 0;
+            width: 100%;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5em;
+            margin: 1.5em 0;
+            width: 100%;
+        }
+
+        /* 确保网格布局的子元素不受全局 margin 影响 */
+        .two-column > *,
+        .three-column > *,
+        .comparison-grid > * {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        /* ========== Section Dividers ========== */
+        .section-divider {
+            background: var(--bg-primary);
+            text-align: center;
+        }
+
+        .section-divider > * {
+            margin-left: 2em !important;
+            margin-right: 2em !important;
+        }
+
+        .section-divider h1 {
+            font-size: 5em;
+            margin-bottom: 0.3em;
+        }
+
+        .section-divider p {
+            font-size: 1.5em;
+            color: var(--color-text-tertiary);
+        }
+
+        /* ========== Chart Container ========== */
+        .chart-container {
+            position: relative;
+            width: calc(100% - 10em);
+            max-width: 1600px;
+            height: 400px;
+            margin: 2em auto;
+        }
+
+        .chart-container canvas {
+            max-height: 400px;
+        }
+
+        /* ========== Metric Display ========== */
+        .metric-display {
+            text-align: center;
+            padding: 2em;
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .metric-value {
+            font-size: 4em;
+            font-weight: 600;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin: 0.2em 0;
+        }
+
+        .metric-label {
+            font-size: 1.2em;
+            color: var(--color-text-tertiary);
+            margin-top: 0.5em;
+        }
+
+        /* ========== Comparison Grid ========== */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5em;
+            margin: 1.5em 0;
+            width: 100%;
+        }
+
+        .comparison-item {
+            text-align: center;
+            padding: 1.5em;
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .comparison-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--color-primary);
+        }
+
+        .comparison-value {
+            font-size: 2.5em;
+            font-weight: 600;
+            margin: 0.2em 0;
+        }
+
+        .comparison-label {
+            font-size: 0.9em;
+            color: var(--color-text-tertiary);
+            margin-bottom: 0.5em;
+        }
+
+        /* ========== Feature Cards ========== */
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2em;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-primary);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 0.5em;
+            filter: drop-shadow(0 4px 20px rgba(0, 122, 255, 0.5));
+        }
+
+        .feature-title {
+            font-size: 1.4em;
+            font-weight: 500;
+            margin-bottom: 0.5em;
+            color: var(--color-text);
+        }
+
+        .feature-desc {
+            font-size: 0.95em;
+            color: var(--color-text-tertiary);
+            line-height: 1.5;
+        }
+
+        /* ========== Slides Layout ========== */
+        .reveal .slides {
+            text-align: left;
+        }
+
+        /* 统一所有 section 的尺寸和布局 */
+        .reveal .slides > section {
+            height: 100% !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* 内容包装器 - 可滚动区域 */
+        .reveal .slides section > * {
+            margin-left: 5em;
+            margin-right: 5em;
+            max-width: calc(100% - 10em);
+        }
+
+        /* 为内容过多的幻灯片添加滚动 */
+        .reveal .slides section.scrollable {
+            justify-content: flex-start;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-top: 3em !important;
+            padding-bottom: 3em !important;
+        }
+
+        .reveal .slides section h2:first-child,
+        .reveal .slides section h1:first-child {
+            margin-top: 0;
+        }
+
+        /* Center aligned slides */
+        .reveal .slides section.center {
+            text-align: center;
+            align-items: center;
+        }
+
+        .reveal .slides section.center > * {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 90%;
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .reveal .slides section.present .glass-card,
+        .reveal .slides section.present .feature-card {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .reveal .slides section.present .metric-display {
+            animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* ========== Code Blocks ========== */
+        .reveal pre {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5em;
+            box-shadow: var(--shadow-sm);
+            margin: 1em 0;
+        }
+
+        .reveal code {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-primary-light);
+            padding: 0.3em 0.6em;
+            border-radius: 6px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 0.85em;
+        }
+
+        /* ========== Tables (minimal use) ========== */
+        .reveal table {
+            font-size: 0.8em;
+            margin: 1.5em auto;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .reveal table th {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--color-text);
+            padding: 1em 1.2em;
+            font-weight: 500;
+            border: none;
+            text-align: left;
+        }
+
+        .reveal table td {
+            padding: 1em 1.2em;
+            border-top: 1px solid var(--glass-border);
+            color: var(--color-text-secondary);
+        }
+
+        .reveal table tr:hover td {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* ========== Info Boxes ========== */
+        .info-box {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.15) 0%, rgba(90, 200, 250, 0.15) 100%);
+            border: 1px solid rgba(0, 122, 255, 0.3);
+            border-radius: 16px;
+            padding: 1.5em 2em;
+            margin: 1.5em 0;
+            backdrop-filter: blur(20px);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 59, 48, 0.15) 0%, rgba(255, 149, 0, 0.15) 100%);
+            border: 1px solid rgba(255, 59, 48, 0.3);
+            border-radius: 16px;
+            padding: 1.5em 2em;
+            margin: 1.5em 0;
+            backdrop-filter: blur(20px);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.15) 0%, rgba(0, 199, 190, 0.15) 100%);
+            border: 1px solid rgba(52, 199, 89, 0.3);
+            border-radius: 16px;
+            padding: 1.5em 2em;
+            margin: 1.5em 0;
+            backdrop-filter: blur(20px);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .two-column,
+            .three-column,
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: 1em;
+            }
+
+            .reveal h1 {
+                font-size: 3em;
+            }
+
+            .reveal h2 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section > * {
+                margin-left: 2em;
+                margin-right: 2em;
+                max-width: calc(100% - 4em);
+            }
+
+            .chart-container {
+                width: calc(100% - 4em);
+                height: 300px;
+            }
+        }
+
+        /* ========== Custom utility classes ========== */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: 1em; }
+        .mt-2 { margin-top: 2em; }
+        .mt-3 { margin-top: 3em; }
+        .mb-1 { margin-bottom: 1em; }
+        .mb-2 { margin-bottom: 2em; }
+        .mb-3 { margin-bottom: 3em; }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1 style="font-size: 6em;">WarpParse</h1>
+                <p class="subtitle" style="font-size: 2em; margin-top: 0.3em;">突破性能边界的下一代 ETL 引擎</p>
+            </section>
+
+            <!-- Slide 2: Logs importance -->
+            <section>
+                <h2 class="mb-2">Logs 是数字世界运行的唯一痕迹</h2>
+                <div class="glass-card mb-2">
+                    <h3 style="font-size: 2em; margin-bottom: 0.5em;">代码可以说谎，日志不会</h3>
+                    <p style="font-size: 1.3em; line-height: 1.6;">系统实际发生的每一个事件、每一次交互、每一个错误<br>都以日志的形式被忠实记录</p>
+                </div>
+                <div class="three-column mt-2">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <div class="feature-title">迭代改进</div>
+                        <div class="feature-desc">性能分析 · 用户洞察 · 产品优化</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-title">安全审计</div>
+                        <div class="feature-desc">攻击溯源 · 异常检测 · 合规证明</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-title">故障排查</div>
+                        <div class="feature-desc">根因定位 · 影响评估 · 事后复盘</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Market scale -->
+            <section>
+                <h2 class="mb-2">百亿美元级的关键基础设施市场</h2>
+                <div class="comparison-grid">
+                    <div class="metric-display">
+                        <div class="metric-value">50亿</div>
+                        <div class="metric-label">日志管理市场</div>
+                        <p style="font-size: 0.9em; color: var(--color-text-tertiary); margin-top: 0.5em;">CAGR 13.2%</p>
+                    </div>
+                    <div class="metric-display">
+                        <div class="metric-value">60亿</div>
+                        <div class="metric-label">SIEM 市场</div>
+                        <p style="font-size: 0.9em; color: var(--color-text-tertiary); margin-top: 0.5em;">CAGR 14.5%</p>
+                    </div>
+                    <div class="metric-display">
+                        <div class="metric-value">100亿+</div>
+                        <div class="metric-label">可观测性平台</div>
+                        <p style="font-size: 0.9em; color: var(--color-text-tertiary); margin-top: 0.5em;">CAGR 18%+</p>
+                    </div>
+                </div>
+                <div class="info-box text-center mt-3">
+                    <p style="font-size: 1.3em; margin: 0;"><strong>日志解析、存储、分析</strong> 是所有这些市场的<span class="highlight">核心技术底座</span></p>
+                </div>
+            </section>
+
+            <!-- Slide 4: Market leaders -->
+            <section>
+                <h2 class="mb-2">头部厂商与技术演进</h2>
+                <div class="two-column mt-2">
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.8em; margin-bottom: 0.8em;">Logstash · ELK Stack</h3>
+                        <p class="number-emphasis">70亿美元</p>
+                        <p style="font-size: 1.1em; margin-top: 1em; line-height: 1.6;">
+                            2009年诞生，定义了日志 ETL 基本范式<br>
+                            <span class="highlight">GROK 过滤器</span>至今仍是行业标准<br>
+                            市场占有率 40%+
+                        </p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.8em; margin-bottom: 0.8em;">Vector · 云原生管道</h3>
+                        <p class="number-emphasis">400亿美元</p>
+                        <p style="font-size: 1.1em; margin-top: 1em; line-height: 1.6;">
+                            2018年启动，Rust 构建，主打性能<br>
+                            2021年被 Datadog <span class="highlight">上亿美元</span>收购<br>
+                            GitHub 20K+ Star
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Growing challenges -->
+            <section class="center">
+                <h2 class="mb-2">日志爆炸：从 GB 到 PB</h2>
+                <div class="comparison-grid" style="max-width: 900px; margin: 2em auto;">
+                    <div class="metric-display">
+                        <div class="metric-label">2010 年</div>
+                        <div class="metric-value" style="font-size: 3em;">GB/天</div>
+                    </div>
+                    <div class="metric-display">
+                        <div class="metric-label">2020 年</div>
+                        <div class="metric-value" style="font-size: 3em;">TB/天</div>
+                    </div>
+                    <div class="metric-display">
+                        <div class="metric-label">2025 年</div>
+                        <div class="metric-value" style="font-size: 3em; background: var(--gradient-danger); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PB/天</div>
+                    </div>
+                </div>
+                <div class="warning-box text-center mt-3" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <p style="font-size: 1.4em; margin: 0; line-height: 1.5;">日志量以 <span class="highlight">40-100%</span> 年增长率爆炸<br>传统工具性能停滞不前</p>
+                </div>
+            </section>
+
+            <!-- Slide 6: Section divider -->
+            <section class="section-divider">
+                <h1>传统技术的性能困局</h1>
+                <p>为什么 Logstash 和 Vector 都不够快？</p>
+            </section>
+
+            <!-- Slide 7: The impossible triangle -->
+            <section class="center">
+                <h2 class="mb-2">行业困局：不可能三角</h2>
+                <p style="font-size: 1.5em; color: var(--color-text-secondary); margin-bottom: 2em;">性能 vs 表达力 vs 易用性 · 传统技术路线只能三选二</p>
+                <div class="two-column" style="max-width: 1000px; margin-bottom: 2em;">
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.8em; margin-bottom: 0.8em; color: var(--color-danger);">❌ Logstash</h3>
+                        <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-bottom: 1em;">选择了表达力 + 易用性</p>
+                        <p style="font-size: 1.1em; line-height: 1.8;">
+                            ✅ GROK 表达力强、上手容易<br>
+                            ❌ 性能差：10万 EPS 需 40C80G<br>
+                            ❌ 内存高：1GB+ 堆内存
+                        </p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.8em; margin-bottom: 0.8em; color: var(--color-danger);">❌ Vector</h3>
+                        <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-bottom: 1em;">选择了性能 + 实现效率</p>
+                        <p style="font-size: 1.1em; line-height: 1.8;">
+                            ✅ Rust 实现，内存占用低<br>
+                            ❌ 仍使用正则匹配思路<br>
+                            ❌ APT 大包场景 CPU 794%
+                        </p>
+                    </div>
+                </div>
+                <div class="success-box text-center" style="max-width: 900px;">
+                    <h3 style="font-size: 1.8em; margin-bottom: 0.5em; color: var(--color-success);">⚡ WarpParse 的突破</h3>
+                    <p style="font-size: 1.3em; margin: 0.5em 0; line-height: 1.6;">通过<strong>技术路线创新</strong>，打破不可能三角</p>
+                    <p style="font-size: 1.5em; margin: 0.5em 0;"><strong>性能 + 表达力 + 易用性</strong> 三者兼得</p>
+                    <p style="font-size: 1.1em; color: var(--color-text-secondary); margin-top: 0.5em;">🔑 核心：结构化解析技术（解析器组合子）替代正则匹配</p>
+                </div>
+            </section>
+
+            <!-- Slide 8: Performance section divider -->
+            <section class="section-divider">
+                <h1 style="background: var(--gradient-danger); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">性能对比</h1>
+                <p>真实数据说话</p>
+            </section>
+
+            <!-- Slide 9: Benchmark overview -->
+            <section>
+                <h2 class="mb-2">全面 Benchmark 测试</h2>
+                <div class="three-column mt-2">
+                    <div class="feature-card">
+                        <div class="feature-icon">🥊</div>
+                        <div class="feature-title">参赛选手</div>
+                        <div class="feature-desc">WarpParse 0.12.0<br>Vector 0.49.0<br>Logstash 9.2.3</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">测试场景</div>
+                        <div class="feature-desc">5类日志 · 3种拓扑<br>Parse · Transform<br>Linux + Mac 双平台</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title">评估指标</div>
+                        <div class="feature-desc">EPS · MPS<br>CPU · Memory<br>Rule Size</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: Performance comparison - Nginx -->
+            <section>
+                <h2 class="mb-1">Nginx 日志性能对比 (Linux)</h2>
+                <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-bottom: 2em;">典型 Web 访问日志 (239B) · TCP → BlackHole · Parse Only</p>
+                <div class="chart-container">
+                    <canvas id="nginxChart"></canvas>
+                </div>
+                <div class="text-center mt-2">
+                    <p style="font-size: 1.3em;"><span class="highlight">WarpParse</span> 性能提升 <span class="number-emphasis" style="font-size: 2.5em;">1.56x</span></p>
+                </div>
+            </section>
+
+            <!-- Slide 11: Performance comparison - AWS ELB -->
+            <section>
+                <h2 class="mb-1">AWS ELB 日志性能对比 (Linux)</h2>
+                <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-bottom: 2em;">云负载均衡日志 (411B) · TCP → BlackHole · Parse Only</p>
+                <div class="chart-container">
+                    <canvas id="elbChart"></canvas>
+                </div>
+                <div class="text-center mt-2">
+                    <p style="font-size: 1.3em;"><span class="highlight">WarpParse</span> 性能提升 <span class="number-emphasis" style="font-size: 2.5em;">2.49x</span></p>
+                    <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-top: 0.5em;">MPS 达到 <strong>145 MiB/s</strong></p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Performance comparison - Sysmon -->
+            <section>
+                <h2 class="mb-1">Sysmon 日志性能对比 (Linux)</h2>
+                <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-bottom: 2em;">终端安全监控日志 (1K) · TCP → BlackHole · Parse Only</p>
+                <div class="chart-container">
+                    <canvas id="sysmonChart"></canvas>
+                </div>
+                <div class="text-center mt-2">
+                    <p style="font-size: 1.3em;"><span class="highlight">WarpParse</span> 性能提升 <span class="number-emphasis" style="font-size: 2.5em;">1.68x</span></p>
+                    <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-top: 0.5em;">MPS 达到 <strong>141 MiB/s</strong></p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Performance comparison - APT -->
+            <section>
+                <h2 class="mb-1">APT 威胁日志性能对比 (Linux)</h2>
+                <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-bottom: 2em;">高级持续性威胁日志 (3KB) · TCP → BlackHole · Parse Only</p>
+                <div class="chart-container">
+                    <canvas id="aptChart"></canvas>
+                </div>
+                <div class="text-center mt-2">
+                    <p style="font-size: 1.3em;"><span class="highlight">WarpParse</span> 性能提升 <span class="number-emphasis" style="font-size: 2.5em;">6.86x</span></p>
+                    <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-top: 0.5em;">MPS 达到 <strong>438 MiB/s</strong></p>
+                </div>
+            </section>
+
+            <!-- Slide 14: Performance comparison - Mixed -->
+            <section>
+                <h2 class="mb-1">混合日志性能对比 (Linux)</h2>
+                <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-bottom: 2em;">混合日志 (平均 867B) · TCP → BlackHole · Parse Only</p>
+                <div class="chart-container">
+                    <canvas id="mixedChart"></canvas>
+                </div>
+                <div class="text-center mt-2">
+                    <p style="font-size: 1.3em;"><span class="highlight">WarpParse</span> 性能提升 <span class="number-emphasis" style="font-size: 2.5em;">2.99x</span></p>
+                    <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-top: 0.5em;">MPS 达到 <strong>215 MiB/s</strong></p>
+                </div>
+            </section>
+
+            <!-- Slide 15: Performance summary -->
+            <section class="center">
+                <h2 class="mb-2">性能优势总览</h2>
+                <div class="comparison-grid" style="max-width: 900px;">
+                    <div class="metric-display">
+                        <div class="metric-label">小包场景 (Nginx)</div>
+                        <div class="metric-value">1.56x</div>
+                        <p style="font-size: 0.9em; color: var(--color-text-tertiary); margin-top: 0.5em;">239B 日志</p>
+                    </div>
+                    <div class="metric-display">
+                        <div class="metric-label">大包场景 (APT)</div>
+                        <div class="metric-value" style="background: var(--gradient-danger); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">6.86x</div>
+                        <p style="font-size: 0.9em; color: var(--color-text-tertiary); margin-top: 0.5em;">3KB 日志</p>
+                    </div>
+                    <div class="metric-display">
+                        <div class="metric-label">最大性能倍数</div>
+                        <div class="metric-value" style="background: var(--gradient-danger); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">20.30x</div>
+                        <p style="font-size: 0.9em; color: var(--color-text-tertiary); margin-top: 0.5em;">TCP → File</p>
+                    </div>
+                </div>
+                <div class="success-box text-center mt-3" style="max-width: 700px;">
+                    <p style="font-size: 1.4em; margin: 0; line-height: 1.5;"><strong>日志体积越大，性能优势越显著</strong></p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Resource efficiency -->
+            <section>
+                <h2 class="mb-2">资源效率对比</h2>
+                <div class="two-column mt-2">
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.8em; margin-bottom: 1em;">💾 内存占用</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5em;">
+                            <div>
+                                <p style="font-size: 1.1em; color: var(--color-text-tertiary);">WarpParse</p>
+                                <p style="font-size: 2.5em; font-weight: 600; color: var(--color-success);">206-461 MB</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <p style="font-size: 1.1em; color: var(--color-text-tertiary);">Logstash</p>
+                                <p style="font-size: 2.5em; font-weight: 600; color: var(--color-danger);">1.2-1.4 GB</p>
+                            </div>
+                        </div>
+                        <div class="success-box text-center">
+                            <p style="font-size: 1.3em; margin: 0;"><strong>节省 60-80%</strong></p>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.8em; margin-bottom: 1em;">⚡ CPU 效率</h3>
+                        <p style="font-size: 1.2em; line-height: 1.8; margin-top: 2em;">
+                            峰值 CPU 因场景而异<br>
+                            <span class="highlight" style="font-size: 1.3em;">完成同等数据量所需<br>总 CPU 时间更少</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 14: Technical innovation divider -->
+            <section class="section-divider">
+                <h1 style="background: var(--gradient-purple); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">核心技术创新</h1>
+                <p>技术路线创新 × Rust 工程 × 领域 DSL</p>
+            </section>
+
+            <!-- Slide 15: Technical approach comparison -->
+            <section>
+                <h2 class="mb-1">两种技术路径的本质差异</h2>
+                <p style="font-size: 1.3em; color: var(--color-text-secondary); margin-bottom: 2em;">从"文本匹配"到"结构解析"的技术路线转变</p>
+
+                <!-- Path 1: Regex approach -->
+                <div class="glass-card mb-2">
+                    <h3 style="font-size: 1.6em; margin-bottom: 1em;">📍 路径 1：正则匹配思路</h3>
+                    <p style="font-size: 1.1em; color: var(--color-text-tertiary); margin-bottom: 1em;">行业主流 20 年</p>
+
+                    <div style="background: var(--bg-tertiary); border-radius: 12px; padding: 1.5em; margin-bottom: 1.5em;">
+                        <p style="font-size: 1.1em; font-weight: 500; margin-bottom: 0.5em;">技术路线</p>
+                        <pre style="margin: 0; background: none; border: none; padding: 0; font-size: 0.95em; line-height: 1.8;"><code>原始日志 → 正则引擎匹配 → 捕获组提取 → 字符串分配 → 结果
+         ↑多次尝试匹配  ↑每个字段一次  ↑频繁拷贝</code></pre>
+                    </div>
+
+                    <div class="two-column" style="gap: 2em; margin-bottom: 1em;">
+                        <div>
+                            <p style="font-size: 1.05em; line-height: 1.8;">
+                                <strong>代表产品</strong><br>
+                                • <strong>GROK (Logstash)</strong>: Ruby Oniguruma，支持回溯/递归/环视，复杂场景性能不可控<br>
+                                • <strong>VRL (Vector)</strong>: Rust regex，已避免回溯，但仍需多次正则匹配 + 字符串分配
+                            </p>
+                        </div>
+                        <div>
+                            <p style="font-size: 1.05em; line-height: 1.8;">
+                                <strong>APT 场景实测</strong><br>
+                                • CPU: <span style="color: var(--color-danger);">794%</span><br>
+                                • EPS: <span style="color: var(--color-danger);">18.9K</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Path 2: Parser combinator approach -->
+                <div class="glass-card mb-2">
+                    <h3 style="font-size: 1.6em; margin-bottom: 1em;">🚀 路径 2：结构化解析思路</h3>
+                    <p style="font-size: 1.1em; color: var(--color-success); margin-bottom: 1em;">WarpParse 首创</p>
+
+                    <div style="background: var(--bg-tertiary); border-radius: 12px; padding: 1.5em; margin-bottom: 1.5em;">
+                        <p style="font-size: 1.1em; font-weight: 500; margin-bottom: 0.5em;">技术路线</p>
+                        <pre style="margin: 0; background: none; border: none; padding: 0; font-size: 0.95em; line-height: 1.8;"><code>原始日志 → 结构化解析 → 对象构建 → 结果
+         ↑一次扫描      ↑零拷贝</code></pre>
+                    </div>
+
+                    <div class="two-column" style="gap: 2em; margin-bottom: 1em;">
+                        <div>
+                            <p style="font-size: 1.05em; line-height: 1.8;">
+                                <strong>关键技术</strong><br>
+                                • <strong>解析器组合子 (Winnow)</strong>: 类似编程语言解析器的确定性解析技术<br>
+                                • <strong>一次扫描完成</strong>: 不需要多次匹配尝试，确定性解析路径<br>
+                                • <strong>零拷贝架构</strong>: 详见 Page 30 工程优化
+                            </p>
+                        </div>
+                        <div>
+                            <p style="font-size: 1.05em; line-height: 1.8;">
+                                <strong>APT 场景实测</strong><br>
+                                • CPU: <span style="color: var(--color-success);">558%</span><br>
+                                • EPS: <span style="color: var(--color-success);">129.6K</span> <span style="font-weight: 600; font-size: 1.2em;">(6.86x)</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-box text-center">
+                    <p style="font-size: 1.3em; margin: 0.3em 0;"><strong>核心价值</strong>: 将解析器组合子技术首次系统性应用到日志解析</p>
+                    <p style="font-size: 1.1em; margin: 0.3em 0;">选择了更适合结构化数据的技术路线</p>
+                    <p style="font-size: 1em; margin-top: 0.5em;">🔒 <strong>专利保护</strong>: PCT/CN2026/072658</p>
+                </div>
+            </section>
+
+            <!-- Slide 16: WPL language -->
+            <section>
+                <h2 class="mb-2">WPL 解析语言</h2>
+                <p style="font-size: 1.2em; color: var(--color-text-tertiary); margin-bottom: 2em;">专为日志解析设计的领域语言</p>
+                <div class="glass-card mb-2">
+                    <h3 style="font-size: 1.5em; margin-bottom: 1em;">同一解析任务对比：Nginx 日志</h3>
+                    <div class="two-column" style="gap: 2em;">
+                        <div>
+                            <p style="font-size: 1.1em; margin-bottom: 0.5em; color: var(--color-danger);">❌ Logstash GROK (248B)</p>
+                            <pre style="margin: 0; font-size: 0.7em; line-height: 1.4;"><code>%{IPORHOST:clientip} - - \[%{HTTPDATE:timestamp}\] "%{WORD:method} %{URIPATHPARAM:request} %{NUMBER:status} %{NUMBER:bytes} "%{DATA:referrer}" "%{DATA:agent}"</code></pre>
+                        </div>
+                        <div>
+                            <p style="font-size: 1.1em; margin-bottom: 0.5em; color: var(--color-success);">✅ WPL (174B)</p>
+                            <pre style="margin: 0; font-size: 0.7em; line-height: 1.4;"><code>( ip:clientip, 2*_, time:timestamp&lt;[,]&gt;, http/method", http/request", digit:status, digit:size, chars:referer", http/agent", _" )</code></pre>
+                        </div>
+                    </div>
+                    <div class="info-box text-center mt-2">
+                        <p style="font-size: 1.2em; margin: 0;">体积减少 <strong>30%</strong> · 可读性提升 <strong>10倍</strong></p>
+                    </div>
+                </div>
+                <div class="success-box mb-2">
+                    <h3 style="font-size: 1.6em; margin-bottom: 0.8em; color: var(--color-success);">🚀 核心价值</h3>
+                    <p style="font-size: 1.25em; margin: 0.8em 0; line-height: 1.7; font-weight: 500;">
+                        WPL 为日志解析提供<strong>确定的最优路径</strong>、<strong>丰富的结构化表达能力</strong>和<strong>极高的表达效率</strong>——<br>
+                        使用者学习成本、编写成本、维护成本均达到最低。
+                    </p>
+                </div>
+                <div class="glass-card mb-2">
+                    <h3 style="font-size: 1.4em; margin-bottom: 1em;">技术路径对比</h3>
+                    <p style="font-size: 1.05em; line-height: 1.8;">
+                        • <strong>GROK</strong>：正则匹配，支持回溯，复杂场景性能不可控<br>
+                        • <strong>VRL</strong>：正则匹配，已避免回溯，但仍需多次正则匹配 + 字符串分配<br>
+                        • <strong>WPL</strong>：解析器组合子，确定性解析路径，一次扫描完成
+                    </p>
+                </div>
+                <div class="three-column">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <div class="feature-title">内置协议</div>
+                        <div class="feature-desc">JSON · KV · HTTP<br>IP · Email · URL</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">智能匹配</div>
+                        <div class="feature-desc">alt · opt · some_of<br>可变字段无压力</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <div class="feature-title">双层管道</div>
+                        <div class="feature-desc">解析 → 解码 → 转换<br>一次解析多层加工</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17: OML language -->
+            <section>
+                <h2 class="mb-2">OML 对象模型语言</h2>
+                <p style="font-size: 1.2em; color: var(--color-text-tertiary); margin-bottom: 2em;">解析后的数据组装与富化</p>
+                <div class="three-column mt-2">
+                    <div class="feature-card">
+                        <div class="feature-icon">📦</div>
+                        <div class="feature-title">声明式构建</div>
+                        <div class="feature-desc">离散字段 → 嵌套对象<br>类型安全的对象组装</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <div class="feature-title">SQL 富化</div>
+                        <div class="feature-desc">内存 DB + JOIN 查询<br>IP→Geo · ID→Name</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔀</div>
+                        <div class="feature-title">智能路由</div>
+                        <div class="feature-desc">多路复制 + 条件过滤<br>一份数据多种输出</div>
+                    </div>
+                </div>
+                <div class="info-box text-center mt-3">
+                    <p style="font-size: 1.3em; margin: 0; line-height: 1.5;"><strong>构建 + 富化 + 路由</strong> 的统一声明式 DSL<br>vs Logstash/Vector 分散的配置、脚本和插件</p>
+                </div>
+            </section>
+
+            <!-- Slide 18: Engineering optimization -->
+            <section>
+                <h2 class="mb-2">极致工程优化</h2>
+                <div class="three-column mt-2">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title">深度并行架构</div>
+                        <div class="feature-desc">四阶段独立并行流水线<br>采集 → 解析 → 转换 → 传送<br>流水线重叠执行</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <div class="feature-title">IO/CPU 分离</div>
+                        <div class="feature-desc">异步 IO 线程池<br>CPU 计算线程池<br>CPU 利用率提升 30%+</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <div class="feature-title">零拷贝技术</div>
+                        <div class="feature-desc">传统方案: 3次拷贝<br>WarpParse: 0次拷贝<br>内存带宽节省 3x</div>
+                    </div>
+                </div>
+                <div class="success-box text-center mt-3">
+                    <p style="font-size: 1.4em; margin: 0; line-height: 1.5;"><strong>三大技术协同效应</strong><br>吞吐提升 <span class="highlight">3-7x</span> 相对 Vector</p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Why WarpParse -->
+            <section class="section-divider">
+                <h1>为什么选择 WarpParse</h1>
+            </section>
+
+            <!-- Slide 20: Four advantages -->
+            <section>
+                <h2 class="mb-2 text-center">四大核心优势</h2>
+                <div class="two-column mt-2" style="gap: 2em;">
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <div class="feature-title" style="font-size: 1.6em;">极致性能</div>
+                        <div class="feature-desc" style="font-size: 1.1em; margin-top: 1em; line-height: 1.6;">
+                            <strong>1.56x - 20.30x</strong> 性能提升<br>
+                            APT 大包场景达到 <strong>6.9x</strong><br>
+                            适用于大规模日志处理
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💎</div>
+                        <div class="feature-title" style="font-size: 1.6em;">资源高效</div>
+                        <div class="feature-desc" style="font-size: 1.1em; margin-top: 1em; line-height: 1.6;">
+                            内存占用 <strong>206-461 MB</strong><br>
+                            相比 Logstash 节省 <strong>60-80%</strong><br>
+                            适用于边缘/Agent 部署
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title" style="font-size: 1.6em;">易于使用</div>
+                        <div class="feature-desc" style="font-size: 1.1em; margin-top: 1em; line-height: 1.6;">
+                            <strong>WPL/OML</strong> 领域语言<br>
+                            高可读性，易于维护<br>
+                            在线 Playground 即时调试
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <div class="feature-title" style="font-size: 1.6em;">灵活扩展</div>
+                        <div class="feature-desc" style="font-size: 1.1em; margin-top: 1em; line-height: 1.6;">
+                            开放 API + 丰富工具链<br>
+                            wp-rule 社区规则库<br>
+                            快速开发自定义模块
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 21: Use cases -->
+            <section>
+                <h2 class="mb-2 text-center">适用场景</h2>
+                <div class="two-column mt-2" style="gap: 2em;">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title" style="font-size: 1.5em;">可观测性</div>
+                        <div class="feature-desc" style="font-size: 1.05em; margin-top: 1em; line-height: 1.6;">
+                            Kubernetes / 微服务日志收集<br>
+                            分布式追踪与性能分析<br>
+                            <strong>百万级 EPS</strong> 处理能力
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-title" style="font-size: 1.5em;">网络安全</div>
+                        <div class="feature-desc" style="font-size: 1.05em; margin-top: 1em; line-height: 1.6;">
+                            SOC / SIEM 日志解析<br>
+                            APT 威胁日志分析<br>
+                            APT 场景 <strong>6.9x</strong> 性能提升
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title" style="font-size: 1.5em;">实时风控</div>
+                        <div class="feature-desc" style="font-size: 1.05em; margin-top: 1em; line-height: 1.6;">
+                            金融交易监控与欺诈检测<br>
+                            用户行为分析与画像<br>
+                            低延迟 <strong>实时处理</strong>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <div class="feature-title" style="font-size: 1.5em;">边缘计算</div>
+                        <div class="feature-desc" style="font-size: 1.05em; margin-top: 1em; line-height: 1.6;">
+                            IoT 设备日志本地处理<br>
+                            CDN / 5G 边缘节点<br>
+                            内存占用 <strong>206-461 MB</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 22: Thank you -->
+            <section class="center">
+                <h1 style="font-size: 6em; margin-bottom: 0.3em;">WarpParse</h1>
+                <p class="subtitle" style="font-size: 1.8em;">突破性能边界的下一代 ETL 引擎</p>
+                <p style="margin-top: 3em; font-size: 1.3em; color: var(--color-text-tertiary);">
+                    联系我们 · GitHub · 文档
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            controls: true,
+            progress: true,
+            center: false,
+            transition: 'fade',
+            transitionSpeed: 'slow',
+            width: 1920,
+            height: 1080,
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0
+        });
+
+        // Initialize charts after reveal is ready
+        Reveal.on('ready', function() {
+            initCharts();
+        });
+
+        function initCharts() {
+            // Chart.js default settings
+            Chart.defaults.color = '#E5E5EA';
+            Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
+            Chart.defaults.font.size = 14;
+
+            // Nginx performance chart
+            const nginxCtx = document.getElementById('nginxChart');
+            if (nginxCtx) {
+                new Chart(nginxCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['WarpParse', 'Vector-VRL', 'Vector-Fixed', 'Logstash'],
+                        datasets: [{
+                            label: 'EPS (千/秒)',
+                            data: [766, 492, 256, 161],
+                            backgroundColor: [
+                                'rgba(0, 122, 255, 0.8)',
+                                'rgba(90, 200, 250, 0.6)',
+                                'rgba(90, 200, 250, 0.4)',
+                                'rgba(142, 142, 147, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(0, 122, 255, 1)',
+                                'rgba(90, 200, 250, 1)',
+                                'rgba(90, 200, 250, 1)',
+                                'rgba(142, 142, 147, 1)'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(28, 28, 30, 0.95)',
+                                titleColor: '#FFFFFF',
+                                bodyColor: '#E5E5EA',
+                                borderColor: 'rgba(255, 255, 255, 0.15)',
+                                borderWidth: 1,
+                                padding: 12,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y + 'K EPS';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.08)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + 'K';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // AWS ELB performance chart
+            const elbCtx = document.getElementById('elbChart');
+            if (elbCtx) {
+                new Chart(elbCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['WarpParse', 'Vector-VRL', 'Logstash'],
+                        datasets: [{
+                            label: 'EPS (千/秒)',
+                            data: [370, 148, 125],
+                            backgroundColor: [
+                                'rgba(0, 122, 255, 0.8)',
+                                'rgba(90, 200, 250, 0.6)',
+                                'rgba(142, 142, 147, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(0, 122, 255, 1)',
+                                'rgba(90, 200, 250, 1)',
+                                'rgba(142, 142, 147, 1)'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(28, 28, 30, 0.95)',
+                                titleColor: '#FFFFFF',
+                                bodyColor: '#E5E5EA',
+                                borderColor: 'rgba(255, 255, 255, 0.15)',
+                                borderWidth: 1,
+                                padding: 12,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y + 'K EPS';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.08)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + 'K';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Sysmon performance chart
+            const sysmonCtx = document.getElementById('sysmonChart');
+            if (sysmonCtx) {
+                new Chart(sysmonCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['WarpParse', 'Vector-VRL', 'Logstash'],
+                        datasets: [{
+                            label: 'EPS (千/秒)',
+                            data: [150, 89, 54],
+                            backgroundColor: [
+                                'rgba(0, 122, 255, 0.8)',
+                                'rgba(90, 200, 250, 0.6)',
+                                'rgba(142, 142, 147, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(0, 122, 255, 1)',
+                                'rgba(90, 200, 250, 1)',
+                                'rgba(142, 142, 147, 1)'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(28, 28, 30, 0.95)',
+                                titleColor: '#FFFFFF',
+                                bodyColor: '#E5E5EA',
+                                borderColor: 'rgba(255, 255, 255, 0.15)',
+                                borderWidth: 1,
+                                padding: 12,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y + 'K EPS';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.08)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + 'K';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Mixed log performance chart
+            const mixedCtx = document.getElementById('mixedChart');
+            if (mixedCtx) {
+                new Chart(mixedCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['WarpParse', 'Vector-VRL', 'Logstash'],
+                        datasets: [{
+                            label: 'EPS (千/秒)',
+                            data: [260, 87, 43],
+                            backgroundColor: [
+                                'rgba(0, 122, 255, 0.8)',
+                                'rgba(90, 200, 250, 0.6)',
+                                'rgba(142, 142, 147, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(0, 122, 255, 1)',
+                                'rgba(90, 200, 250, 1)',
+                                'rgba(142, 142, 147, 1)'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(28, 28, 30, 0.95)',
+                                titleColor: '#FFFFFF',
+                                bodyColor: '#E5E5EA',
+                                borderColor: 'rgba(255, 255, 255, 0.15)',
+                                borderWidth: 1,
+                                padding: 12,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y + 'K EPS';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.08)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + 'K';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // APT performance chart
+            const aptCtx = document.getElementById('aptChart');
+            if (aptCtx) {
+                new Chart(aptCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['WarpParse', 'Vector-VRL', 'Vector-Fixed', 'Logstash'],
+                        datasets: [{
+                            label: 'EPS (千/秒)',
+                            data: [130, 19, 19, 10],
+                            backgroundColor: [
+                                'rgba(255, 59, 48, 0.8)',
+                                'rgba(255, 149, 0, 0.6)',
+                                'rgba(255, 149, 0, 0.4)',
+                                'rgba(142, 142, 147, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 59, 48, 1)',
+                                'rgba(255, 149, 0, 1)',
+                                'rgba(255, 149, 0, 1)',
+                                'rgba(142, 142, 147, 1)'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(28, 28, 30, 0.95)',
+                                titleColor: '#FFFFFF',
+                                bodyColor: '#E5E5EA',
+                                borderColor: 'rgba(255, 255, 255, 0.15)',
+                                borderWidth: 1,
+                                padding: 12,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y + 'K EPS';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.08)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + 'K';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -5,83 +5,58 @@ WPL (Warp Parse Language) 是为工业级数据治理设计的强类型领域特
 
 示例： 解析AWS日志
 ### WPL:
-size 1132
+size 287
 ```bash
-   rule aws {
-        (
-            symbol(http),
-            chars:timestamp,
-            chars:elb,
-            chars:client_host,
-            chars:target_host,
-            chars:request_processing_time,
-            chars:target_processing_time,
-            chars:response_processing_time,
-            chars:elb_status_code,
-            chars:target_status_code,
-            chars:received_bytes,
-            chars:sent_bytes,
-            chars:request | (chars:request_method, chars:request_url, chars:request_protocol),
-            chars:user_agent,
-            chars:ssl_cipher,
-            chars:ssl_protocol,
-            chars:target_group_arn,
-            chars:trace_id,
-            chars:domain_name,
-            chars:chosen_cert_arn,
-            chars:matched_rule_priority,
-            chars:request_creation_time,
-            chars:actions_executed,
-            chars:redirect_url,
-            chars:error_reason,
-            chars:target_port_list,
-            chars:target_status_code_list,
-            chars:classification,
-            chars:classification_reason,
-            chars:traceability_id,
-        )
-   }
+rule nginx {
+    (
+        json | take(log) | json_unescape() | (
+            ip:sip,
+            2*_,
+            time:recv_time<[,]>,
+            http/request",
+            http/status,
+            digit,
+            chars",
+            http/agent",
+            _"
+        )  
+    )
+}
 ```
 
 ### VRL(Vector)
-size : 2285
+size : 910
 ```
-source = '''
-  parsed = parse_regex!(.message, r'^(?P<type>\S+) (?P<timestamp>\S+) (?P<elb>\S+) (?P<client_host>\S+) (?P<target_host>\S+) (?P<request_processing_time>[-\d\.]+) (?P<target_processing_time>[-\d\.]+) (?P<response_processing_time>[-\d\.]+) (?P<elb_status_code>\S+) (?P<target_status_code>\S+) (?P<received_bytes>\d+) (?P<sent_bytes>\d+) "(?P<request_method>\S+) (?P<request_url>[^ ]+) (?P<request_protocol>[^"]+)" "(?P<user_agent>[^"]*)" "(?P<ssl_cipher>[^"]*)" "(?P<ssl_protocol>[^"]*)" (?P<target_group_arn>\S+) "(?P<trace_id>[^"]*)" "(?P<domain_name>[^"]*)" "(?P<chosen_cert_arn>[^"]*)" (?P<matched_rule_priority>\S+) (?P<request_creation_time>\S+) "(?P<actions_executed>[^"]*)" "(?P<redirect_url>[^"]*)" "(?P<error_reason>[^"]*)" "(?P<target_port_list>[^"]*)" "(?P<target_status_code_list>[^"]*)" "(?P<classification>[^"]*)" "(?P<classification_reason>[^"]*)" (?P<traceability_id>\S+)$')
-  .timestamp = parsed.timestamp
-  .symbol = parsed.type
-  .elb = parsed.elb
-  .client_host = parsed.client_host
-  .target_host = parsed.target_host
-  .request_processing_time = parsed.request_processing_time
-  .target_processing_time = parsed.target_processing_time
-  .response_processing_time = parsed.response_processing_time
-  .elb_status_code = parsed.elb_status_code
-  .target_status_code = parsed.target_status_code
-  .received_bytes = parsed.received_bytes
-  .sent_bytes = parsed.sent_bytes
-  .request_method = parsed.request_method
-  .request_url = parsed.request_url
-  .request_protocol = parsed.request_protocol
-  .user_agent = parsed.user_agent
-  .ssl_cipher = parsed.ssl_cipher
-  .ssl_protocol = parsed.ssl_protocol
-  .target_group_arn = parsed.target_group_arn
-  .trace_id = parsed.trace_id
-  .domain_name = parsed.domain_name
-  .chosen_cert_arn = parsed.chosen_cert_arn
-  .matched_rule_priority = parsed.matched_rule_priority
-  .request_creation_time = parsed.request_creation_time
-  .actions_executed = parsed.actions_executed
-  .redirect_url = parsed.redirect_url
-  .error_reason = parsed.error_reason
-  .target_port_list = parsed.target_port_list
-  .target_status_code_list = parsed.target_status_code_list
-  .classification = parsed.classification
-  .classification_reason = parsed.classification_reason
-  .traceability_id = parsed.traceability_id
-  del(.message)
-'''
+m = parse_regex!(
+  string!(.message),
+  r'^date:(?P<date>[0-9]+(?:\.[0-9]+)?)\s+log:(?P<sip>\S+)\s+\S+\s+\S+\s+\[(?P<dt>\d{2}\/[A-Za-z]{3}\/\d{4}:\d{2}:\d{2}:\d{2})\s+[+\-]\d{4}\]\s+\\"(?P<req>[^\\"]*)\\"\s+(?P<status>\d{3})\s+(?P<size>\d+)\s+\\"(?P<referer>[^\\"]*)\\"\s+\\"(?P<agent>[^\\"]*)\\"\s+\\"[^\\"]*\\"$'
+)
+
+.date = to_float!(m.date)
+.sip = m.sip
+
+t = parse_timestamp!(m.dt, format: "%d/%b/%Y:%H:%M:%S", timezone: "Asia/Shanghai")
+.recv_time = format_timestamp!(t, format: "%F %T")
+
+."http/request" = m.req
+."http/status" = to_int!(m.status)
+.digit = to_int!(m.size)
+.chars = m.referer
+
+ua = replace(m.agent, ";", "")
+ua = replace(ua, "Mozilla/5.0 (", "Mozilla/5.0(")
+."http/agent" = ua + " "
+
+. = {
+  "date": .date,
+  "sip": .sip,
+  "recv_time": .recv_time,
+  "http/request": ."http/request",
+  "http/status": ."http/status",
+  "digit": .digit,
+  "chars": .chars,
+  "http/agent": ."http/agent",
+  }
 ```
 
 ### Logstash
