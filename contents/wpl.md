@@ -3,94 +3,71 @@ WPL (Warp Parse Language) 是为工业级数据治理设计的强类型领域特
 
 ## 更简洁
 
-示例： 解析AWS日志
+示例： FB/nginx (json 下的 nginx)
+
+### 样本
+```json
+{"date":1767006286.778936,"log":"180.57.30.149 - - [21/Jan/2025:01:40:02 +0800] \"GET /nginx-logo.png HTTP/1.1\" 500 368 \"http://207.131.38.110/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36\" \"-\""}
+```
 ### WPL:
-size 287
+size 162 (去空格)
 ```bash
-rule nginx {
-    (
-        json | take(log) | json_unescape() | (
-            ip:sip,
-            2*_,
-            time:recv_time<[,]>,
-            http/request",
-            http/status,
-            digit,
-            chars",
-            http/agent",
-            _"
-        )  
-    )
-}
+rule nginx { (
+    json | take(log) | json_unescape() | (
+        ip:sip,
+        2*_,
+        time:recv_time<[,]>,
+        http/request",
+        http/status,
+        digit,
+        chars",
+        http/agent",
+        _"
+    )  
+) }
 ```
 
 ### VRL(Vector)
-size : 910
+size : 419
 ```
-m = parse_regex!(
-  string!(.message),
-  r'^date:(?P<date>[0-9]+(?:\.[0-9]+)?)\s+log:(?P<sip>\S+)\s+\S+\s+\S+\s+\[(?P<dt>\d{2}\/[A-Za-z]{3}\/\d{4}:\d{2}:\d{2}:\d{2})\s+[+\-]\d{4}\]\s+\\"(?P<req>[^\\"]*)\\"\s+(?P<status>\d{3})\s+(?P<size>\d+)\s+\\"(?P<referer>[^\\"]*)\\"\s+\\"(?P<agent>[^\\"]*)\\"\s+\\"[^\\"]*\\"$'
+source = '''
+obj = parse_json!(string!(.message))
+. = object!(obj)
+
+.|= parse_regex!(
+  string!(.log),
+  r'^(?P<sip>\S+)\s+\S+\s+\S+\s+\[(?P<recv_time>\d{2}\/[A-Za-z]{3}\/\d{4}:\d{2}:\d{2}:\d{2})\s+[+\-]\d{4}\]\s+"(?P<http_request>[^"]*)"\s+(?P<status>\d{3})\s+(?P<digit>\d+)\s+"(?P<chars>[^"]*)"\s+"(?P<http_agent>[^"]*)"\s+"[^"]*"\s*$'
 )
-
-.date = to_float!(m.date)
-.sip = m.sip
-
-t = parse_timestamp!(m.dt, format: "%d/%b/%Y:%H:%M:%S", timezone: "Asia/Shanghai")
-.recv_time = format_timestamp!(t, format: "%F %T")
-
-."http/request" = m.req
-."http/status" = to_int!(m.status)
-.digit = to_int!(m.size)
-.chars = m.referer
-
-ua = replace(m.agent, ";", "")
-ua = replace(ua, "Mozilla/5.0 (", "Mozilla/5.0(")
-."http/agent" = ua + " "
-
-. = {
-  "date": .date,
-  "sip": .sip,
-  "recv_time": .recv_time,
-  "http/request": ."http/request",
-  "http/status": ."http/status",
-  "digit": .digit,
-  "chars": .chars,
-  "http/agent": ."http/agent",
-  }
+  .status = to_int!(.status)
+  .digit = to_int!(.digit)
+del(.log)
+del(.message)
+'''
 ```
 
 ### Logstash
 
-size :1071
+size : 470
 ```conf
-input {
-  file {
-    path => ["in_data/medium_aws_411B"]
-    start_position => "beginning"
-    sincedb_path => "/dev/null"
-  }
-}
-
 filter {
+  json {
+    source => "message"
+  }
   dissect {
     mapping => {
-      "message" => '%{symbol} %{timestamp} %{elb} %{client_host} %{target_host} %{request_processing_time} %{target_processing_time} %{response_processing_time} %{elb_status_code} %{target_status_code} %{received_bytes} %{sent_bytes} "%{raw_request}" "%{user_agent}" "%{ssl_cipher}" "%{ssl_protocol}" %{target_group_arn} "%{trace_id}" "%{domain_name}" "%{chosen_cert_arn}" %{matched_rule_priority} %{request_creation_time} "%{actions_executed}" "%{redirect_url}" "%{error_reason}" "%{target_port_list}" "%{target_status_code_list}" "%{classification}" "%{classification_reason}" %{traceability_id}'
+      "log" => '%{sip} - - [%{recv_time} %{+recv_time}] "%{http_request}" %{status} %{digit} "%{chars}" "%{http_agent}" "%{ignore_tail}"'
     }
+    tag_on_failure => ["nginx_dissect_failure"]
   }
-
-  dissect {
-    mapping => {
-      "raw_request" => "%{request_method} %{request_url} %{request_protocol}"
-    }
-  }
-
   mutate {
-  remove_field => ["message","@timestamp","@version","event","[event][original]","raw_request"]
-}
-}
-
-output {
-  file { path => "/dev/null" codec => "json_lines" }
+    convert => {
+      "status" => "integer"
+      "digit"  => "integer"
+    }
+  }
+  mutate {
+    remove_field => ["log", "message", "ignore_tail","@timestamp","@version","event"]
+  }
 }
 ```
 

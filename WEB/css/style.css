@@ -837,6 +837,100 @@ a:hover {
     color: var(--text-secondary);
 }
 
+.code-badge.logstash {
+    background: rgba(234, 179, 8, 0.2);
+    color: #fbbf24;
+}
+
+/* Sample Data */
+.sample-data {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-top: 2rem;
+    overflow: hidden;
+}
+
+.sample-header {
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-card-hover);
+    border-bottom: 1px solid var(--border);
+}
+
+.sample-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.sample-content {
+    padding: 1rem 1.5rem;
+    overflow-x: auto;
+}
+
+.sample-content pre {
+    margin: 0;
+    font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #94a3b8;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* Size Comparison */
+.size-comparison {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.size-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.size-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.size-unit {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.wpl-size .size-value {
+    color: var(--primary-light);
+}
+
+.vrl-size .size-value {
+    color: #94a3b8;
+}
+
+.logstash-size .size-value {
+    color: #fbbf24;
+}
+
+/* Three column code comparison */
+.code-comparison-three {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
 .code-content {
     padding: 1.5rem;
     overflow-x: auto;
@@ -912,6 +1006,12 @@ a:hover {
 /* WPL Delimiters - Gray */
 .wpl-delimiter {
     color: #94a3b8;
+}
+
+/* WPL Functions - Teal */
+.wpl-func {
+    color: #14b8a6;
+    font-weight: 500;
 }
 
 /* ============================================
@@ -2098,6 +2198,14 @@ a.connector-card {
         grid-template-columns: 1fr;
     }
 
+    .code-comparison-three {
+        grid-template-columns: 1fr;
+    }
+
+    .size-comparison {
+        gap: 2rem;
+    }
+
     .footer-grid {
         grid-template-columns: 1fr 1fr;
     }
@@ -2284,6 +2392,22 @@ a.connector-card {
     /* Code Blocks */
     .code-content pre {
         font-size: 0.75rem;
+    }
+
+    /* Size Comparison */
+    .size-comparison {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .size-value {
+        font-size: 1.5rem;
+    }
+
+    /* Sample Data */
+    .sample-content pre {
+        font-size: 0.7rem;
     }
 
     /* Connectors */

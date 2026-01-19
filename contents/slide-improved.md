@@ -683,14 +683,58 @@ WPL（Warp Programming Language）—— 专为日志解析设计的领域语言
 
 ### 同一解析任务：Nginx 日志
 
-**❌ Logstash GROK（248B）**
+**WPL **
+162
 ```
-%{IPORHOST:clientip} - - \[%{HTTPDATE:timestamp}\] "%{WORD:method} %{URIPATHPARAM:request}  %{NUMBER:status} %{NUMBER:bytes} "%{DATA:referrer}" "%{DATA:agent}"
+rule nginx { (
+    json | take(log) | json_unescape() | 
+    ( ip:sip, 2*_, time:recv_time<[,]>, http/request", http/status, digit, chars", http/agent", _" )  
+)}
 ```
 
-**✅ WPL（174B）**
+**✅ VRL（174B）**
+rule size :419
 ```
-( ip:clientip, 2*_, time:timestamp<[,]>, http/method",http/request", digit:status, digit:size, chars:referer", http/agent", _" )
+source = '''
+obj = parse_json!(string!(.message))
+. = object!(obj)
+
+.|= parse_regex!(
+  string!(.log),
+  r'^(?P<sip>\S+)\s+\S+\s+\S+\s+\[(?P<recv_time>\d{2}\/[A-Za-z]{3}\/\d{4}:\d{2}:\d{2}:\d{2})\s+[+\-]\d{4}\]\s+"(?P<http_request>[^"]*)"\s+(?P<status>\d{3})\s+(?P<digit>\d+)\s+"(?P<chars>[^"]*)"\s+"(?P<http_agent>[^"]*)"\s+"[^"]*"\s*$'
+)
+  .status = to_int!(.status)
+  .digit = to_int!(.digit)
+del(.log)
+del(.message)
+```
+
+** Logstash 
+rule size :470
+```
+filter {
+  json {
+    source => "message"
+  }
+
+  dissect {
+    mapping => {
+      "log" => '%{sip} - - [%{recv_time} %{+recv_time}] "%{http_request}" %{status} %{digit} "%{chars}" "%{http_agent}" "%{ignore_tail}"'
+    }
+    tag_on_failure => ["nginx_dissect_failure"]
+  }
+
+  mutate {
+    convert => {
+      "status" => "integer"
+      "digit"  => "integer"
+    }
+  }
+
+  mutate {
+    remove_field => ["log", "message", "ignore_tail","@timestamp","@version","event"]
+  }
+}
 ```
 
 **WPL 体积减少 30%**，可读性提升 10 倍 —— 一眼看懂日志结构

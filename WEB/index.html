@@ -3960,46 +3960,107 @@
                         </p>
                     </div>
                 </div>
-                <div class="code-comparison">
+                <!-- 样本数据 -->
+                <div class="sample-data">
+                    <div class="sample-header">
+                        <span class="sample-title">示例：JSON 包裹的 Nginx 日志</span>
+                    </div>
+                    <div class="sample-content">
+                        <pre><code>{"date":1767006286.778936,"log":"180.57.30.149 - - [21/Jan/2025:01:40:02 +0800] \"GET /nginx-logo.png HTTP/1.1\" 500 368 \"http://207.131.38.110/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36\" \"-\""}</code></pre>
+                    </div>
+                </div>
+
+                <!-- 规则大小对比 -->
+                <div class="size-comparison">
+                    <div class="size-item wpl-size">
+                        <span class="size-label">WPL</span>
+                        <span class="size-value">162</span>
+                        <span class="size-unit">字符</span>
+                    </div>
+                    <div class="size-item vrl-size">
+                        <span class="size-label">VRL</span>
+                        <span class="size-value">419</span>
+                        <span class="size-unit">字符</span>
+                    </div>
+                    <div class="size-item logstash-size">
+                        <span class="size-label">Logstash</span>
+                        <span class="size-value">470</span>
+                        <span class="size-unit">字符</span>
+                    </div>
+                </div>
+
+                <div class="code-comparison code-comparison-three">
                     <div class="code-block">
                         <div class="code-header">
                             <span class="code-title">WPL</span
-                            ><span class="code-badge wpl">更简洁</span>
+                            ><span class="code-badge wpl">162 字符</span>
                         </div>
                         <div class="code-content">
                             <pre
                                 class="language-wpl"
-                            ><code><span class="wpl-keyword">rule</span> <span class="wpl-name">nginx</span> {
-    (<span class="wpl-type">ip</span>:<span class="wpl-field">sip</span>, <span class="wpl-mod">_^2</span>,
-     <span class="wpl-type">chars</span>:<span class="wpl-field">timestamp</span><span class="wpl-delimiter">&lt;[,]&gt;</span>,
-     <span class="wpl-type">http/request</span>:<span class="wpl-field">http_request</span><span class="wpl-string">"</span>,
-     <span class="wpl-type">chars</span>:<span class="wpl-field">status</span>,
-     <span class="wpl-type">chars</span>:<span class="wpl-field">size</span>,
-     <span class="wpl-type">chars</span>:<span class="wpl-field">referer</span><span class="wpl-string">"</span>,
-     <span class="wpl-type">http/agent</span>:<span class="wpl-field">http_agent</span><span class="wpl-string">"</span>,
-     <span class="wpl-mod">_"</span>)
-}</code></pre>
+                            ><code><span class="wpl-keyword">rule</span> <span class="wpl-name">nginx</span> { (
+    <span class="wpl-type">json</span> | <span class="wpl-func">take</span>(log) | <span class="wpl-func">json_unescape</span>() | (
+        <span class="wpl-type">ip</span>:<span class="wpl-field">sip</span>,
+        <span class="wpl-mod">2*_</span>,
+        <span class="wpl-type">time</span>:<span class="wpl-field">recv_time</span><span class="wpl-delimiter">&lt;[,]&gt;</span>,
+        <span class="wpl-type">http/request</span><span class="wpl-string">"</span>,
+        <span class="wpl-type">http/status</span>,
+        <span class="wpl-type">digit</span>,
+        <span class="wpl-type">chars</span><span class="wpl-string">"</span>,
+        <span class="wpl-type">http/agent</span><span class="wpl-string">"</span>,
+        <span class="wpl-mod">_"</span>
+    )
+) }</code></pre>
                         </div>
                     </div>
                     <div class="code-block">
                         <div class="code-header">
                             <span class="code-title">VRL (Vector)</span
-                            ><span class="code-badge vrl">更复杂</span>
+                            ><span class="code-badge vrl">419 字符</span>
                         </div>
                         <div class="code-content">
-                            <pre><code>parsed = parse_regex!(.message,
-    r'^(?P&lt;client&gt;\S+) \S+ \S+ \[(?P&lt;time&gt;[^\]]+)\] \
-    "(?P&lt;request&gt;[^"]*)" (?P&lt;status&gt;\d{3}) \
-    (?P&lt;size&gt;\d+) "(?P&lt;referer&gt;[^"]*)" \
-    "(?P&lt;agent&gt;[^"]*)"')
-.sip = parsed.client
-.http_request = parsed.request
-.status = parsed.status
-.size = parsed.size
-.referer = parsed.referer
-.http_agent = parsed.agent
-.timestamp = parsed.time
+                            <pre><code>obj = parse_json!(string!(.message))
+. = object!(obj)
+
+.|= parse_regex!(
+  string!(.log),
+  r'^(?P&lt;sip&gt;\S+)\s+\S+\s+\S+\s+\[(?P&lt;recv_time&gt;\d{2}\/[A-Za-z]{3}\/\d{4}:\d{2}:\d{2}:\d{2})\s+[+\-]\d{4}\]\s+"(?P&lt;http_request&gt;[^"]*)"\s+(?P&lt;status&gt;\d{3})\s+(?P&lt;digit&gt;\d+)\s+"(?P&lt;chars&gt;[^"]*)"\s+"(?P&lt;http_agent&gt;[^"]*)"\s+"[^"]*"\s*$'
+)
+.status = to_int!(.status)
+.digit = to_int!(.digit)
+del(.log)
 del(.message)</code></pre>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">Logstash</span
+                            ><span class="code-badge logstash">470 字符</span>
+                        </div>
+                        <div class="code-content">
+                            <pre><code>filter {
+  json {
+    source => "message"
+  }
+
+  dissect {
+    mapping => {
+      "log" => '%{sip} - - [%{recv_time} %{+recv_time}] "%{http_request}" %{status} %{digit} "%{chars}" "%{http_agent}" "%{ignore_tail}"'
+    }
+    tag_on_failure => ["nginx_dissect_failure"]
+  }
+
+  mutate {
+    convert => {
+      "status" => "integer"
+      "digit"  => "integer"
+    }
+  }
+
+  mutate {
+    remove_field => ["log", "message", "ignore_tail","@timestamp","@version","event"]
+  }
+}</code></pre>
                         </div>
                     </div>
                 </div>
