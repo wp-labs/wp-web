@@ -522,6 +522,83 @@ a:hover {
 }
 
 /* ============================================
+   Dropdown Menu
+   ============================================ */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 40px;
+    transition: all 0.2s ease;
+}
+
+.dropdown-toggle svg {
+    width: 12px;
+    height: 8px;
+    transition: transform 0.2s ease;
+}
+
+.dropdown-toggle.active svg {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    min-width: 150px;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.dropdown-menu.active {
+    display: flex;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    border: none;
+    background: transparent;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: var(--bg-card-hover);
+    color: var(--primary);
+    padding-left: 1.25rem;
+}
+
+.dropdown-item:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+.dropdown-item:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+/* ============================================
    Cards
    ============================================ */
 
@@ -2636,3 +2713,271 @@ a.connector-card {
 .gap-4 {
     gap: 2rem;
 }
+
+/* ==================== Resource Usage Charts ==================== */
+.resource-section {
+    background: linear-gradient(180deg, #0d1117 0%, rgba(13, 17, 23, 0.95) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.resource-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1400px;
+    height: 100%;
+    background: radial-gradient(ellipse at top, rgba(87, 148, 242, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.resource-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+}
+
+.resource-intro h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #c9d1d9;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #5794f2 0%, #8b5cf6 50%, #ff7a45 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.resource-subtitle {
+    font-size: 1.1rem;
+    color: #8b949e;
+    margin-bottom: 1.5rem;
+}
+
+.resource-note {
+    background: rgba(87, 148, 242, 0.1);
+    border-left: 3px solid #5794f2;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    color: #c9d1d9;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    text-align: left;
+}
+
+.resource-note strong {
+    color: #5794f2;
+}
+
+.resource-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.resource-chart-card {
+    background: rgba(22, 27, 34, 0.6);
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.resource-chart-card:hover {
+    border-color: #5794f2;
+    box-shadow: 0 8px 24px rgba(87, 148, 242, 0.15);
+    transform: translateY(-2px);
+}
+
+.chart-card-header {
+    margin-bottom: 1.5rem;
+}
+
+.chart-card-header h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #c9d1d9;
+    margin-bottom: 0.5rem;
+}
+
+.chart-card-header p {
+    font-size: 0.9rem;
+    color: #8b949e;
+}
+
+.chart-container {
+    height: 350px;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.chart-legend {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid #30363d;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #8b949e;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.legend-dot.wp-dot {
+    background: linear-gradient(135deg, #5794f2 0%, #3b82f6 100%);
+}
+
+.legend-dot.vector-vrl-dot {
+    background: linear-gradient(135deg, #ff7a45 0%, #ff5722 100%);
+}
+
+.legend-dot.vector-fixed-dot {
+    background: linear-gradient(135deg, #ff9800 0%, #ff7043 100%);
+}
+
+.legend-dot.logstash-dot {
+    background: linear-gradient(135deg, #9333ea 0%, #8b5cf6 100%);
+}
+
+.resource-efficiency-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.efficiency-card {
+    background: rgba(22, 27, 34, 0.6);
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.efficiency-card.highlight-card {
+    background: linear-gradient(135deg, rgba(87, 148, 242, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-color: #5794f2;
+}
+
+.efficiency-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(87, 148, 242, 0.2);
+}
+
+.efficiency-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.efficiency-content h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #c9d1d9;
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+.efficiency-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #5794f2 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.efficiency-desc {
+    font-size: 0.95rem;
+    color: #8b949e;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.efficiency-desc strong {
+    color: #5794f2;
+    font-weight: 600;
+}
+
+/* Responsive adjustments for resource charts */
+@media (max-width: 1200px) {
+    .resource-charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .resource-intro h3 {
+        font-size: 1.5rem;
+    }
+
+    .resource-subtitle {
+        font-size: 1rem;
+    }
+
+    .resource-charts-grid {
+        gap: 1.5rem;
+    }
+
+    .resource-chart-card {
+        padding: 1.5rem;
+    }
+
+    .chart-container {
+        height: 300px;
+    }
+
+    .chart-legend {
+        grid-template-columns: 1fr;
+    }
+
+    .resource-efficiency-summary {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .efficiency-card {
+        padding: 1.5rem;
+    }
+
+    .efficiency-value {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .resource-intro h3 {
+        font-size: 1.3rem;
+    }
+
+    .resource-note {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
+
+    .efficiency-icon {
+        font-size: 2rem;
+    }
+}
+

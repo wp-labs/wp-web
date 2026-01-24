@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
             name="description"
-            content="WarpParse - A high-performance ETL engine designed for observability, security, real-time risk control, and data platform teams"
+            content="WarpParse - 面向可观测性、安全、实时风控、数据平台团队的高性能 ETL 引擎"
         />
-        <title>WarpParse - High-Performance ETL Engine</title>
+        <title>WarpParse - 高性能 ETL 引擎</title>
         <link rel="stylesheet" href="css/style.css" />
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
         <link rel="icon" type="image/png" href="favicon.png" />
@@ -26,18 +26,18 @@
                     <span>WarpParse</span>
                 </a>
                 <nav class="nav" id="mainNav">
-                    <a href="#features" class="nav-link">Features</a>
-                    <a href="#performance" class="nav-link">Throughput</a>
+                    <a href="#features" class="nav-link">核心特性</a>
+                    <a href="#performance" class="nav-link">吞吐量对比</a>
                     <a href="#wpl" class="nav-link">WPL</a>
                     <a href="#oml" class="nav-link">OML</a>
                     <a href="#wpeditor" class="nav-link">Editor</a>
-                    <a href="#connectors" class="nav-link">Connectors</a>
+                    <a href="#connectors" class="nav-link">连接器</a>
                 </nav>
                 <div class="btn-group desktop-only">
                     <a
-                        href="index_zh.html"
+                        href="index.html"
                         class="btn btn-secondary btn-sm"
-                        >中文</a
+                        >EN</a
                     >
                     <a
                         href="https://editor.warpparse.ai"
@@ -47,14 +47,14 @@
                     >
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" id="moreMenuBtn">
-                            More
+                            更多
                             <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
                                 <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                             </svg>
                         </button>
                         <div class="dropdown-menu" id="moreMenu">
                             <a href="https://github.com/wp-labs" target="_blank" class="dropdown-item">GitHub</a>
-                            <a href="https://wp-labs.github.io/wp-docs" target="_blank" class="dropdown-item">Documentation</a>
+                            <a href="https://wp-labs.github.io/wp-docs" target="_blank" class="dropdown-item">文档</a>
                             <a href="https://example.warpparse.ai" target="_blank" class="dropdown-item">Example</a>
                         </div>
                     </div>
@@ -62,13 +62,13 @@
                         href="https://github.com/wp-labs/warp-parse/releases"
                         target="_blank"
                         class="btn btn-primary btn-sm"
-                        >Download</a
+                        >下载</a
                     >
                 </div>
                 <button
                     class="mobile-menu-btn"
                     id="mobileMenuBtn"
-                    aria-label="Menu"
+                    aria-label="菜单"
                 >
                     <span></span>
                     <span></span>
@@ -83,24 +83,24 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-badge">
-                        <span>Next Generation</span>
-                        <span>High-Performance Open Source ETL Engine</span>
+                        <span>新一代</span>
+                        <span>高性能开源ETL 引擎</span>
                     </div>
                     <h1 class="hero-title">
                         <span class="hero-line-1"
                             >WarpParse
                             <span class="gradient-text"
-                                >Lightning Fast</span
+                                >快得难以想象</span
                             ></span
                         >
-                        <span class="hero-line-2"> Yet So Lightweight</span>
+                        <span class="hero-line-2"> 又如此轻量简洁</span>
                     </h1>
                     <p class="hero-description">
                         WarpParse
-                        is designed forObservability、Security、Real-time Risk Control、Data Platformsteam's high-performance ETL
-                        engine，
-                        Focus on logs/Log/event ingestion, parsing and transformation，Provides high-throughput parsing（WPL）、Transform（OML）、
-                        routing、unifiedConnectors API and minimalist DevOps experience。
+                        是面向可观测性、安全、实时风控、数据平台团队的高性能 ETL
+                        引擎，
+                        专注于日志/事件接入、解析与转换，提供高吞吐解析（WPL）、转换（OML）、
+                        路由、统一连接器 API 及极简运维体验。
                     </p>
                     <div class="install-code">
                         <code
@@ -115,7 +115,7 @@
                         <button
                             class="copy-btn"
                             onclick="copyInstallCode()"
-                            title="copy"
+                            title="复制"
                         >
                             <svg
                                 width="16"
@@ -144,7 +144,7 @@
                     <div class="hero-mini-charts">
                         <div class="mini-chart">
                             <div class="mini-chart-title">
-                                MPS Throughput <span class="mini-unit">MiB/s</span>
+                                MPS 吞吐 <span class="mini-unit">MiB/s</span>
                             </div>
                             <div class="mini-bars">
                                 <div class="mini-bar-row">
@@ -178,7 +178,7 @@
                         </div>
                         <div class="mini-chart">
                             <div class="mini-chart-title">
-                                runtime memory <span class="mini-unit">MiB</span>
+                                运行内存 <span class="mini-unit">MiB</span>
                             </div>
                             <div class="mini-bars">
                                 <div class="mini-bar-row">
@@ -212,7 +212,7 @@
                         </div>
                         <div class="mini-chart">
                             <div class="mini-chart-title">
-                                binary size <span class="mini-unit">MiB</span>
+                                二进制大小 <span class="mini-unit">MiB</span>
                             </div>
                             <div class="mini-bars">
                                 <div class="mini-bar-row">
@@ -256,40 +256,40 @@
         <section id="features" class="section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Core Features</h2>
+                    <h2 class="section-title">核心特性</h2>
                     <p class="section-subtitle">
-                        specialized for high-performance log processing and dataTransformdesign
+                        专为高性能日志处理和数据转换而设计
                     </p>
                 </div>
                 <div class="features-grid">
                     <div class="card">
                         <div class="card-icon">F</div>
-                        <h3 class="card-title">Ultimate Throughput</h3>
+                        <h3 class="card-title">极致吞吐</h3>
                         <p class="card-description">
-                            in many scenariosComprehensively surpass in performance
-                            Vector，provides industry-leading log processing capability，meet highThroughputscenario requirements。
+                            众多场景下性能全面超越
+                            Vector，提供行业领先的日志处理能力，满足高吞吐场景需求。
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">W</div>
-                        <h3 class="card-title">Easy Rule Writing</h3>
+                        <h3 class="card-title">规则易编写</h3>
                         <p class="card-description">
-                            WPL（parsing DSL）+ OML（Transform
-                            DSL），far more readable than regex and
-                            Lua，makes rule writing simpler。
+                            WPL（解析 DSL）+ OML（转换
+                            DSL），可读性远超正则表达式和
+                            Lua，让规则编写更简单。
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">C</div>
-                        <h3 class="card-title">Connectorsunified</h3>
+                        <h3 class="card-title">连接器统一</h3>
                         <p class="card-description">
-                            based on
-                            wp-connector-api，便于CommunityEcosystem扩展，Support多种数据源和输出目标。
+                            基于
+                            wp-connector-api，便于社区生态扩展，支持多种数据源和输出目标。
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">O</div>
-                        <h3 class="card-title">DevOps Friendly</h3>
+                        <h3 class="card-title">运维友好</h3>
                         <p class="card-description">
                             单二进制部署，配置化；提供 wproj、wpgen、wprescue
                             工具套件，简化运维工作。
@@ -297,17 +297,17 @@
                     </div>
                     <div class="card">
                         <div class="card-icon">D</div>
-                        <h3 class="card-title">Knowledge Transformation</h3>
+                        <h3 class="card-title">知识转换</h3>
                         <p class="card-description">
-                            通过内存数据库Support SQL
+                            通过内存数据库支持 SQL
                             查询，实现数据富化，让数据更有价值。
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">R</div>
-                        <h3 class="card-title">Data Routing</h3>
+                        <h3 class="card-title">数据路由</h3>
                         <p class="card-description">
-                            based on规则和Transform模型进行routing，Support多路copy与过滤器，灵活控制数据流向。
+                            基于规则和转换模型进行路由，支持多路复制与过滤器，灵活控制数据流向。
                         </p>
                     </div>
                 </div>
@@ -318,9 +318,9 @@
         <section id="performance" class="section performance-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Throughput Performance Comparison</h2>
+                    <h2 class="section-title">吞吐量性能对比</h2>
                     <p class="section-subtitle">
-                        WarpParse vs Vector Benchmark Results (AWS EC2 / Ubuntu 24.04
+                        WarpParse vs Vector 基准测试结果 (AWS EC2 / Ubuntu 24.04
                         / 8 vCPU / 16 GiB RAM)
                     </p>
                 </div>
@@ -329,33 +329,33 @@
                 <div class="metrics-grid">
                     <div class="metric-card metric-primary">
                         <div class="metric-value">3.4x</div>
-                        <div class="metric-label">Parse Performance Boost</div>
+                        <div class="metric-label">解析性能提升</div>
                         <div class="metric-desc">Mixed Log Parse Only</div>
                     </div>
                     <div class="metric-card metric-secondary">
                         <div class="metric-value">2.8x</div>
-                        <div class="metric-label">Parse+Transform Performance Boost</div>
+                        <div class="metric-label">解析+转换性能提升</div>
                         <div class="metric-desc">Mixed Log Parse+Transform</div>
                     </div>
                     <div class="metric-card metric-accent">
                         <div class="metric-value">81W</div>
-                        <div class="metric-label">EPS Peak Throughput</div>
-                        <div class="metric-desc">Nginx File→BlackHole</div>
+                        <div class="metric-label">EPS 峰值吞吐</div>
+                        <div class="metric-desc">Nginx File->BlackHole</div>
                     </div>
                     <div class="metric-card metric-success">
                         <div class="metric-value">380 MiB/s</div>
-                        <div class="metric-label">MPS Peak</div>
-                        <div class="metric-desc">APT File→BlackHole</div>
+                        <div class="metric-label">MPS 峰值</div>
+                        <div class="metric-desc">APT File->BlackHole</div>
                     </div>
                 </div>
 
                 <!-- Performance Mode Tabs -->
                 <div class="perf-mode-tabs">
                     <button class="perf-mode-btn active" data-mode="parse-only">
-                        Parse Capability (Parse Only)
+                        解析能力 (Parse Only)
                     </button>
                     <button class="perf-mode-btn" data-mode="parse-transform">
-                        Parse+Transform (Parse+Transform)
+                        解析+转换 (Parse+Transform)
                     </button>
                 </div>
 
@@ -384,9 +384,9 @@
 
                     <div class="perf-log-content active" id="nginx-parse">
                         <div class="chart-header">
-                            <h3>Nginx Access Log (239B) - Parse Capability</h3>
+                            <h3>Nginx Access Log (239B) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -449,7 +449,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.83x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -512,16 +512,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">1.56x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="elb-parse">
                         <div class="chart-header">
-                            <h3>AWS ELB Log (411B) - Parse Capability</h3>
+                            <h3>AWS ELB Log (411B) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -584,7 +584,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.82x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -647,16 +647,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.49x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="sysmon-parse">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - Parse Capability</h3>
+                            <h3>Sysmon JSON Log (1K) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -706,7 +706,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">4.01x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -756,16 +756,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.19x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="apt-parse">
                         <div class="chart-header">
-                            <h3>APT Threat Log (3K) - Parse Capability</h3>
+                            <h3>APT Threat Log (3K) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -815,7 +815,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">7.67x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -865,16 +865,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">6.86x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mixed-parse">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - Parse Capability</h3>
+                            <h3>Mixed Log (867B avg) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -937,7 +937,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.35x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -1000,7 +1000,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.99x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
@@ -1034,9 +1034,9 @@
 
                     <div class="perf-log-content active" id="nginx-transform">
                         <div class="chart-header">
-                            <h3>Nginx Access Log (239B) - parsing+Transform</h3>
+                            <h3>Nginx Access Log (239B) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -1099,7 +1099,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.27x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -1162,16 +1162,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">1.34x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="elb-transform">
                         <div class="chart-header">
-                            <h3>AWS ELB Log (411B) - parsing+Transform</h3>
+                            <h3>AWS ELB Log (411B) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -1234,7 +1234,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.22x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -1297,16 +1297,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">1.99x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="sysmon-transform">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - parsing+Transform</h3>
+                            <h3>Sysmon JSON Log (1K) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -1356,7 +1356,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.61x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -1406,16 +1406,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.64x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="apt-transform">
                         <div class="chart-header">
-                            <h3>APT Threat Log (3K) - parsing+Transform</h3>
+                            <h3>APT Threat Log (3K) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -1465,7 +1465,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">7.65x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -1515,16 +1515,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">6.14x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mixed-transform">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - parsing+Transform</h3>
+                            <h3>Mixed Log (867B avg) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -1587,7 +1587,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.80x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -1650,7 +1650,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.51x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
@@ -1661,24 +1661,24 @@
                 <div class="perf-summary">
                     <div class="summary-card">
                         <div class="summary-icon">P</div>
-                        <h4>Ultimate Performance</h4>
+                        <h4>追求极致性能</h4>
                         <p>
-                            In Linux mixed log scenarios, provides 3.4x parse performance advantage, File and
-                            TCP reception link performance stands out.
+                            Linux 混合日志场景下提供 3.4x 解析性能优势，File 与
+                            TCP 接收链路表现突出。
                         </p>
                     </div>
                     <div class="summary-card">
                         <div class="summary-icon">R</div>
-                        <h4>Resource-Constrained Environments</h4>
+                        <h4>资源受限环境</h4>
                         <p>
-                            Peak CPU is higher, but total CPU time required for equivalent data volume is less.
+                            峰值 CPU 较高，但完成同等数据量所需总 CPU 时间更少。
                         </p>
                     </div>
                     <div class="summary-card">
                         <div class="summary-icon">E</div>
-                        <h4>Edge/Agent Deployment</h4>
+                        <h4>边缘/Agent 部署</h4>
                         <p>
-                            Small rule files for quick hot updates; strong single-machine processing capability reducing central pressure.
+                            规则文件小，便于快速热更新；单机处理能力强，减少中心端压力。
                         </p>
                     </div>
                 </div>
@@ -1688,7 +1688,7 @@
                         href="https://example.warpparse.ai/benchmark/report/report_linux.html"
                         target="_blank"
                         class="report-link"
-                        >View Full Performance Report →</a
+                        >查看完整性能报告 →</a
                     >
                 </div>
             </div>
@@ -1698,14 +1698,14 @@
         <section id="resource" class="section resource-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Fixed Rate Resource Comparison</h2>
+                    <h2 class="section-title">固定速率资源对比</h2>
                     <p class="section-subtitle">
-                        CPU and Memory Comparison at 20,000 EPS Fixed Rate (AWS EC2 / Ubuntu 24.04 / Mixed Log / TCP → BlackHole)
+                        在 20,000 EPS 固定速率下的 CPU 和内存占用对比 (AWS EC2 / Ubuntu 24.04 / Mixed Log / TCP → BlackHole)
                     </p>
                 </div>
 
                 <div class="resource-note">
-                    <strong>Test Description:</strong>All engines run at the same 20,000 EPS throughput, testing Mixed Log scenario (average log size 867B), comparing CPU and memory resource consumption.Logstash在warmupData collected after。
+                    <strong>测试说明：</strong>所有引擎在相同的 20,000 EPS 吞吐量下运行，测试Mixed Log场景（平均日志大小867B），对比CPU和内存的资源消耗。Logstash在warmup后采集数据。
                 </div>
 
                 <!-- Charts Grid -->
@@ -1713,8 +1713,8 @@
                     <!-- CPU Usage Chart -->
                     <div class="resource-chart-card">
                         <div class="chart-card-header">
-                            <h4>CPU Usage Comparison</h4>
-                            <p>Average / Peak (%)</p>
+                            <h4>CPU 使用率对比</h4>
+                            <p>平均值 / 峰值 (%)</p>
                         </div>
                         <div class="chart-container">
                             <canvas id="cpuUsageChart"></canvas>
@@ -1742,8 +1742,8 @@
                     <!-- Memory Usage Chart -->
                     <div class="resource-chart-card">
                         <div class="chart-card-header">
-                            <h4>Memory Usage Comparison</h4>
-                            <p>Average / Peak (MB)</p>
+                            <h4>内存占用对比</h4>
+                            <p>平均值 / 峰值 (MB)</p>
                         </div>
                         <div class="chart-container">
                             <canvas id="memUsageChart"></canvas>
@@ -1774,30 +1774,30 @@
                     <div class="efficiency-card highlight-card">
                         <div class="efficiency-icon">⚡</div>
                         <div class="efficiency-content">
-                            <h4>Ultra Low CPU Usage</h4>
-                            <p class="efficiency-value">54% Average CPU</p>
+                            <h4>极低 CPU 占用</h4>
+                            <p class="efficiency-value">54% 平均 CPU</p>
                             <p class="efficiency-desc">
-                                Reduced compared to Vector-VRL by <strong>68.8%</strong>，Reduced compared to Logstash by <strong>80.4%</strong>
+                                相比 Vector-VRL 降低 <strong>68.8%</strong>，相比 Logstash 降低 <strong>80.4%</strong>
                             </p>
                         </div>
                     </div>
                     <div class="efficiency-card highlight-card">
                         <div class="efficiency-icon">💾</div>
                         <div class="efficiency-content">
-                            <h4>Ultra Low Memory Usage</h4>
-                            <p class="efficiency-value">60 MB Average Memory</p>
+                            <h4>极低内存占用</h4>
+                            <p class="efficiency-value">60 MB 平均内存</p>
                             <p class="efficiency-desc">
-                                Reduced compared to Vector-VRL by <strong>63.0%</strong>，Reduced compared to Logstash by <strong>95.0%</strong>
+                                相比 Vector-VRL 降低 <strong>63.0%</strong>，相比 Logstash 降低 <strong>95.0%</strong>
                             </p>
                         </div>
                     </div>
                     <div class="efficiency-card">
                         <div class="efficiency-icon">📊</div>
                         <div class="efficiency-content">
-                            <h4>Resource Efficiency Advantage</h4>
+                            <h4>资源效率优势</h4>
                             <p class="efficiency-desc">
-                                At the same throughput, WarpParse resource consumption is far lower than other engines,
-                                very suitable for resource-constrained edge environments and large-scale deployment scenarios.
+                                在相同吞吐量下，WarpParse 的资源占用远低于其他引擎，
+                                非常适合资源受限的边缘环境和大规模部署场景。
                             </p>
                         </div>
                     </div>
@@ -1808,7 +1808,7 @@
                         href="https://example.warpparse.ai/benchmark/report/report_linux.html"
                         target="_blank"
                         class="report-link"
-                        >View Full Performance Report →</a
+                        >查看完整性能报告 →</a
                     >
                 </div>
             </div>
@@ -1818,7 +1818,7 @@
         <section id="performance-mac" class="section performance-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Mac Throughput Performance Comparison</h2>
+                    <h2 class="section-title">Mac 吞吐量性能对比</h2>
                     <p class="section-subtitle">
                         WarpParse vs Vector-VRL vs Vector-Fixed vs Logstash (Mac
                         M4 Mini / 10C / 16G RAM)
@@ -1829,23 +1829,23 @@
                 <div class="metrics-grid">
                     <div class="metric-card metric-primary">
                         <div class="metric-value">4.0x</div>
-                        <div class="metric-label">Parse Performance Boost</div>
+                        <div class="metric-label">解析性能提升</div>
                         <div class="metric-desc">Mixed Log Parse Only</div>
                     </div>
                     <div class="metric-card metric-secondary">
                         <div class="metric-value">3.5x</div>
-                        <div class="metric-label">Parse+Transform Performance Boost</div>
+                        <div class="metric-label">解析+转换性能提升</div>
                         <div class="metric-desc">Mixed Log Parse+Transform</div>
                     </div>
                     <div class="metric-card metric-accent">
                         <div class="metric-value">278.9W</div>
-                        <div class="metric-label">EPS Peak Throughput</div>
-                        <div class="metric-desc">Nginx File→BlackHole</div>
+                        <div class="metric-label">EPS 峰值吞吐</div>
+                        <div class="metric-desc">Nginx File->BlackHole</div>
                     </div>
                     <div class="metric-card metric-success">
                         <div class="metric-value">1109 MiB/s</div>
-                        <div class="metric-label">MPS Peak</div>
-                        <div class="metric-desc">APT File→BlackHole</div>
+                        <div class="metric-label">MPS 峰值</div>
+                        <div class="metric-desc">APT File->BlackHole</div>
                     </div>
                 </div>
 
@@ -1855,13 +1855,13 @@
                         class="perf-mode-btn active"
                         data-mode="mac-parse-only"
                     >
-                        Parse Capability (Parse Only)
+                        解析能力 (Parse Only)
                     </button>
                     <button
                         class="perf-mode-btn"
                         data-mode="mac-parse-transform"
                     >
-                        Parse+Transform (Parse+Transform)
+                        解析+转换 (Parse+Transform)
                     </button>
                 </div>
 
@@ -1893,9 +1893,9 @@
 
                     <div class="perf-log-content active" id="mac-nginx-parse">
                         <div class="chart-header">
-                            <h3>Nginx Access Log (239B) - Parse Capability</h3>
+                            <h3>Nginx Access Log (239B) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -1958,7 +1958,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">4.88x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2021,7 +2021,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">1.42x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2084,16 +2084,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">8.78x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mac-elb-parse">
                         <div class="chart-header">
-                            <h3>AWS ELB Log (411B) - Parse Capability</h3>
+                            <h3>AWS ELB Log (411B) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -2156,7 +2156,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.89x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2219,7 +2219,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.40x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2282,16 +2282,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">4.12x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mac-sysmon-parse">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - Parse Capability</h3>
+                            <h3>Sysmon JSON Log (1K) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -2354,7 +2354,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.38x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2417,7 +2417,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">1.93x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2480,16 +2480,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.69x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mac-apt-parse">
                         <div class="chart-header">
-                            <h3>APT Threat Log (3K) - Parse Capability</h3>
+                            <h3>APT Threat Log (3K) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -2552,7 +2552,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">8.68x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2615,7 +2615,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">5.88x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2678,16 +2678,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.69x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mac-mixed-parse">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - Parse Capability</h3>
+                            <h3>Mixed Log (867B avg) - 解析能力</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -2750,7 +2750,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">4.01x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2813,7 +2813,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.82x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -2876,7 +2876,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">4.21x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
@@ -2922,9 +2922,9 @@
                         id="mac-nginx-transform"
                     >
                         <div class="chart-header">
-                            <h3>Nginx Access Log (239B) - parsing+Transform</h3>
+                            <h3>Nginx Access Log (239B) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -2987,7 +2987,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.77x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3050,7 +3050,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">1.35x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3113,16 +3113,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">8.44x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mac-elb-transform">
                         <div class="chart-header">
-                            <h3>AWS ELB Log (411B) - parsing+Transform</h3>
+                            <h3>AWS ELB Log (411B) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -3185,7 +3185,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.64x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3248,7 +3248,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.04x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3311,16 +3311,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.87x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mac-sysmon-transform">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - parsing+Transform</h3>
+                            <h3>Sysmon JSON Log (1K) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -3383,7 +3383,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.03x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3446,7 +3446,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">1.79x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3509,16 +3509,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.12x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mac-apt-transform">
                         <div class="chart-header">
-                            <h3>APT Threat Log (3K) - parsing+Transform</h3>
+                            <h3>APT Threat Log (3K) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -3581,7 +3581,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">8.12x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3644,7 +3644,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">5.38x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3707,16 +3707,16 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.41x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="perf-log-content" id="mac-mixed-transform">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - parsing+Transform</h3>
+                            <h3>Mixed Log (867B avg) - 解析+转换</h3>
                             <p class="chart-subtitle">
-                                EPS (Events Per Second) Comparison
+                                EPS (Events Per Second) 对比
                             </p>
                         </div>
 
@@ -3779,7 +3779,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">3.53x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3842,7 +3842,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">2.67x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
 
@@ -3905,7 +3905,7 @@
                             </div>
                             <div class="comp-ratio">
                                 <span class="ratio-badge">4.01x</span>
-                                <span class="ratio-text">WarpParse Faster</span>
+                                <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
@@ -3915,21 +3915,21 @@
                 <div class="perf-summary">
                     <div class="summary-card">
                         <div class="summary-icon">P</div>
-                        <h4>Ultimate Performance</h4>
+                        <h4>追求极致性能</h4>
                         <p>Mac M4 平台场景下提供 1.4-8.8x 性能优势。</p>
                     </div>
                     <div class="summary-card">
                         <div class="summary-icon">R</div>
-                        <h4>Resource-Constrained Environments</h4>
+                        <h4>资源受限环境</h4>
                         <p>
-                            Peak CPU is higher, but total CPU time required for equivalent data volume is less.
+                            峰值 CPU 较高，但完成同等数据量所需总 CPU 时间更少。
                         </p>
                     </div>
                     <div class="summary-card">
                         <div class="summary-icon">E</div>
                         <h4>边缘/Agent部署</h4>
                         <p>
-                            Small rule files for quick hot updates; strong single-machine processing capability reducing central pressure.
+                            规则文件小，便于快速热更新；单机处理能力强，减少中心端压力。
                         </p>
                     </div>
                 </div>
@@ -3939,7 +3939,7 @@
                         href="https://example.warpparse.ai/benchmark/report/report_mac.html"
                         target="_blank"
                         class="report-link"
-                        >View Full Performance Report →</a
+                        >查看完整性能报告 →</a
                     >
                 </div>
             </div>
@@ -3951,18 +3951,18 @@
                 <div class="section-header">
                     <h2 class="section-title">WPL - Warp Parse Language</h2>
                     <p class="section-subtitle">
-                        工业级数据治理的强类型parsing DSL，比正则表达式更精准、高效
+                        工业级数据治理的强类型解析 DSL，比正则表达式更精准、高效
                     </p>
                 </div>
                 <div class="features-grid">
                     <div class="card">
-                        <h3 class="card-title">More Concise</h3>
+                        <h3 class="card-title">更简洁</h3>
                         <p class="card-description">
-                            用更少的代码完成更复杂的parsing任务，语法直观易读。
+                            用更少的代码完成更复杂的解析任务，语法直观易读。
                         </p>
                     </div>
                     <div class="card">
-                        <h3 class="card-title">Stronger Control</h3>
+                        <h3 class="card-title">更强控制</h3>
                         <p class="card-description">
                             内置
                             alt（择一容错）、opt（可选匹配）、some_of（循环探测）等元信息，提供远超正则的容错能力。
@@ -3971,7 +3971,7 @@
                     <div class="card">
                         <h3 class="card-title">集成化流水线</h3>
                         <p class="card-description">
-                            Integrate cleaning and parsing in a single expression，Support
+                            将清洗与解析整合在一个表达式中，支持
                             decode/base64、unquote/unescape、decode/hex
                             等预处理。
                         </p>
@@ -3980,14 +3980,14 @@
                 <!-- 样本数据 -->
                 <div class="sample-data">
                     <div class="sample-header">
-                        <span class="sample-title">Example：JSON 包裹的 Nginx 日志</span>
+                        <span class="sample-title">示例：JSON 包裹的 Nginx 日志</span>
                     </div>
                     <div class="sample-content">
                         <pre><code>{"date":1767006286.778936,"log":"180.57.30.149 - - [21/Jan/2025:01:40:02 +0800] \"GET /nginx-logo.png HTTP/1.1\" 500 368 \"http://207.131.38.110/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36\" \"-\""}</code></pre>
                     </div>
                 </div>
 
-                <!-- Rule Size Comparison -->
+                <!-- 规则大小对比 -->
                 <div class="size-comparison">
                     <div class="size-item wpl-size">
                         <span class="size-label">WPL</span>
@@ -4116,7 +4116,7 @@ del(.message)</code></pre>
                         <h3 class="card-title">精确数据处理</h3>
                         <p class="card-description">
                             read（非破坏性读取）和
-                            take（破坏性读取）模式，Support强类型Security与自动推断。
+                            take（破坏性读取）模式，支持强类型安全与自动推断。
                         </p>
                     </div>
                     <div class="card">
@@ -4181,7 +4181,7 @@ del(.message)</code></pre>
                 <div class="section-header">
                     <h2 class="section-title">WpEditor</h2>
                     <p class="section-subtitle">
-                        Used for writing WPL parsing和 OML Transform的工作台
+                        用于编写 WPL 解析和 OML 转换的工作台
                     </p>
                 </div>
 
@@ -4190,18 +4190,18 @@ del(.message)</code></pre>
                     <div class="wpeditor-card">
                         <img
                             src="wp-editor1.jpg"
-                            alt="WpEditor Interface截图 1"
+                            alt="WpEditor 界面截图 1"
                             class="wpeditor-img"
                         />
-                        <div class="wpeditor-caption">WPL parsing规则编辑</div>
+                        <div class="wpeditor-caption">WPL 解析规则编辑</div>
                     </div>
                     <div class="wpeditor-card">
                         <img
                             src="wp-editor2.jpg"
-                            alt="WpEditor Interface截图 2"
+                            alt="WpEditor 界面截图 2"
                             class="wpeditor-img"
                         />
-                        <div class="wpeditor-caption">OML Transform规则编辑</div>
+                        <div class="wpeditor-caption">OML 转换规则编辑</div>
                     </div>
                 </div>
 
@@ -4211,13 +4211,13 @@ del(.message)</code></pre>
                         href="https://editor.warpparse.ai"
                         target="_blank"
                         class="btn btn-primary"
-                        >Online使用</a
+                        >在线使用</a
                     >
                     <a
                         href="https://github.com/wp-labs/wp-editor/releases"
                         target="_blank"
                         class="btn btn-secondary"
-                        >Download WpEditor</a
+                        >下载 WpEditor</a
                     >
                 </div>
             </div>
@@ -4227,9 +4227,9 @@ del(.message)</code></pre>
         <section id="connectors" class="section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">ConnectorsEcosystem</h2>
+                    <h2 class="section-title">连接器生态</h2>
                     <p class="section-subtitle">
-                        based on wp-connector-api，Support多种数据源和输出目标
+                        基于 wp-connector-api，支持多种数据源和输出目标
                     </p>
                 </div>
                 <div class="connector-grid">
@@ -4263,7 +4263,7 @@ del(.message)</code></pre>
                         class="connector-card connector-link"
                     >
                         <div class="connector-icon">+</div>
-                        <div class="connector-name">More Coming Soon...</div>
+                        <div class="connector-name">更多开发中...</div>
                     </a>
                 </div>
             </div>
@@ -4284,20 +4284,20 @@ del(.message)</code></pre>
                 <div class="section-header">
                     <h2 class="section-title">开始使用 WarpParse</h2>
                     <p class="section-subtitle">
-                        立即体验高性能 ETL engine的强大能力
+                        立即体验高性能 ETL 引擎的强大能力
                     </p>
                     <div class="btn-group justify-center mt-4">
                         <a
                             href="https://github.com/wp-labs/warp-parse/releases"
                             target="_blank"
                             class="btn btn-primary"
-                            >Download</a
+                            >下载</a
                         >
                         <a
                             href="https://wp-labs.github.io/wp-docs"
                             target="_blank"
                             class="btn btn-secondary"
-                            >Documentation</a
+                            >文档</a
                         >
                         <a
                             href="https://github.com/wp-labs"
@@ -4324,12 +4324,12 @@ del(.message)</code></pre>
                             <span>WarpParse</span>
                         </a>
                         <p>
-                            面向Observability、Security、Real-time Risk Control、Data Platformsteam's high-performance
-                            ETL engine
+                            面向可观测性、安全、实时风控、数据平台团队的高性能
+                            ETL 引擎
                         </p>
                     </div>
                     <div>
-                        <h4 class="footer-title">Resources</h4>
+                        <h4 class="footer-title">资源</h4>
                         <ul class="footer-links">
                             <li>
                                 <a
@@ -4342,14 +4342,14 @@ del(.message)</code></pre>
                                 <a
                                     href="https://wp-labs.github.io/wp-docs"
                                     target="_blank"
-                                    >Documentation</a
+                                    >文档</a
                                 >
                             </li>
                             <li>
                                 <a
                                     href="https://github.com/wp-labs/warp-parse/releases"
                                     target="_blank"
-                                    >Download</a
+                                    >下载</a
                                 >
                             </li>
                         </ul>
@@ -4357,15 +4357,15 @@ del(.message)</code></pre>
                     <div>
                         <h4 class="footer-title">语言</h4>
                         <ul class="footer-links">
-                            <li><a href="#wpl">WPL parsing语言</a></li>
-                            <li><a href="#oml">OML Transform语言</a></li>
+                            <li><a href="#wpl">WPL 解析语言</a></li>
+                            <li><a href="#oml">OML 转换语言</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="footer-title">Connectors</h4>
+                        <h4 class="footer-title">连接器</h4>
                         <ul class="footer-links">
-                            <li><a href="#connectors">所有Connectors</a></li>
-                            <li><a href="#">Developer Guide</a></li>
+                            <li><a href="#connectors">所有连接器</a></li>
+                            <li><a href="#">开发指南</a></li>
                         </ul>
                     </div>
                 </div>

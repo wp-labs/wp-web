@@ -33,6 +33,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Dropdown Menu Toggle
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = this.closest('.dropdown');
+            const menu = dropdown.querySelector('.dropdown-menu');
+
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown-menu.active').forEach(m => {
+                if (m !== menu) {
+                    m.classList.remove('active');
+                    m.previousElementSibling.classList.remove('active');
+                }
+            });
+
+            // Toggle current dropdown
+            menu.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu.active').forEach(menu => {
+                menu.classList.remove('active');
+                menu.closest('.dropdown').querySelector('.dropdown-toggle').classList.remove('active');
+            });
+        }
+    });
+
+
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -253,6 +287,9 @@ document.addEventListener('DOMContentLoaded', function() {
     );
     console.log('%c High-Performance ETL Engine ', 'color: #5794f2; font-size: 12px;');
     console.log('%c https://github.com/wp-labs ', 'color: #8b949e; font-size: 10px;');
+
+    // Initialize Resource Usage Charts
+    initResourceCharts();
 });
 
 // Copy code functionality
@@ -279,4 +316,225 @@ function copyInstallCode() {
             btn.classList.remove('copied');
         }, 2000);
     });
+}
+
+// Initialize Resource Usage Charts
+function initResourceCharts() {
+    if (typeof Chart === 'undefined') {
+        console.warn('Chart.js not loaded, skipping chart initialization');
+        return;
+    }
+
+    // Common chart options
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                backgroundColor: 'rgba(13, 17, 23, 0.95)',
+                titleColor: '#c9d1d9',
+                bodyColor: '#c9d1d9',
+                borderColor: '#30363d',
+                borderWidth: 1,
+                padding: 12,
+                displayColors: false,
+                callbacks: {
+                    label: function(context) {
+                        return context.parsed.y + (context.dataset.label.includes('CPU') ? '%' : ' MB');
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(48, 54, 61, 0.5)',
+                    drawBorder: false
+                },
+                ticks: {
+                    color: '#8b949e'
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                },
+                ticks: {
+                    color: '#8b949e'
+                }
+            }
+        }
+    };
+
+    // CPU Usage Chart
+    const cpuCtx = document.getElementById('cpuUsageChart');
+    if (cpuCtx) {
+        new Chart(cpuCtx, {
+            type: 'bar',
+            data: {
+                labels: ['WarpParse', 'Vector-VRL', 'Vector-Fixed', 'Logstash'],
+                datasets: [
+                    {
+                        label: 'CPU Avg (%)',
+                        data: [54, 173, 171, 276],
+                        backgroundColor: [
+                            'rgba(87, 148, 242, 0.8)',
+                            'rgba(255, 122, 69, 0.7)',
+                            'rgba(255, 152, 0, 0.7)',
+                            'rgba(147, 51, 234, 0.7)'
+                        ],
+                        borderColor: [
+                            '#5794f2',
+                            '#ff7a45',
+                            '#ff9800',
+                            '#9333ea'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        barPercentage: 0.7
+                    },
+                    {
+                        label: 'CPU Peak (%)',
+                        data: [56, 180, 177, 396],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.5)',
+                            'rgba(255, 87, 34, 0.5)',
+                            'rgba(255, 112, 67, 0.5)',
+                            'rgba(139, 92, 246, 0.5)'
+                        ],
+                        borderColor: [
+                            '#3b82f6',
+                            '#ff5722',
+                            '#ff7043',
+                            '#8b5cf6'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        barPercentage: 0.7
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    title: {
+                        display: false
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#c9d1d9',
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    ...commonOptions.scales,
+                    y: {
+                        ...commonOptions.scales.y,
+                        max: 450,
+                        ticks: {
+                            ...commonOptions.scales.y.ticks,
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Memory Usage Chart
+    const memCtx = document.getElementById('memUsageChart');
+    if (memCtx) {
+        new Chart(memCtx, {
+            type: 'bar',
+            data: {
+                labels: ['WarpParse', 'Vector-VRL', 'Vector-Fixed', 'Logstash'],
+                datasets: [
+                    {
+                        label: 'MEM Avg (MB)',
+                        data: [60, 162, 128, 1190],
+                        backgroundColor: [
+                            'rgba(87, 148, 242, 0.8)',
+                            'rgba(255, 122, 69, 0.7)',
+                            'rgba(255, 152, 0, 0.7)',
+                            'rgba(147, 51, 234, 0.7)'
+                        ],
+                        borderColor: [
+                            '#5794f2',
+                            '#ff7a45',
+                            '#ff9800',
+                            '#9333ea'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        barPercentage: 0.7
+                    },
+                    {
+                        label: 'MEM Peak (MB)',
+                        data: [66, 166, 134, 1223],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.5)',
+                            'rgba(255, 87, 34, 0.5)',
+                            'rgba(255, 112, 67, 0.5)',
+                            'rgba(139, 92, 246, 0.5)'
+                        ],
+                        borderColor: [
+                            '#3b82f6',
+                            '#ff5722',
+                            '#ff7043',
+                            '#8b5cf6'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        barPercentage: 0.7
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    title: {
+                        display: false
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#c9d1d9',
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    ...commonOptions.scales,
+                    y: {
+                        ...commonOptions.scales.y,
+                        max: 1400,
+                        ticks: {
+                            ...commonOptions.scales.y.ticks,
+                            callback: function(value) {
+                                return value + ' MB';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
 }
