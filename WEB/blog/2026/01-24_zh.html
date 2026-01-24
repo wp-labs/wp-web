@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="WarpParse 对外开源发布 - 高性能ETL引擎的官方发布公告"
+        />
+        <title>WarpParse 对外开源发布 - WarpParse 博客</title>
+        <link rel="stylesheet" href="../../css/style.css" />
+        <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+        <style>
+            .blog-post {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 4rem 2rem;
+            }
+            .blog-post-header {
+                margin-bottom: 3rem;
+                padding-bottom: 2rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .blog-post-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                margin-bottom: 1rem;
+                line-height: 1.2;
+            }
+            .blog-post-meta {
+                display: flex;
+                gap: 2rem;
+                color: var(--text-secondary);
+                font-size: 0.95rem;
+            }
+            .blog-post-content {
+                color: var(--text-secondary);
+                font-size: 1.05rem;
+                line-height: 1.8;
+            }
+            .blog-post-content h2 {
+                color: var(--text-primary);
+                font-size: 1.8rem;
+                font-weight: 600;
+                margin-top: 3rem;
+                margin-bottom: 1.5rem;
+            }
+            .blog-post-content h3 {
+                color: var(--text-primary);
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+            }
+            .blog-post-content p {
+                margin-bottom: 1.5rem;
+            }
+            .blog-post-content ul {
+                margin: 1.5rem 0;
+                padding-left: 2rem;
+            }
+            .blog-post-content li {
+                margin-bottom: 0.75rem;
+            }
+            .blog-post-content strong {
+                color: var(--primary);
+                font-weight: 600;
+            }
+            .blog-post-content a {
+                color: var(--primary);
+                text-decoration: none;
+            }
+            .blog-post-content a:hover {
+                text-decoration: underline;
+            }
+            .blog-back-link {
+                display: inline-block;
+                margin-bottom: 2rem;
+                color: var(--primary);
+                text-decoration: none;
+                font-size: 0.95rem;
+            }
+            .blog-back-link:hover {
+                text-decoration: underline;
+            }
+            .blog-cta {
+                margin-top: 3rem;
+                padding: 2rem;
+                background: rgba(87, 148, 242, 0.1);
+                border: 1px solid rgba(87, 148, 242, 0.3);
+                border-radius: 12px;
+            }
+            .blog-cta h3 {
+                margin-top: 0;
+            }
+            .blog-cta-links {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                margin-top: 1rem;
+            }
+            .blog-cta-links a {
+                padding: 0.5rem 1rem;
+                background: var(--primary);
+                color: white;
+                text-decoration: none;
+                border-radius: 6px;
+                font-size: 0.9rem;
+                transition: all 0.2s ease;
+            }
+            .blog-cta-links a:hover {
+                background: var(--primary-dark);
+                transform: translateY(-2px);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="blog-post">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <a href="../index_zh.html" class="blog-back-link">← 返回博客</a>
+                <a href="01-24.html" style="color: var(--primary); text-decoration: none; font-size: 0.95rem;">EN</a>
+            </div>
+
+            <article>
+                <header class="blog-post-header">
+                    <h1 class="blog-post-title">WarpParse 对外开源发布</h1>
+                    <div class="blog-post-meta">
+                        <span>📅 2026年1月24日</span>
+                        <span>👤 WarpParse 团队</span>
+                        <span>🏷️ 发布, 性能, 开源</span>
+                    </div>
+                </header>
+
+                <div class="blog-post-content">
+                    <h2>在中国长沙的大禹安全办公室的正式开源发布</h2>
+                    <p>
+                        2026年1月23日，我们在中国长沙的大禹安全的办公室正式开源发布了WarpParse - 新一代高性能ETL引擎。
+                        WarpParse是一款面向可观测性、安全、实时风控和数据平台团队的高性能开源ETL引擎。
+                        经过充分的基准测试验证，WarpParse在吞吐量、资源消耗和易用性等多个维度都达到业界领先水平。
+                    </p>
+
+                    <h2>新型ETL引擎有什么优势？</h2>
+
+                    <h3>超越Vector的吞吐量</h3>
+                    <p>WarpParse在性能上实现了重大突破：</p>
+                    <ul>
+                        <li><strong>解析性能</strong>：在混合日志场景下相比Vector-VRL提升 3.4x-3.5x</li>
+                        <li><strong>解析+转换性能</strong>：提升 2.8x-2.80x</li>
+                        <li><strong>极限吞吐</strong>：Nginx日志场景达到 810,100 EPS（File→BlackHole）</li>
+                        <li><strong>数据吞吐</strong>：APT大包场景达到 380+ MiB/s</li>
+                    </ul>
+                    <p>
+                        这些性能数据基于AWS EC2标准配置（8 vCPU / 16 GiB RAM）在完全公平的测试环境中获得，
+                        具有高度的可复现性和参考价值。
+                    </p>
+
+                    <h3>负载下资源最低</h3>
+                    <p>在相同的20,000 EPS固定吞吐量下，WarpParse展现出极优的资源利用效率：</p>
+                    <ul>
+                        <li><strong>CPU占用</strong>：仅需54%平均CPU，相比Vector-VRL降低68.8%，相比Logstash降低80.4%</li>
+                        <li><strong>内存占用</strong>：仅需60 MB平均内存，相比Vector-VRL降低63.0%，相比Logstash降低95.0%</li>
+                    </ul>
+                    <p>
+                        这意味着在资源受限的边缘环境中，WarpParse能够用更少的资源完成相同的工作量，
+                        非常适合大规模部署和成本优化场景。
+                    </p>
+
+                    <h3>使用成本更低的DSL</h3>
+                    <p>WarpParse提供了两种革命性的领域特定语言（DSL）：</p>
+
+                    <p><strong>WPL（WarpParse Language）- 解析DSL</strong></p>
+                    <ul>
+                        <li>规则体积更小：相比正则表达式平均减少30-50%的配置复杂度</li>
+                        <li>内置逻辑感知算子：支持alt（择一容错）、opt（可选匹配）、some_of（循环探测）等高级特性</li>
+                        <li>集成化流水线：在单一表达式中完成清洗和解析，避免多个组件间的数据传递开销</li>
+                    </ul>
+
+                    <p><strong>OML（Object Modeling Language）- 转换DSL</strong></p>
+                    <ul>
+                        <li>声明式建模：用户只需描述"要什么"而不用关心"怎么做"</li>
+                        <li>原生SQL集成：支持在构建对象时直接查询数据库进行实时数据增强</li>
+                        <li>灵活的聚合构造：支持复杂的嵌套JSON对象构建和数组聚合</li>
+                    </ul>
+
+                    <h2>对于我们的客户、行业有什么价值？</h2>
+
+                    <h3>可观测性和安全分析</h3>
+                    <ul>
+                        <li><strong>高性能日志处理</strong>：支持海量日志实时摄取和分析，满足安全威胁检测的低延迟需求</li>
+                        <li><strong>灵活的数据转换</strong>：通过WPL和OML快速适配各类日志格式，包括Nginx、Sysmon、APT威胁日志等</li>
+                        <li><strong>实时数据富化</strong>：利用OML的SQL集成能力，将原始日志与用户信息、地理位置等上下文关联</li>
+                    </ul>
+
+                    <h3>成本优化</h3>
+                    <ul>
+                        <li><strong>资源节省</strong>：相同的日志处理能力，WarpParse所需的硬件投入显著更低</li>
+                        <li><strong>运维简化</strong>：单二进制部署，配置化管理，无需复杂的多组件编排</li>
+                        <li><strong>规模效应</strong>：在大规模部署中，CPU和内存的节省可带来可观的TCO降低</li>
+                    </ul>
+
+                    <h3>生态兼容</h3>
+                    <ul>
+                        <li><strong>统一连接器API</strong>：支持Kafka、MySQL、Elasticsearch、VictoriaLog、Doris等主流数据源和目标</li>
+                        <li><strong>开源协议</strong>：采用ELv2.0开源协议，提供商业级支持和保证</li>
+                        <li><strong>社区驱动</strong>：欢迎开发者贡献新的连接器和优化方案</li>
+                    </ul>
+
+                    <h2>开源采用ELv2.0协议</h2>
+                    <p>WarpParse选择了Elastic License v2.0和SSPL协议的组合方案：</p>
+                    <ul>
+                        <li><strong>自由使用</strong>：所有用户可以自由下载、使用和修改源代码</li>
+                        <li><strong>商业友好</strong>：提供明确的商业使用条款，避免开源许可的模糊性</li>
+                        <li><strong>社区贡献</strong>：欢迎社区提交PR和贡献，完善生态</li>
+                        <li><strong>长期支持</strong>：大禹安全承诺为WarpParse提供持续的技术支持和功能迭代</li>
+                    </ul>
+
+                    <h2>WarpParse的未来如何发展？</h2>
+
+                    <h3>短期规划（2026年上半年）</h3>
+                    <ul>
+                        <li>性能优化：持续优化在不同硬件平台（x86、ARM等）上的表现</li>
+                        <li>生态扩展：新增更多连接器支持，覆盖主流数据平台</li>
+                        <li>工具链完善：发布wpgen代码生成工具、wprescue故障诊断工具等运维工具</li>
+                    </ul>
+
+                    <h3>中期规划（2026年下半年-2028年）</h3>
+                    <ul>
+                        <li>分布式架构：支持多节点部署和高可用配置</li>
+                        <li>AI/ML集成：支持异常检测、智能告警等AI驱动的安全分析</li>
+                        <li>性能基准库：建立行业标准的性能测试基准库，支持用户对标评测</li>
+                        <li>全球生态：建立国际开发者社区，推动WarpParse成为业界标准的ETL引擎</li>
+                    </ul>
+
+                    <h3>长期愿景（2027年及以后）</h3>
+                    <ul>
+                        <li>实时计算引擎：集成流处理能力，支持实时数据聚合和指标计算</li>
+                        <li>AI/ML集成：支持异常检测、智能告警等AI驱动的安全分析</li>
+                        <li>全球生态：建立国际开发者社区，推动WarpParse成为业界标准的ETL引擎</li>
+                    </ul>
+
+                    <h2>我们的承诺</h2>
+                    <p>
+                        WarpParse不仅是一个高性能的技术产品，更是我们对开源社区的深入承诺。我们相信：
+                    </p>
+                    <ul>
+                        <li><strong>性能是基础</strong>：高效的资源利用是所有应用的前提</li>
+                        <li><strong>易用性是关键</strong>：好的DSL设计能显著提升开发效率</li>
+                        <li><strong>开放是方向</strong>：开源和社区驱动能加速创新迭代</li>
+                    </ul>
+                    <p>
+                        我们欢迎所有对高性能ETL引擎感兴趣的开发者、架构师和运维人员加入WarpParse社区，
+                        共同推动数据处理技术的进步。
+                    </p>
+
+                    <div class="blog-cta">
+                        <h3>立即开始：</h3>
+                        <div class="blog-cta-links">
+                            <a href="https://github.com/wp-labs/warp-parse" target="_blank">GitHub</a>
+                            <a href="https://wp-labs.github.io/wp-docs" target="_blank">文档</a>
+                            <a href="https://editor.warpparse.ai" target="_blank">在线编辑器</a>
+                            <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank">下载</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </body>
+</html>
