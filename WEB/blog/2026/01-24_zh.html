@@ -113,6 +113,13 @@
                 background: var(--primary-dark);
                 transform: translateY(-2px);
             }
+            .blog-post-content img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                margin: 2rem 0;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
         </style>
     </head>
     <body>
@@ -154,6 +161,7 @@
                         这些性能数据基于AWS EC2标准配置（8 vCPU / 16 GiB RAM）在完全公平的测试环境中获得，
                         具有高度的可复现性和参考价值。
                     </p>
+                    <img src="assets/throughput.jpg" alt="WarpParse 吞吐量性能对比" />
 
                     <h3>负载下资源最低</h3>
                     <p>在相同的20,000 EPS固定吞吐量下，WarpParse展现出极优的资源利用效率：</p>
@@ -165,6 +173,7 @@
                         这意味着在资源受限的边缘环境中，WarpParse能够用更少的资源完成相同的工作量，
                         非常适合大规模部署和成本优化场景。
                     </p>
+                    <img src="assets/resource-use.jpg" alt="WarpParse 资源使用对比" />
 
                     <h3>使用成本更低的DSL</h3>
                     <p>WarpParse提供了两种革命性的领域特定语言（DSL）：</p>
@@ -202,15 +211,15 @@
                     <h3>生态兼容</h3>
                     <ul>
                         <li><strong>统一连接器API</strong>：支持Kafka、MySQL、Elasticsearch、VictoriaLog、Doris等主流数据源和目标</li>
-                        <li><strong>开源协议</strong>：采用ELv2.0开源协议，提供商业级支持和保证</li>
+                        <li><strong>开源协议</strong>：采用Apache 2.0开源协议，提供商业级支持和保证</li>
                         <li><strong>社区驱动</strong>：欢迎开发者贡献新的连接器和优化方案</li>
                     </ul>
 
-                    <h2>开源采用ELv2.0协议</h2>
-                    <p>WarpParse选择了Elastic License v2.0和SSPL协议的组合方案：</p>
+                    <h2>开源采用Apache 2.0协议</h2>
+                    <p>WarpParse 采用了Apache License 2.0开源协议：</p>
                     <ul>
                         <li><strong>自由使用</strong>：所有用户可以自由下载、使用和修改源代码</li>
-                        <li><strong>商业友好</strong>：提供明确的商业使用条款，避免开源许可的模糊性</li>
+                        <li><strong>商业友好</strong>：开放的许可证，允许商业应用和衍生产品</li>
                         <li><strong>社区贡献</strong>：欢迎社区提交PR和贡献，完善生态</li>
                         <li><strong>长期支持</strong>：大禹安全承诺为WarpParse提供持续的技术支持和功能迭代</li>
                     </ul>

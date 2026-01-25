@@ -36,31 +36,34 @@
                     <a
                         href="https://github.com/wp-labs"
                         target="_blank"
-                        class="btn btn-secondary btn-sm"
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary btn-xs"
                         >GitHub</a
                     >
                     <a
                         href="https://wp-labs.github.io/wp-docs"
                         target="_blank"
-                        class="btn btn-secondary btn-sm"
-                        >文档</a
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary btn-xs"
+                        >Docs</a
                     >
                     <a
                         href="https://editor.warpparse.ai"
                         target="_blank"
-                        class="btn btn-secondary btn-sm"
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary btn-xs"
                         >编辑器</a
                     >
                     <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" id="moreMenuBtn">
+                        <button class="btn btn-secondary btn-xs dropdown-toggle" id="moreMenuBtn">
                             更多
                             <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
                                 <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                             </svg>
                         </button>
                         <div class="dropdown-menu" id="moreMenu">
-                            <a href="https://example.warpparse.ai" target="_blank" class="dropdown-item">示例</a>
-                            <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank" class="dropdown-item">下载</a>
+                            <a href="https://example.warpparse.ai" target="_blank" rel="noopener noreferrer" class="dropdown-item">示例</a>
+                            <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank" rel="noopener noreferrer" class="dropdown-item">下载</a>
                         </div>
                     </div>
                     <a
@@ -255,6 +258,13 @@
                 </div>
             </div>
         </section>
+
+        <!-- License Badge -->
+        <div class="license-section" style="text-align: center; padding: 2rem 0; background: var(--bg-secondary);">
+            <a href="https://opensource.org/licenses/Apache-2.0" target="_blank" rel="noopener noreferrer">
+                <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat" alt="Apache 2.0 License" style="height: 28px;">
+            </a>
+        </div>
 
         <!-- Features Section -->
         <section id="features" class="section">

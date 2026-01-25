@@ -113,6 +113,13 @@
                 background: var(--primary-dark);
                 transform: translateY(-2px);
             }
+            .blog-post-content img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                margin: 2rem 0;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
         </style>
     </head>
     <body>
@@ -154,6 +161,7 @@
                         These performance metrics were obtained on AWS EC2 standard configuration (8 vCPU / 16 GiB RAM) in completely fair testing environments,
                         with high reproducibility and reference value.
                     </p>
+                    <img src="assets/throughput.jpg" alt="WarpParse Throughput Performance Comparison" />
 
                     <h3>Lowest Resource Usage Under Load</h3>
                     <p>At the same fixed throughput of 20,000 EPS, WarpParse demonstrates excellent resource utilization efficiency:</p>
@@ -165,6 +173,7 @@
                         This means in resource-constrained edge environments, WarpParse can complete the same workload with fewer resources,
                         making it ideal for large-scale deployments and cost optimization scenarios.
                     </p>
+                    <img src="assets/resource-use.jpg" alt="WarpParse Resource Usage Comparison" />
 
                     <h3>Lower Cost DSL</h3>
                     <p>WarpParse provides two revolutionary Domain Specific Languages (DSL):</p>
@@ -202,15 +211,15 @@
                     <h3>Ecosystem Compatibility</h3>
                     <ul>
                         <li><strong>Unified Connector API</strong>: supports mainstream data sources and targets like Kafka, MySQL, Elasticsearch, VictoriaLog, Doris</li>
-                        <li><strong>Open source license</strong>: uses ELv2.0 open source license, providing commercial-grade support and guarantees</li>
+                        <li><strong>Open source license</strong>: uses Apache 2.0 open source license, providing commercial-grade support and guarantees</li>
                         <li><strong>Community-driven</strong>: welcomes developers to contribute new connectors and optimization solutions</li>
                     </ul>
 
-                    <h2>Open Source with ELv2.0 License</h2>
-                    <p>WarpParse has chosen the Elastic License v2.0 and SSPL license combination:</p>
+                    <h2>Open Source with Apache 2.0 License</h2>
+                    <p>WarpParse has adopted the Apache License 2.0 open source license:</p>
                     <ul>
                         <li><strong>Free to use</strong>: all users can freely download, use, and modify the source code</li>
-                        <li><strong>Business-friendly</strong>: provides clear commercial usage terms, avoiding open source license ambiguity</li>
+                        <li><strong>Business-friendly</strong>: open license that permits commercial applications and derivative products</li>
                         <li><strong>Community contributions</strong>: welcomes community PR submissions and contributions to improve the ecosystem</li>
                         <li><strong>Long-term support</strong>: Dayu Security commits to providing continuous technical support and feature iterations for WarpParse</li>
                     </ul>

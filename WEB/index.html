@@ -36,31 +36,34 @@
                     <a
                         href="https://github.com/wp-labs"
                         target="_blank"
-                        class="btn btn-secondary btn-sm"
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary btn-xs"
                         >GitHub</a
                     >
                     <a
                         href="https://wp-labs.github.io/wp-docs"
                         target="_blank"
-                        class="btn btn-secondary btn-sm"
-                        >Documentation</a
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary btn-xs"
+                        >Docs</a
                     >
                     <a
                         href="https://editor.warpparse.ai"
                         target="_blank"
-                        class="btn btn-secondary btn-sm"
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary btn-xs"
                         >Editor</a
                     >
                     <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" id="moreMenuBtn">
+                        <button class="btn btn-secondary btn-xs dropdown-toggle" id="moreMenuBtn">
                             More
                             <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
                                 <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                             </svg>
                         </button>
                         <div class="dropdown-menu" id="moreMenu">
-                            <a href="https://example.warpparse.ai" target="_blank" class="dropdown-item">Example</a>
-                            <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank" class="dropdown-item">Download</a>
+                            <a href="https://example.warpparse.ai" target="_blank" rel="noopener noreferrer" class="dropdown-item">Example</a>
+                            <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank" rel="noopener noreferrer" class="dropdown-item">Download</a>
                         </div>
                     </div>
                     <a
@@ -100,11 +103,9 @@
                         <span class="hero-line-2"> Yet So Lightweight</span>
                     </h1>
                     <p class="hero-description">
-                        WarpParse
-                        is designed forObservability、Security、Real-time Risk Control、Data Platformsteam's high-performance ETL
-                        engine，
-                        Focus on logs/Log/event ingestion, parsing and transformation，Provides high-throughput parsing（WPL）、Transform（OML）、
-                        routing、unifiedConnectors API and minimalist DevOps experience。
+                        WarpParse is designed for Observability, Security, Real-time Risk Control, Data Platform teams' high-performance ETL engine.
+                        Focus on logs/event ingestion, parsing and transformation, provides high-throughput parsing (WPL), transform (OML),
+                        routing, unified connectors API and minimalist DevOps experience.
                     </p>
                     <div class="install-code">
                         <code
@@ -256,6 +257,13 @@
             </div>
         </section>
 
+        <!-- License Badge -->
+        <div class="license-section" style="text-align: center; padding: 2rem 0; background: var(--bg-secondary);">
+            <a href="https://opensource.org/licenses/Apache-2.0" target="_blank" rel="noopener noreferrer">
+                <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat" alt="Apache 2.0 License" style="height: 28px;">
+            </a>
+        </div>
+
         <!-- Features Section -->
         <section id="features" class="section">
             <div class="container">
@@ -271,47 +279,42 @@
                         <h3 class="card-title">Ultimate Throughput</h3>
                         <p class="card-description">
                             in many scenariosComprehensively surpass in performance
-                            Vector，provides industry-leading log processing capability，meet highThroughputscenario requirements。
+                            Vector, provides industry-leading log processing capability, meet high throughput scenario requirements.
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">W</div>
                         <h3 class="card-title">Easy Rule Writing</h3>
                         <p class="card-description">
-                            WPL（parsing DSL）+ OML（Transform
-                            DSL），far more readable than regex and
-                            Lua，makes rule writing simpler。
+                            WPL (parsing DSL) + OML (transform DSL), far more readable than regex and Lua, makes rule writing simpler.
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">C</div>
-                        <h3 class="card-title">Connectorsunified</h3>
+                        <h3 class="card-title">Unified Connectors</h3>
                         <p class="card-description">
-                            based on
-                            wp-connector-api，便于CommunityEcosystem扩展，Support多种数据源和输出目标。
+                            Based on wp-connector-api, easy for community ecosystem extension, supports multiple data sources and output targets.
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">O</div>
                         <h3 class="card-title">DevOps Friendly</h3>
                         <p class="card-description">
-                            单二进制部署，配置化；提供 wproj、wpgen、wprescue
-                            工具套件，简化运维工作。
+                            Single binary deployment with configuration-based management; provides wproj, wpgen, wprescue toolkits to simplify DevOps work.
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">D</div>
                         <h3 class="card-title">Knowledge Transformation</h3>
                         <p class="card-description">
-                            通过内存数据库Support SQL
-                            查询，实现数据富化，让数据更有价值。
+                            Support SQL queries through in-memory database to enrich data and make it more valuable.
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">R</div>
                         <h3 class="card-title">Data Routing</h3>
                         <p class="card-description">
-                            based on规则和Transform模型进行routing，Support多路copy与过滤器，灵活控制数据流向。
+                            Route data based on rules and transform models, support multi-path copy and filters, flexibly control data flow direction.
                         </p>
                     </div>
                 </div>
@@ -1691,6 +1694,7 @@
                     <a
                         href="https://example.warpparse.ai/benchmark/report/report_linux.html"
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="report-link"
                         >View Full Performance Report →</a
                     >
@@ -1709,7 +1713,7 @@
                 </div>
 
                 <div class="resource-note">
-                    <strong>Test Description:</strong>All engines run at the same 20,000 EPS throughput, testing Mixed Log scenario (average log size 867B), comparing CPU and memory resource consumption.Logstash在warmupData collected after。
+                    <strong>Test Description:</strong> All engines run at the same 20,000 EPS throughput, testing Mixed Log scenario (average log size 867B), comparing CPU and memory resource consumption. Data collected after Logstash warmup.
                 </div>
 
                 <!-- Charts Grid -->
@@ -1811,6 +1815,7 @@
                     <a
                         href="https://example.warpparse.ai/benchmark/report/report_linux.html"
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="report-link"
                         >View Full Performance Report →</a
                     >
@@ -3920,7 +3925,7 @@
                     <div class="summary-card">
                         <div class="summary-icon">P</div>
                         <h4>Ultimate Performance</h4>
-                        <p>Mac M4 平台场景下提供 1.4-8.8x 性能优势。</p>
+                        <p>Provides 1.4-8.8x performance advantage on Mac M4 platform.</p>
                     </div>
                     <div class="summary-card">
                         <div class="summary-icon">R</div>
@@ -3931,7 +3936,7 @@
                     </div>
                     <div class="summary-card">
                         <div class="summary-icon">E</div>
-                        <h4>边缘/Agent部署</h4>
+                        <h4>Edge/Agent Deployment</h4>
                         <p>
                             Small rule files for quick hot updates; strong single-machine processing capability reducing central pressure.
                         </p>
@@ -3942,6 +3947,7 @@
                     <a
                         href="https://example.warpparse.ai/benchmark/report/report_mac.html"
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="report-link"
                         >View Full Performance Report →</a
                     >
@@ -3955,36 +3961,33 @@
                 <div class="section-header">
                     <h2 class="section-title">WPL - Warp Parse Language</h2>
                     <p class="section-subtitle">
-                        工业级数据治理的强类型parsing DSL，比正则表达式更精准、高效
+                        Industrial-grade data governance with strongly-typed parsing DSL, more precise and efficient than regular expressions
                     </p>
                 </div>
                 <div class="features-grid">
                     <div class="card">
                         <h3 class="card-title">More Concise</h3>
                         <p class="card-description">
-                            用更少的代码完成更复杂的parsing任务，语法直观易读。
+                            Complete more complex parsing tasks with less code, intuitive and readable syntax.
                         </p>
                     </div>
                     <div class="card">
                         <h3 class="card-title">Stronger Control</h3>
                         <p class="card-description">
-                            内置
-                            alt（择一容错）、opt（可选匹配）、some_of（循环探测）等元信息，提供远超正则的容错能力。
+                            Built-in alt (alternative fallback), opt (optional matching), some_of (loop detection) and other meta-information, providing far superior fault tolerance than regex.
                         </p>
                     </div>
                     <div class="card">
-                        <h3 class="card-title">集成化流水线</h3>
+                        <h3 class="card-title">Integrated Pipeline</h3>
                         <p class="card-description">
-                            Integrate cleaning and parsing in a single expression，Support
-                            decode/base64、unquote/unescape、decode/hex
-                            等预处理。
+                            Integrate cleaning and parsing in a single expression, supports preprocessing like decode/base64, unquote/unescape, decode/hex.
                         </p>
                     </div>
                 </div>
-                <!-- 样本数据 -->
+                <!-- Sample Data -->
                 <div class="sample-data">
                     <div class="sample-header">
-                        <span class="sample-title">Example：JSON 包裹的 Nginx 日志</span>
+                        <span class="sample-title">Example: JSON-wrapped Nginx Log</span>
                     </div>
                     <div class="sample-content">
                         <pre><code>{"date":1767006286.778936,"log":"180.57.30.149 - - [21/Jan/2025:01:40:02 +0800] \"GET /nginx-logo.png HTTP/1.1\" 500 368 \"http://207.131.38.110/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36\" \"-\""}</code></pre>
@@ -3996,17 +3999,17 @@
                     <div class="size-item wpl-size">
                         <span class="size-label">WPL</span>
                         <span class="size-value">162</span>
-                        <span class="size-unit">字符</span>
+                        <span class="size-unit">characters</span>
                     </div>
                     <div class="size-item vrl-size">
                         <span class="size-label">VRL</span>
                         <span class="size-value">419</span>
-                        <span class="size-unit">字符</span>
+                        <span class="size-unit">characters</span>
                     </div>
                     <div class="size-item logstash-size">
                         <span class="size-label">Logstash</span>
                         <span class="size-value">470</span>
-                        <span class="size-unit">字符</span>
+                        <span class="size-unit">characters</span>
                     </div>
                 </div>
 
@@ -4014,7 +4017,7 @@
                     <div class="code-block">
                         <div class="code-header">
                             <span class="code-title">WPL</span
-                            ><span class="code-badge wpl">162 字符</span>
+                            ><span class="code-badge wpl">162 chars</span>
                         </div>
                         <div class="code-content">
                             <pre
@@ -4037,7 +4040,7 @@
                     <div class="code-block">
                         <div class="code-header">
                             <span class="code-title">VRL (Vector)</span
-                            ><span class="code-badge vrl">419 字符</span>
+                            ><span class="code-badge vrl">419 chars</span>
                         </div>
                         <div class="code-content">
                             <pre><code>obj = parse_json!(string!(.message))
@@ -4056,7 +4059,7 @@ del(.message)</code></pre>
                     <div class="code-block">
                         <div class="code-header">
                             <span class="code-title">Logstash</span
-                            ><span class="code-badge logstash">470 字符</span>
+                            ><span class="code-badge logstash">470 chars</span>
                         </div>
                         <div class="code-content">
                             <pre><code>filter {
@@ -4106,28 +4109,26 @@ del(.message)</code></pre>
                         OML - Object Modeling Language
                     </h2>
                     <p class="section-subtitle">
-                        声明式语法，自动重组数据字段为复杂的结构化业务模型
+                        Declarative syntax, automatically reorganize data fields into complex structured business models
                     </p>
                 </div>
                 <div class="features-grid">
                     <div class="card">
-                        <h3 class="card-title">声明式建模</h3>
+                        <h3 class="card-title">Declarative Modeling</h3>
                         <p class="card-description">
-                            描述要什么，而不是如何做。只需定义最终输出的数据结构，无需编写底层处理逻辑。
+                            Describe what you want, not how to do it. Simply define the final output data structure without writing low-level processing logic.
                         </p>
                     </div>
                     <div class="card">
-                        <h3 class="card-title">精确数据处理</h3>
+                        <h3 class="card-title">Precise Data Processing</h3>
                         <p class="card-description">
-                            read（非破坏性读取）和
-                            take（破坏性读取）模式，Support强类型Security与自动推断。
+                            read (non-destructive read) and take (destructive read) modes, support strong-type safety and automatic inference.
                         </p>
                     </div>
                     <div class="card">
-                        <h3 class="card-title">SQL 集成</h3>
+                        <h3 class="card-title">SQL Integration</h3>
                         <p class="card-description">
-                            原生 SQL
-                            集成，在构建对象时直接查询数据库进行数据增强。
+                            Native SQL integration, directly query database for data enrichment when building objects.
                         </p>
                     </div>
                 </div>
@@ -4135,7 +4136,7 @@ del(.message)</code></pre>
                     <div class="code-block">
                         <div class="code-header">
                             <span class="code-title">OML</span
-                            ><span class="code-badge wpl">声明式</span>
+                            ><span class="code-badge wpl">Declarative</span>
                         </div>
                         <div class="code-content">
                             <pre
@@ -4156,7 +4157,7 @@ del(.message)</code></pre>
                     <div class="code-block">
                         <div class="code-header">
                             <span class="code-title">VRL (Vector)</span
-                            ><span class="code-badge vrl">命令式</span>
+                            ><span class="code-badge vrl">Imperative</span>
                         </div>
                         <div class="code-content">
                             <pre
@@ -4185,7 +4186,7 @@ del(.message)</code></pre>
                 <div class="section-header">
                     <h2 class="section-title">WpEditor</h2>
                     <p class="section-subtitle">
-                        Used for writing WPL parsing和 OML Transform的工作台
+                        Used for writing WPL parsing and OML transform rules
                     </p>
                 </div>
 
@@ -4194,18 +4195,18 @@ del(.message)</code></pre>
                     <div class="wpeditor-card">
                         <img
                             src="wp-editor1.jpg"
-                            alt="WpEditor Interface截图 1"
+                            alt="WpEditor Interface Screenshot 1"
                             class="wpeditor-img"
                         />
-                        <div class="wpeditor-caption">WPL parsing规则编辑</div>
+                        <div class="wpeditor-caption">WPL Parsing Rule Editor</div>
                     </div>
                     <div class="wpeditor-card">
                         <img
                             src="wp-editor2.jpg"
-                            alt="WpEditor Interface截图 2"
+                            alt="WpEditor Interface Screenshot 2"
                             class="wpeditor-img"
                         />
-                        <div class="wpeditor-caption">OML Transform规则编辑</div>
+                        <div class="wpeditor-caption">OML Transform Rule Editor</div>
                     </div>
                 </div>
 
@@ -4214,12 +4215,14 @@ del(.message)</code></pre>
                     <a
                         href="https://editor.warpparse.ai"
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="btn btn-primary"
-                        >Online使用</a
+                        >Try Online</a
                     >
                     <a
                         href="https://github.com/wp-labs/wp-editor/releases"
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="btn btn-secondary"
                         >Download WpEditor</a
                     >
@@ -4233,7 +4236,7 @@ del(.message)</code></pre>
                 <div class="section-header">
                     <h2 class="section-title">ConnectorsEcosystem</h2>
                     <p class="section-subtitle">
-                        based on wp-connector-api，Support多种数据源和输出目标
+                        Based on wp-connector-api, support multiple data sources and output targets
                     </p>
                 </div>
                 <div class="connector-grid">
@@ -4264,6 +4267,7 @@ del(.message)</code></pre>
                     <a
                         href="https://github.com/wp-labs/warp-parse/issues"
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="connector-card connector-link"
                     >
                         <div class="connector-icon">+</div>
@@ -4286,26 +4290,29 @@ del(.message)</code></pre>
         >
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">开始使用 WarpParse</h2>
+                    <h2 class="section-title">Get Started with WarpParse</h2>
                     <p class="section-subtitle">
-                        立即体验高性能 ETL engine的强大能力
+                        Experience the power of high-performance ETL engine right now
                     </p>
                     <div class="btn-group justify-center mt-4">
                         <a
                             href="https://github.com/wp-labs/warp-parse/releases"
                             target="_blank"
+                            rel="noopener noreferrer"
                             class="btn btn-primary"
                             >Download</a
                         >
                         <a
                             href="https://wp-labs.github.io/wp-docs"
                             target="_blank"
+                            rel="noopener noreferrer"
                             class="btn btn-secondary"
                             >Documentation</a
                         >
                         <a
                             href="https://github.com/wp-labs"
                             target="_blank"
+                            rel="noopener noreferrer"
                             class="btn btn-secondary"
                             >GitHub</a
                         >
@@ -4328,8 +4335,7 @@ del(.message)</code></pre>
                             <span>WarpParse</span>
                         </a>
                         <p>
-                            面向Observability、Security、Real-time Risk Control、Data Platformsteam's high-performance
-                            ETL engine
+                            High-performance ETL engine for Observability, Security, Real-time Risk Control, and Data Platforms
                         </p>
                     </div>
                     <div>
@@ -4339,6 +4345,7 @@ del(.message)</code></pre>
                                 <a
                                     href="https://github.com/wp-labs"
                                     target="_blank"
+                                    rel="noopener noreferrer"
                                     >GitHub</a
                                 >
                             </li>
@@ -4346,6 +4353,7 @@ del(.message)</code></pre>
                                 <a
                                     href="https://wp-labs.github.io/wp-docs"
                                     target="_blank"
+                                    rel="noopener noreferrer"
                                     >Documentation</a
                                 >
                             </li>
@@ -4353,22 +4361,23 @@ del(.message)</code></pre>
                                 <a
                                     href="https://github.com/wp-labs/warp-parse/releases"
                                     target="_blank"
+                                    rel="noopener noreferrer"
                                     >Download</a
                                 >
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="footer-title">语言</h4>
+                        <h4 class="footer-title">Languages</h4>
                         <ul class="footer-links">
-                            <li><a href="#wpl">WPL parsing语言</a></li>
-                            <li><a href="#oml">OML Transform语言</a></li>
+                            <li><a href="#wpl">WPL Language</a></li>
+                            <li><a href="#oml">OML Language</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="footer-title">Connectors</h4>
                         <ul class="footer-links">
-                            <li><a href="#connectors">所有Connectors</a></li>
+                            <li><a href="#connectors">All Connectors</a></li>
                             <li><a href="#">Developer Guide</a></li>
                         </ul>
                     </div>
