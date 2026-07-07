@@ -54,6 +54,13 @@
                         class="btn btn-secondary btn-xs"
                         >Editor</a
                     >
+                    <a
+                        href="https://monitor.alpha.warpparse.ai"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary btn-xs"
+                        >Monitor</a
+                    >
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-xs dropdown-toggle" id="moreMenuBtn">
                             More
@@ -251,7 +258,7 @@
                         </div>
                     </div>
                     <div class="hero-chart-note">
-                        TCP→BlackHole MixedLogs · AWS EC2 8C/16G
+                        TCP→BlackHole MixedLogs · 腾讯云 SA9 8C/16G
                     </div>
                 </div>
             </div>
@@ -327,7 +334,7 @@
                 <div class="section-header">
                     <h2 class="section-title">Throughput Performance Comparison</h2>
                     <p class="section-subtitle">
-                        WarpParse vs Vector Benchmark Results (AWS EC2 / Ubuntu 24.04
+                        WarpParse vs Vector Benchmark Results (腾讯云 SA9 / Ubuntu 24.04
                         / 8 vCPU / 16 GiB RAM)
                     </p>
                 </div>
@@ -378,14 +385,14 @@
                         <button class="perf-log-btn" data-log="elb-parse">
                             AWS ELB (411B)
                         </button>
-                        <button class="perf-log-btn" data-log="sysmon-parse">
-                            Sysmon (1K)
+                        <button class="perf-log-btn" data-log="firewall-parse">
+                            Firewall (1,122B)
                         </button>
                         <button class="perf-log-btn" data-log="apt-parse">
                             APT (3K)
                         </button>
                         <button class="perf-log-btn" data-log="mixed-parse">
-                            Mixed (867B)
+                            Mixed (1,260B)
                         </button>
                     </div>
 
@@ -518,7 +525,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">1.56x</span>
+                                <span class="ratio-badge">1.93x</span>
                                 <span class="ratio-text">WarpParse Faster</span>
                             </div>
                         </div>
@@ -653,15 +660,15 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">2.49x</span>
+                                <span class="ratio-badge">3.81x</span>
                                 <span class="ratio-text">WarpParse Faster</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="perf-log-content" id="sysmon-parse">
+                    <div class="perf-log-content" id="firewall-parse">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - Parse Capability</h3>
+                            <h3>Firewall Log (1,122B) - Parse Capability</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) Comparison
                             </p>
@@ -871,7 +878,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">6.86x</span>
+                                <span class="ratio-badge">6.16x</span>
                                 <span class="ratio-text">WarpParse Faster</span>
                             </div>
                         </div>
@@ -879,7 +886,7 @@
 
                     <div class="perf-log-content" id="mixed-parse">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - Parse Capability</h3>
+                            <h3>Mixed Log (1,260B avg) - Parse Capability</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) Comparison
                             </p>
@@ -1027,15 +1034,15 @@
                         </button>
                         <button
                             class="perf-log-btn"
-                            data-log="sysmon-transform"
+                            data-log="firewall-transform"
                         >
-                            Sysmon (1K)
+                            Firewall (1,122B)
                         </button>
                         <button class="perf-log-btn" data-log="apt-transform">
                             APT (3K)
                         </button>
                         <button class="perf-log-btn" data-log="mixed-transform">
-                            Mixed (867B)
+                            Mixed (1,260B)
                         </button>
                     </div>
 
@@ -1168,7 +1175,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">1.34x</span>
+                                <span class="ratio-badge">1.69x</span>
                                 <span class="ratio-text">WarpParse Faster</span>
                             </div>
                         </div>
@@ -1240,7 +1247,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">2.22x</span>
+                                <span class="ratio-badge">3.43x</span>
                                 <span class="ratio-text">WarpParse Faster</span>
                             </div>
                         </div>
@@ -1303,15 +1310,15 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">1.99x</span>
+                                <span class="ratio-badge">2.75x</span>
                                 <span class="ratio-text">WarpParse Faster</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="perf-log-content" id="sysmon-transform">
+                    <div class="perf-log-content" id="firewall-transform">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - parsing+Transform</h3>
+                            <h3>Firewall Log (1,122B) - parsing+Transform</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) Comparison
                             </p>
@@ -1521,7 +1528,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">6.14x</span>
+                                <span class="ratio-badge">4.85x</span>
                                 <span class="ratio-text">WarpParse Faster</span>
                             </div>
                         </div>
@@ -1529,7 +1536,7 @@
 
                     <div class="perf-log-content" id="mixed-transform">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - parsing+Transform</h3>
+                            <h3>Mixed Log (1,260B avg) - parsing+Transform</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) Comparison
                             </p>
@@ -1708,7 +1715,7 @@
                 <div class="section-header">
                     <h2 class="section-title">Fixed Rate Resource Comparison</h2>
                     <p class="section-subtitle">
-                        CPU and Memory Comparison at 20,000 EPS Fixed Rate (AWS EC2 / Ubuntu 24.04 / Mixed Log / TCP → BlackHole)
+                        CPU and Memory Comparison at 20,000 EPS Fixed Rate (腾讯云 SA9 / Ubuntu 24.04 / Mixed Log / TCP → BlackHole)
                     </p>
                 </div>
 
@@ -1888,15 +1895,15 @@
                         </button>
                         <button
                             class="perf-log-btn"
-                            data-log="mac-sysmon-parse"
+                            data-log="mac-firewall-parse"
                         >
-                            Sysmon (1K)
+                            Firewall (1,122B)
                         </button>
                         <button class="perf-log-btn" data-log="mac-apt-parse">
                             APT (3K)
                         </button>
                         <button class="perf-log-btn" data-log="mac-mixed-parse">
-                            Mixed (867B)
+                            Mixed (1,260B)
                         </button>
                     </div>
 
@@ -2227,7 +2234,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">2.40x</span>
+                                <span class="ratio-badge">2.48x</span>
                                 <span class="ratio-text">WarpParse Faster</span>
                             </div>
                         </div>
@@ -2296,9 +2303,9 @@
                         </div>
                     </div>
 
-                    <div class="perf-log-content" id="mac-sysmon-parse">
+                    <div class="perf-log-content" id="mac-firewall-parse">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - Parse Capability</h3>
+                            <h3>Firewall Log (1,122B) - Parse Capability</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) Comparison
                             </p>
@@ -2694,7 +2701,7 @@
 
                     <div class="perf-log-content" id="mac-mixed-parse">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - Parse Capability</h3>
+                            <h3>Mixed Log (1,260B avg) - Parse Capability</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) Comparison
                             </p>
@@ -2908,9 +2915,9 @@
                         </button>
                         <button
                             class="perf-log-btn"
-                            data-log="mac-sysmon-transform"
+                            data-log="mac-firewall-transform"
                         >
-                            Sysmon (1K)
+                            Firewall (1,122B)
                         </button>
                         <button
                             class="perf-log-btn"
@@ -2922,7 +2929,7 @@
                             class="perf-log-btn"
                             data-log="mac-mixed-transform"
                         >
-                            Mixed (867B)
+                            Mixed (1,260B)
                         </button>
                     </div>
 
@@ -3325,9 +3332,9 @@
                         </div>
                     </div>
 
-                    <div class="perf-log-content" id="mac-sysmon-transform">
+                    <div class="perf-log-content" id="mac-firewall-transform">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - parsing+Transform</h3>
+                            <h3>Firewall Log (1,122B) - parsing+Transform</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) Comparison
                             </p>
@@ -3723,7 +3730,7 @@
 
                     <div class="perf-log-content" id="mac-mixed-transform">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - parsing+Transform</h3>
+                            <h3>Mixed Log (1,260B avg) - parsing+Transform</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) Comparison
                             </p>

@@ -54,6 +54,13 @@
                         class="btn btn-secondary btn-xs"
                         >编辑器</a
                     >
+                    <a
+                        href="https://monitor.alpha.warpparse.ai"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-secondary btn-xs"
+                        >监控</a
+                    >
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-xs dropdown-toggle" id="moreMenuBtn">
                             更多
@@ -253,7 +260,7 @@
                         </div>
                     </div>
                     <div class="hero-chart-note">
-                        TCP→BlackHole MixedLogs · AWS EC2 8C/16G
+                        TCP→BlackHole MixedLogs · 腾讯云 SA9 8C/16G
                     </div>
                 </div>
             </div>
@@ -334,7 +341,7 @@
                 <div class="section-header">
                     <h2 class="section-title">吞吐量性能对比</h2>
                     <p class="section-subtitle">
-                        WarpParse vs Vector 基准测试结果 (AWS EC2 / Ubuntu 24.04
+                        WarpParse vs Vector 基准测试结果 (腾讯云 SA9 / Ubuntu 24.04
                         / 8 vCPU / 16 GiB RAM)
                     </p>
                 </div>
@@ -385,14 +392,14 @@
                         <button class="perf-log-btn" data-log="elb-parse">
                             AWS ELB (411B)
                         </button>
-                        <button class="perf-log-btn" data-log="sysmon-parse">
-                            Sysmon (1K)
+                        <button class="perf-log-btn" data-log="firewall-parse">
+                            Firewall (1,122B)
                         </button>
                         <button class="perf-log-btn" data-log="apt-parse">
                             APT (3K)
                         </button>
                         <button class="perf-log-btn" data-log="mixed-parse">
-                            Mixed (867B)
+                            Mixed (1,260B)
                         </button>
                     </div>
 
@@ -525,7 +532,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">1.56x</span>
+                                <span class="ratio-badge">1.93x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -660,15 +667,15 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">2.49x</span>
+                                <span class="ratio-badge">3.81x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="perf-log-content" id="sysmon-parse">
+                    <div class="perf-log-content" id="firewall-parse">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - 解析能力</h3>
+                            <h3>Firewall Log (1,122B) - 解析能力</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) 对比
                             </p>
@@ -878,7 +885,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">6.86x</span>
+                                <span class="ratio-badge">6.16x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -886,7 +893,7 @@
 
                     <div class="perf-log-content" id="mixed-parse">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - 解析能力</h3>
+                            <h3>Mixed Log (1,260B avg) - 解析能力</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) 对比
                             </p>
@@ -1034,15 +1041,15 @@
                         </button>
                         <button
                             class="perf-log-btn"
-                            data-log="sysmon-transform"
+                            data-log="firewall-transform"
                         >
-                            Sysmon (1K)
+                            Firewall (1,122B)
                         </button>
                         <button class="perf-log-btn" data-log="apt-transform">
                             APT (3K)
                         </button>
                         <button class="perf-log-btn" data-log="mixed-transform">
-                            Mixed (867B)
+                            Mixed (1,260B)
                         </button>
                     </div>
 
@@ -1175,7 +1182,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">1.34x</span>
+                                <span class="ratio-badge">1.69x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1247,7 +1254,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">2.22x</span>
+                                <span class="ratio-badge">3.43x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1310,15 +1317,15 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">1.99x</span>
+                                <span class="ratio-badge">2.75x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="perf-log-content" id="sysmon-transform">
+                    <div class="perf-log-content" id="firewall-transform">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - 解析+转换</h3>
+                            <h3>Firewall Log (1,122B) - 解析+转换</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) 对比
                             </p>
@@ -1528,7 +1535,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">6.14x</span>
+                                <span class="ratio-badge">4.85x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -1536,7 +1543,7 @@
 
                     <div class="perf-log-content" id="mixed-transform">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - 解析+转换</h3>
+                            <h3>Mixed Log (1,260B avg) - 解析+转换</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) 对比
                             </p>
@@ -1677,7 +1684,7 @@
                         <div class="summary-icon">P</div>
                         <h4>追求极致性能</h4>
                         <p>
-                            Linux 混合日志场景下提供 3.4x 解析性能优势，File 与
+                            Linux 混合日志场景下提供 2.48x 解析+转换性能优势，File 与
                             TCP 接收链路表现突出。
                         </p>
                     </div>
@@ -1714,12 +1721,12 @@
                 <div class="section-header">
                     <h2 class="section-title">固定速率资源对比</h2>
                     <p class="section-subtitle">
-                        在 20,000 EPS 固定速率下的 CPU 和内存占用对比 (AWS EC2 / Ubuntu 24.04 / Mixed Log / TCP → BlackHole)
+                        在 20,000 EPS 固定速率下的 CPU 和内存占用对比 (腾讯云 SA9 / Ubuntu 24.04 / Mixed Log / TCP → BlackHole)
                     </p>
                 </div>
 
                 <div class="resource-note">
-                    <strong>测试说明：</strong>所有引擎在相同的 20,000 EPS 吞吐量下运行，测试Mixed Log场景（平均日志大小867B），对比CPU和内存的资源消耗。Logstash在warmup后采集数据。
+                    <strong>测试说明：</strong>所有引擎在相同的 20,000 EPS 吞吐量下运行，测试Mixed Log场景（平均日志大小1,260B），对比CPU和内存的资源消耗。Logstash在warmup后采集数据。
                 </div>
 
                 <!-- Charts Grid -->
@@ -1893,15 +1900,15 @@
                         </button>
                         <button
                             class="perf-log-btn"
-                            data-log="mac-sysmon-parse"
+                            data-log="mac-firewall-parse"
                         >
-                            Sysmon (1K)
+                            Firewall (1,122B)
                         </button>
                         <button class="perf-log-btn" data-log="mac-apt-parse">
                             APT (3K)
                         </button>
                         <button class="perf-log-btn" data-log="mac-mixed-parse">
-                            Mixed (867B)
+                            Mixed (1,260B)
                         </button>
                     </div>
 
@@ -2232,7 +2239,7 @@
                                 </div>
                             </div>
                             <div class="comp-ratio">
-                                <span class="ratio-badge">2.40x</span>
+                                <span class="ratio-badge">2.48x</span>
                                 <span class="ratio-text">WarpParse 更快</span>
                             </div>
                         </div>
@@ -2301,9 +2308,9 @@
                         </div>
                     </div>
 
-                    <div class="perf-log-content" id="mac-sysmon-parse">
+                    <div class="perf-log-content" id="mac-firewall-parse">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - 解析能力</h3>
+                            <h3>Firewall Log (1,122B) - 解析能力</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) 对比
                             </p>
@@ -2699,7 +2706,7 @@
 
                     <div class="perf-log-content" id="mac-mixed-parse">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - 解析能力</h3>
+                            <h3>Mixed Log (1,260B avg) - 解析能力</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) 对比
                             </p>
@@ -2913,9 +2920,9 @@
                         </button>
                         <button
                             class="perf-log-btn"
-                            data-log="mac-sysmon-transform"
+                            data-log="mac-firewall-transform"
                         >
-                            Sysmon (1K)
+                            Firewall (1,122B)
                         </button>
                         <button
                             class="perf-log-btn"
@@ -2927,7 +2934,7 @@
                             class="perf-log-btn"
                             data-log="mac-mixed-transform"
                         >
-                            Mixed (867B)
+                            Mixed (1,260B)
                         </button>
                     </div>
 
@@ -3330,9 +3337,9 @@
                         </div>
                     </div>
 
-                    <div class="perf-log-content" id="mac-sysmon-transform">
+                    <div class="perf-log-content" id="mac-firewall-transform">
                         <div class="chart-header">
-                            <h3>Sysmon JSON Log (1K) - 解析+转换</h3>
+                            <h3>Firewall Log (1,122B) - 解析+转换</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) 对比
                             </p>
@@ -3728,7 +3735,7 @@
 
                     <div class="perf-log-content" id="mac-mixed-transform">
                         <div class="chart-header">
-                            <h3>Mixed Log (867B avg) - 解析+转换</h3>
+                            <h3>Mixed Log (1,260B avg) - 解析+转换</h3>
                             <p class="chart-subtitle">
                                 EPS (Events Per Second) 对比
                             </p>
@@ -3930,7 +3937,7 @@
                     <div class="summary-card">
                         <div class="summary-icon">P</div>
                         <h4>追求极致性能</h4>
-                        <p>Mac M4 平台场景下提供 1.4-8.8x 性能优势。</p>
+                        <p>Mac M4 平台场景下提供 1.90x-9.18x 性能优势。</p>
                     </div>
                     <div class="summary-card">
                         <div class="summary-icon">R</div>
