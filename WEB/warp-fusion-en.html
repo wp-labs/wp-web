@@ -1,0 +1,1252 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="WarpFusion - A Rust-based real-time correlation engine: WFL declarative rules, NEXMark full-query wins over Flink, AI-native rule development loop, single binary with zero external dependencies"
+        />
+        <title>WarpFusion - AI-Native Realtime Correlation Engine</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+        <style>
+            /* ===== WarpFusion 页面补充样式（延续 WP 视觉体系） ===== */
+            .wf-lead {
+                font-size: 1.15rem;
+                color: var(--text-secondary);
+                line-height: 1.9;
+            }
+
+            .wf-note {
+                margin-top: 1rem;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                text-align: center;
+            }
+
+            /* 正文表格（复用 perf-table 家族） */
+            .perf-table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .perf-table td.center,
+            .perf-table th.center {
+                text-align: center;
+            }
+
+            .perf-table .wf-strong td {
+                background: rgba(87, 148, 242, 0.08);
+            }
+
+            .wf-chip {
+                display: inline-block;
+                padding: 0.15rem 0.55rem;
+                border-radius: 100px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                background: rgba(59, 130, 246, 0.15);
+                color: var(--primary-light);
+                border: 1px solid rgba(59, 130, 246, 0.3);
+            }
+
+            .wf-chip.ok {
+                background: rgba(34, 197, 94, 0.12);
+                color: #22c55e;
+                border-color: rgba(34, 197, 94, 0.35);
+            }
+
+            .wf-chip.warn {
+                background: rgba(234, 179, 8, 0.12);
+                color: #fbbf24;
+                border-color: rgba(234, 179, 8, 0.35);
+            }
+
+            .wf-chip.no {
+                background: rgba(148, 163, 184, 0.12);
+                color: #94a3b8;
+                border-color: rgba(148, 163, 184, 0.3);
+            }
+
+            /* AI 能力分级卡片 */
+            .wf-ai-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .wf-ai-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 1.5rem;
+                transition: all 0.3s ease;
+            }
+
+            .wf-ai-card:hover {
+                border-color: var(--primary);
+                box-shadow: var(--shadow-glow);
+                transform: translateY(-3px);
+            }
+
+            .wf-ai-card .wf-ai-step {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: var(--primary-light);
+                letter-spacing: 0.05em;
+            }
+
+            .wf-ai-card h4 {
+                margin: 0.5rem 0 0.75rem;
+                font-size: 1.05rem;
+                color: var(--text-primary);
+            }
+
+            .wf-ai-card p {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                line-height: 1.7;
+                margin: 0;
+            }
+
+            .wf-ai-card code {
+                font-size: 0.8rem;
+                color: #a5d6ff;
+            }
+
+            /* 语言能力矩阵首列高亮 */
+            .perf-table td:first-child {
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+
+            /* 契约 / 口径警示块 */
+            .wf-caveat {
+                background: rgba(255, 152, 0, 0.08);
+                border: 1px solid rgba(234, 179, 8, 0.25);
+                border-left: 3px solid #fbbf24;
+                border-radius: 8px;
+                padding: 1rem 1.25rem;
+                margin: 1.5rem 0;
+                font-size: 0.875rem;
+                color: var(--text-secondary);
+                line-height: 1.8;
+            }
+
+            .wf-caveat strong {
+                color: #fbbf24;
+            }
+
+            /* hero 三列快速指标 */
+            .hero-stats .stat-label {
+                max-width: 220px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* 迷你图“越低越好”语义标注 */
+            .mini-chart-title .mini-better {
+                margin-left: 0.5rem;
+                font-size: 0.68rem;
+                font-weight: 700;
+                color: #22c55e;
+            }
+
+            /* 迷你图比例轨：条在轨内按真实比例铺开 */
+            .wf-track {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                height: 16px;
+                border-radius: 3px;
+                background: rgba(255, 255, 255, 0.07);
+                overflow: hidden;
+            }
+
+            .wf-track .mini-bar {
+                min-width: 0;
+                height: 100%;
+                border-radius: 3px 0 0 3px;
+            }
+
+            /* 代码块轻量语法高亮 token 色 */
+            .code-content .tok-c {
+                color: #6e7681;
+                font-style: italic;
+            }
+
+            .code-content .tok-k {
+                color: #79c0ff;
+                font-weight: 600;
+            }
+
+            .code-content .tok-f {
+                color: #a5d6ff;
+            }
+
+            .code-content .tok-p {
+                color: #ff7b72;
+            }
+
+            .code-content .tok-u {
+                color: #7ee787;
+            }
+
+            .wf-scene-icon {
+                font-size: 1.6rem;
+                margin-bottom: 0.75rem;
+            }
+
+            @media (max-width: 768px) {
+                .hero-stats {
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 1rem;
+                }
+                .hero-mini-charts {
+                    flex-direction: column;
+                }
+            }
+
+            /* 特性卡标识：彩色字母 / 数字（第 1–6 位各一色，页面内生效） */
+            .features-grid > .card:nth-child(1) .card-icon {
+                background: rgba(96, 165, 250, 0.16);
+                color: #60a5fa;
+                box-shadow: 0 0 18px rgba(96, 165, 250, 0.25);
+            }
+            .features-grid > .card:nth-child(2) .card-icon {
+                background: rgba(167, 139, 250, 0.16);
+                color: #a78bfa;
+                box-shadow: 0 0 18px rgba(167, 139, 250, 0.25);
+            }
+            .features-grid > .card:nth-child(3) .card-icon {
+                background: rgba(52, 211, 153, 0.16);
+                color: #34d399;
+                box-shadow: 0 0 18px rgba(52, 211, 153, 0.25);
+            }
+            .features-grid > .card:nth-child(4) .card-icon {
+                background: rgba(251, 191, 36, 0.16);
+                color: #fbbf24;
+                box-shadow: 0 0 18px rgba(251, 191, 36, 0.25);
+            }
+            .features-grid > .card:nth-child(5) .card-icon {
+                background: rgba(251, 113, 133, 0.16);
+                color: #fb7185;
+                box-shadow: 0 0 18px rgba(251, 113, 133, 0.25);
+            }
+            .features-grid > .card:nth-child(6) .card-icon {
+                background: rgba(34, 211, 238, 0.16);
+                color: #22d3ee;
+                box-shadow: 0 0 18px rgba(34, 211, 238, 0.25);
+            }
+        </style>
+    </head>
+    <body class="has-site-header">
+        <!-- Header -->
+        <header class="header site-header">
+            <div class="container">
+                <div class="site-row-top">
+                    <a href="index.html" class="logo site-logo">
+                        <img
+                            src="icons/wp.png"
+                            alt="WP Labs Logo"
+                            class="logo-img"
+                        />
+                        <span>WP Labs</span>
+                    </a>
+                    <nav class="site-products" aria-label="Products">
+                        <a href="index.html" class="site-product">WarpParse</a>
+                        <a href="warp-fusion-en.html" class="site-product active">WarpFusion</a>
+                    </nav>
+                    <div class="site-langs">
+                        <a href="warp-fusion.html" class="site-lang">中</a>
+                        <span class="site-lang-sep">/</span>
+                        <a href="warp-fusion-en.html" class="site-lang active">EN</a>
+                    </div>
+                </div>
+                <div class="site-row-sub">
+                    <nav class="nav" id="mainNav">
+                        <a href="#what" class="nav-link">Features</a>
+                        <a href="#advantage" class="nav-link">Rule Capabilities</a>
+                        <a href="#benchmark" class="nav-link">Performance</a>
+                        <a href="#ai-native" class="nav-link">AI Native</a>
+                        <a href="#scenarios" class="nav-link">Application Domains</a>
+                        <a href="#getting-started" class="nav-link nav-blog">Start</a>
+                    </nav>
+                    <div class="btn-group desktop-only site-actions">
+                        <a
+                            href="https://github.com/wp-labs/warp-fusion"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-secondary btn-xs"
+                            >GitHub</a
+                        >
+                        <a
+                            href="https://wp-labs.github.io/wp-docs"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-secondary btn-xs"
+                            >Docs</a
+                        >
+                    </div>
+                    <button
+                        class="mobile-menu-btn"
+                        id="mobileMenuBtn"
+                        aria-label="Menu"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="top" class="hero">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span>Real-time correlation engine</span>
+                        <span>Rust · Single binary · AI Native</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="hero-line-1"
+                            >WarpFusion
+                            <span class="gradient-text">Lightning Fast</span></span
+                        >
+                        <span class="hero-line-2" style="color: #fff"
+                            >The AI-Native Realtime Correlation Engine</span
+                        >
+                    </h1>
+                    <p class="hero-description">
+                        Feed it structured event streams; get back explainable, scored correlation results.
+                        Cross-event, cross-window pattern matching — attack chains, missing-event detection,
+                        behavior profiling, real-time rate limiting — all in one binary: rules in a few lines,
+                        verified the moment they are written, hot-reloaded without restarts.
+                    </p>
+
+                    <!-- Quick Stats -->
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">24.3×</div>
+                            <div class="stat-label">
+                                NEXMark geometric mean vs Flink OSS
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">6.8×</div>
+                            <div class="stat-label">
+                                NEXMark geometric mean vs VVR
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">31M</div>
+                            <div class="stat-label">
+                                Peak per-query throughput (EPS) on one 8-core host
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Install Code -->
+                    <div class="install-code">
+                        <code>
+                            <span class="cmd">curl</span>
+                            <span class="flag">-sSf</span>
+                            <span class="url"
+                                >https://get.warpparse.ai/inst-x.sh</span
+                            >
+                            <span class="pipe">|</span>
+                            <span class="cmd">bash</span>
+                            <span class="flag">-s -- wfusion alpha</span>
+                        </code>
+                        <button
+                            class="copy-btn"
+                            onclick="copyWfText(this)"
+                            data-copy="curl -sSf https://get.warpparse.ai/inst-x.sh | bash -s -- wfusion alpha"
+                            title="Copy"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <rect
+                                    x="9"
+                                    y="9"
+                                    width="13"
+                                    height="13"
+                                    rx="2"
+                                    ry="2"
+                                ></rect>
+                                <path
+                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Hero Mini Charts -->
+                    <div class="hero-mini-charts">
+                        <div class="mini-chart">
+                            <div class="mini-chart-title">
+                                Avg EPS · NEXMark (arithmetic mean)
+                                <span class="mini-unit">events/s</span>
+                            </div>
+                            <div class="mini-bars">
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">WarpFusion</span>
+                                    <div class="mini-bar wp" style="width: 100%">
+                                        <span>12.2M</span>
+                                    </div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Flink OSS</span>
+                                    <div class="mini-bar vector" style="width: 5.6%">
+                                        <span style="font-size: 0.6rem">0.68M</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-chart">
+                            <div class="mini-chart-title">
+                                CPU platform resources (OSS = 3 hosts total)
+                                <span class="mini-unit">vCPU</span
+                                ><span class="mini-better">lower is better</span>
+                            </div>
+                            <div class="mini-bars">
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">WarpFusion</span>
+                                    <div class="wf-track">
+                                        <div class="mini-bar wp" style="width: 66.7%">
+                                            <span>8</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Flink OSS</span>
+                                    <div class="wf-track">
+                                        <div class="mini-bar vector" style="width: 100%">
+                                            <span>12</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-chart">
+                            <div class="mini-chart-title">
+                                Memory platform resources (OSS = 3 hosts total)
+                                <span class="mini-unit">GB</span
+                                ><span class="mini-better">lower is better</span>
+                            </div>
+                            <div class="mini-bars">
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">WarpFusion</span>
+                                    <div class="wf-track">
+                                        <div class="mini-bar wp" style="width: 66.7%">
+                                            <span>≈32*</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Flink OSS</span>
+                                    <div class="wf-track">
+                                        <div class="mini-bar vector" style="width: 100%">
+                                            <span>48</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-chart-note">
+                        Avg EPS: NEXMark 100M events/query · Linux 8 cores · 2026-08-27 (wp-reactor v2.0.7) arithmetic mean · baseline from Alibaba Cloud Nexmark whitepaper.
+                        CPU / memory = test-platform resource requirements: WarpFusion single host 8 cores ≈32GB*; Flink OSS = 3 × ecs.g6a.xlarge (4 vCPU / 16 GiB each), 12 vCPU / 48 GiB total.
+                        *≈32GB inferred from the same cloud server model and q18 RSS ≈28GB
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- License Badge -->
+        <div class="license-section" style="text-align: center; padding: 1.5rem 0; background: var(--bg-secondary);">
+            <span class="wf-chip">Elastic License 2.0 (ELv2)</span>
+            <span class="wf-chip ok">Free for internal business use</span>
+            <span class="wf-chip no">source-available · standalone edition</span>
+        </div>
+
+        <!-- What is WarpFusion -->
+        <section id="what" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Core Features</h2>
+                </div>
+
+                <div class="features-grid">
+                    <div class="card">
+                        <div class="card-icon">M</div>
+                        <h3 class="card-title">Cross-event pattern matching</h3>
+                        <p class="card-description">
+                            The core capability is correlation across events and time windows — not per-event filtering:
+                            structured streams in, explainable alerts / scores / structured data out.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">L</div>
+                        <h3 class="card-title">WFL declarative language</h3>
+                        <p class="card-description">
+                            Five primitives (Bind / Match / Stats / Join / Yield) say what you are looking for;
+                            the three-file model separates what data looks like / what to match / how to run.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">B</div>
+                        <h3 class="card-title">Single binary · zero dependencies</h3>
+                        <p class="card-description">
+                            Written in Rust — one binary runs the whole pipeline with no Kafka, etcd or database:
+                            roughly a thousand rules on a single 8GB node, idle memory target &lt;100MB.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">T</div>
+                        <h3 class="card-title">Rules ship with tests</h3>
+                        <p class="card-description">
+                            `test` blocks live inside the rule file: hit / miss paths verified with one command,
+                            feedback in seconds; replay / verify / wfgen close the loop. Write, verify — no praying.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">A</div>
+                        <h3 class="card-title">AI Native</h3>
+                        <p class="card-description">
+                            The language is designed for AI generation: small surface area, explicit semantics,
+                            machine-readable receipts — “AI writes the rule, the engine proves it, receipts drive iteration”.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">R</div>
+                        <h3 class="card-title">Interpretable · scored</h3>
+                        <p class="card-description">
+                            Entity modeling entity() + numeric scoring score() + stat.* evidence fields turn
+                            “why did this fire” into auditable alert evidence instead of a black box.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 品类边界 -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    What it is &amp; isn't — category boundaries
+                </h3>
+                <div class="perf-table-wrapper" style="margin-top: 1rem">
+                    <table class="perf-table">
+                        <thead>
+                            <tr>
+                                <th>It is: real-time correlation / pattern-matching engine</th>
+                                <th>It is not (be honest about it)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Stateful correlation across sources, windows and steps</td>
+                                <td>General-purpose distributed stream processing (no distributed coordination / checkpoint)</td>
+                            </tr>
+                            <tr>
+                                <td>WFL declarative rules + built-in test loop + hot reload</td>
+                                <td>Data warehouse / interactive analytics engine (no eventstats; hand that to a downstream SIEM)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advantages Section -->
+        <section
+            id="advantage"
+            class="section"
+            style="
+                background: linear-gradient(
+                    180deg,
+                    #0f1419 0%,
+                    var(--bg-body) 100%
+                );
+            "
+        >
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Rule Capabilities</h2>
+                    <p class="section-subtitle">
+                        WFL makes detection semantics first-class: temporal chains, missing-event detection,
+                        entity modeling, scoring, window stats and joins — one rule says what you are looking for
+                    </p>
+                </div>
+
+                <!-- WFL Code -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    Five primitives · WFL — one rule, one attack chain
+                </h3>
+                <div class="code-comparison">
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">chain_attack.wfl</span
+                            ><span class="code-badge wpl">rules carry their tests</span>
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="comment">// same IP: scanned 5 ports AND failed login 3 times within 30m → score 90</span>
+<span class="keyword">rule</span> chain_attack {
+    events {
+        scan  : conn_events && action == <span class="string">"syn"</span>
+        login : conn_events && action == <span class="string">"login_fail"</span>
+    }
+    match&lt;sip:30m&gt; {
+        on event {
+            scan  | count >= 5;
+            login | count >= 3;
+        }
+    } -&gt; <span class="function">score</span>(90.0)
+    entity(ip, scan.sip)
+    yield network_alerts (sip = scan.sip, alert_type = <span class="string">"chain_attack"</span>)
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">test, in the same file</span
+                            ><span class="code-badge ok" style="background: rgba(34, 197, 94, 0.15); color: #22c55e">verify as you write</span>
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="comment">// expect is an independent semantic oracle: change the rule, miss the expectation → FAIL</span>
+<span class="keyword">test</span> full_chain <span class="keyword">for</span> chain_attack {
+  input {
+    row(scan,  sip = <span class="string">"10.0.0.1"</span>, action = <span class="string">"syn"</span>,        event_time = <span class="string">"2026-01-01T00:00:00Z"</span>);
+    row(login, sip = <span class="string">"10.0.0.1"</span>, action = <span class="string">"login_fail"</span>, event_time = <span class="string">"2026-01-01T00:00:05Z"</span>);
+  }
+  expect {
+    hits == 1;
+    hit[0].score == 90.0;
+    hit[0].entity_id == <span class="string">"10.0.0.1"</span>;
+  }
+}
+<span class="comment">// wfl test rules/chain_attack.wfl --schemas "schemas/*.wfs"</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+                <p class="wf-lead" style="text-align: center; margin-top: 2rem">
+                    Three-file model: <code>.wfs</code> (what data looks like) · <code>.wfl</code> (what pattern to match) ·
+                    <code>.toml</code> (how to run: source / sink / window memory / watermark)
+                </p>
+
+                <!-- 语言能力矩阵 -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    Language expressiveness: WFL vs mainstream detection DSLs
+                </h3>
+                <p class="wf-lead" style="text-align: center">
+                    ✅ = native language support · 🟡 = partial / planned · ✗ = unsupported &nbsp;(benchmarked against YARA-L 2.0, EQL, Sigma, SPL, KQL)
+                </p>
+                <div class="perf-table-wrapper" style="margin-top: 1rem">
+                    <table class="perf-table">
+                        <thead>
+                            <tr>
+                                <th>Capability</th>
+                                <th class="center">WFL</th>
+                                <th class="center">YARA-L</th>
+                                <th class="center">EQL</th>
+                                <th class="center">Sigma</th>
+                                <th class="center">SPL</th>
+                                <th class="center">KQL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Multi-step temporal chains</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✅</td><td class="center">✅</td><td class="center">✗</td><td class="center">✅</td><td class="center">✗</td></tr>
+                            <tr><td>OR-branch temporal logic</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>Dual-phase matching (live / close)</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>Missing-event detection (A → NOT B)</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✅</td><td class="center">✅</td><td class="center">✗</td><td class="center">✅</td><td class="center">✗</td></tr>
+                            <tr><td>Session / hopping windows (HOP)</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">partial</td><td class="center">✗</td></tr>
+                            <tr><td>Declarative window statistics</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✅</td><td class="center">✅</td></tr>
+                            <tr><td>Anti-join / external enrichment / first-class join timing</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">partial</td><td class="center">✗</td><td class="center">✗</td><td class="center">✅</td><td class="center">✅</td></tr>
+                            <tr><td>Numeric risk scoring score()</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>First-class entity declaration entity()</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>Versioned output contracts yield target@vN</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>Per-rule resource budgets limits</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">platform config</td><td class="center">platform config</td></tr>
+                            <tr><td>Conformance gates</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">platform replay</td><td class="center">platform tests</td><td class="center">✗</td><td class="center">platform tests</td><td class="center">platform tests</td></tr>
+                            <tr><td>Itemized explainable scoring (planned)</td><td class="center"><span class="wf-chip warn">🟡</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>Baseline deviation (planned)</td><td class="center"><span class="wf-chip warn">🟡</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">needs MLTK</td><td class="center">needs Fusion ML</td></tr>
+                            <tr><td>Row-retaining aggregation (eventstats)</td><td class="center"><span class="wf-chip no">✗ intentionally omitted</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✅</td><td class="center">✅</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEXMark Benchmark Section -->
+        <section id="benchmark" class="section performance-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Performance</h2>
+                    <p class="section-subtitle">
+                        WarpFusion vs Flink OSS (1.20.4) · Alibaba Cloud Realtime Compute Flink VVR (vvr-11.5-jdk11-flink-1.20)
+                    </p>
+                </div>
+
+                <div class="wf-caveat">
+                    <strong>Methodology first (keep this footnote when citing any number below):</strong>
+                    The performance data comes from self-run benchmarks on the NEXMark synthetic workload with fixed
+                    configuration: 100M events per query, Linux 8 cores (same cloud server model as VVR), local-file sink
+                    (blackhole-equivalent), authoritative run of 2026-08-27, core runtime wp-reactor v2.0.7 (with
+                    WarpFusion tools 0.5.x), 21/21 queries [clean]. The
+                    comparison baselines come from the publicly released Alibaba Cloud Nexmark whitepaper. WarpFusion EPS
+                    (sentinel metric) and whitepaper RPS are measured differently, and resources are not equivalent
+                    (8 cores vs 8 CU / 3×12 vCPU cluster) — <strong>treat the results as an order-of-magnitude reference,
+                    not a bit-for-bit comparison or a production SLA promise</strong>.
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card metric-primary">
+                        <div class="metric-value">24.3×</div>
+                        <div class="metric-label">Geometric mean vs Flink OSS</div>
+                        <div class="metric-desc">arithmetic mean 44.7× (upper bound)</div>
+                    </div>
+                    <div class="metric-card metric-secondary">
+                        <div class="metric-value">6.8×</div>
+                        <div class="metric-label">Geometric mean vs Alibaba VVR</div>
+                        <div class="metric-desc">arithmetic mean 10.1× (upper bound)</div>
+                    </div>
+                    <div class="metric-card metric-accent">
+                        <div class="metric-value">231×</div>
+                        <div class="metric-label">Top single-query lead (q20 vs OSS)</div>
+                        <div class="metric-desc">q9 vs OSS 185× · q7 vs OSS 117×</div>
+                    </div>
+                    <div class="metric-card metric-success">
+                        <div class="metric-value">20/20</div>
+                        <div class="metric-label">Ahead on every baseline query</div>
+                        <div class="metric-desc">wp-reactor v2.0.7 · 100M · blackhole sink</div>
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <div class="resource-charts-grid" style="grid-template-columns: 1fr">
+                    <div class="resource-chart-card">
+                        <div class="chart-card-header">
+                            <h4>NEXMark Q1–Q22 per-query throughput (log scale · events/s)</h4>
+                            <p>
+                                One group per query with three bars: WarpFusion / Flink OSS / Alibaba VVR on the same query
+                                (log scale — bar gaps are order-of-magnitude gaps; taller is faster). q6 was not published in
+                                the whitepaper; q13 has no baseline and only shows the WarpFusion bar.
+                                All 21 queries are here; exact values are in the full table below.
+                            </p>
+                        </div>
+                        <div class="chart-container" style="height: 460px">
+                            <canvas id="nexmarkChart"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: linear-gradient(135deg, #5794f2 0%, #8b5cf6 100%)"></span>
+                                <span>WarpFusion (EPS, 100M measured)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: linear-gradient(135deg, #34d399 0%, #059669 100%)"></span>
+                                <span>Flink OSS (RPS, whitepaper)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)"></span>
+                                <span>Alibaba VVR (RPS, whitepaper)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Table -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    Full per-query comparison table
+                </h3>
+                <div class="perf-table-wrapper" style="margin-top: 1rem">
+                    <table class="perf-table">
+                        <thead>
+                            <tr>
+                                <th>Query</th>
+                                <th style="text-align: right">WarpFusion EPS</th>
+                                <th style="text-align: right">Flink OSS RPS</th>
+                                <th style="text-align: right">Alibaba VVR RPS</th>
+                                <th style="text-align: right">vs OSS</th>
+                                <th style="text-align: right">vs VVR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>q1</td><td style="text-align: right">16,850,363</td><td style="text-align: right">1,753,002</td><td style="text-align: right">4,381,353</td><td style="text-align: right">9.62×</td><td style="text-align: right">3.85×</td></tr>
+                            <tr><td>q2</td><td style="text-align: right">31,078,008</td><td style="text-align: right">1,927,154</td><td style="text-align: right">6,568,576</td><td style="text-align: right">16.13×</td><td style="text-align: right">4.73×</td></tr>
+                            <tr><td>q3</td><td style="text-align: right">22,183,478</td><td style="text-align: right">1,176,664</td><td style="text-align: right">4,638,649</td><td style="text-align: right">18.84×</td><td style="text-align: right">4.79×</td></tr>
+                            <tr><td>q4</td><td style="text-align: right">3,738,638</td><td style="text-align: right">180,693</td><td style="text-align: right">636,468</td><td style="text-align: right">20.69×</td><td style="text-align: right">5.87×</td></tr>
+                            <tr><td>q5</td><td style="text-align: right">1,998,737</td><td style="text-align: right">273,496</td><td style="text-align: right">279,684</td><td style="text-align: right">7.31×</td><td style="text-align: right">7.15×</td></tr>
+                            <tr><td>q7</td><td style="text-align: right">9,293,974</td><td style="text-align: right">79,526</td><td style="text-align: right">299,547</td><td style="text-align: right">116.74×</td><td style="text-align: right">31.03×</td></tr>
+                            <tr><td>q8</td><td style="text-align: right">28,969,548</td><td style="text-align: right">1,253,321</td><td style="text-align: right">3,340,125</td><td style="text-align: right">23.12×</td><td style="text-align: right">8.67×</td></tr>
+                            <tr><td>q9</td><td style="text-align: right">7,962,629</td><td style="text-align: right">43,020</td><td style="text-align: right">375,146</td><td style="text-align: right">185.08×</td><td style="text-align: right">21.22×</td></tr>
+                            <tr><td>q10</td><td style="text-align: right">17,299,653</td><td style="text-align: right">526,357</td><td style="text-align: right">1,953,049</td><td style="text-align: right">32.82×</td><td style="text-align: right">8.85×</td></tr>
+                            <tr><td>q11</td><td style="text-align: right">10,854,288</td><td style="text-align: right">244,868</td><td style="text-align: right">685,011</td><td style="text-align: right">44.36×</td><td style="text-align: right">15.84×</td></tr>
+                            <tr><td>q12</td><td style="text-align: right">10,892,485</td><td style="text-align: right">822,680</td><td style="text-align: right">2,703,360</td><td style="text-align: right">13.23×</td><td style="text-align: right">4.03×</td></tr>
+                            <tr><td>q13</td><td style="text-align: right">8,202,970</td><td style="text-align: right">—</td><td style="text-align: right">—</td><td style="text-align: right">—</td><td style="text-align: right">—</td></tr>
+                            <tr class="wf-strong"><td>q14 (weakest lead)</td><td style="text-align: right">8,798,983</td><td style="text-align: right">1,451,316</td><td style="text-align: right">4,997,002</td><td style="text-align: right">6.06×</td><td style="text-align: right">1.76×</td></tr>
+                            <tr><td>q15</td><td style="text-align: right">7,385,812</td><td style="text-align: right">544,339</td><td style="text-align: right">2,340,057</td><td style="text-align: right">13.57×</td><td style="text-align: right">3.15×</td></tr>
+                            <tr><td>q16</td><td style="text-align: right">5,924,391</td><td style="text-align: right">108,980</td><td style="text-align: right">296,478</td><td style="text-align: right">54.36×</td><td style="text-align: right">19.96×</td></tr>
+                            <tr><td>q17</td><td style="text-align: right">8,363,724</td><td style="text-align: right">972,318</td><td style="text-align: right">3,693,308</td><td style="text-align: right">8.60×</td><td style="text-align: right">2.26×</td></tr>
+                            <tr><td>q18</td><td style="text-align: right">3,092,075</td><td style="text-align: right">173,928</td><td style="text-align: right">1,038,044</td><td style="text-align: right">17.78×</td><td style="text-align: right">2.98×</td></tr>
+                            <tr><td>q19</td><td style="text-align: right">7,859,815</td><td style="text-align: right">170,565</td><td style="text-align: right">1,051,293</td><td style="text-align: right">46.08×</td><td style="text-align: right">7.48×</td></tr>
+                            <tr class="wf-strong"><td>q20 (snapshot join)</td><td style="text-align: right">17,272,687</td><td style="text-align: right">74,591</td><td style="text-align: right">431,999</td><td style="text-align: right">231.49×</td><td style="text-align: right">39.98×</td></tr>
+                            <tr><td>q21</td><td style="text-align: right">13,666,841</td><td style="text-align: right">786,850</td><td style="text-align: right">2,519,336</td><td style="text-align: right">17.38×</td><td style="text-align: right">5.43×</td></tr>
+                            <tr><td>q22</td><td style="text-align: right">10,328,808</td><td style="text-align: right">1,054,519</td><td style="text-align: right">3,202,254</td><td style="text-align: right">9.79×</td><td style="text-align: right">3.23×</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="wf-note">
+                    Units: events/sec everywhere. EPS and RPS are different metrics — the multiples are an
+                    order-of-magnitude reference only. q6 was not published in the whitepaper; the WarpFusion `all` run
+                    covers 21 queries (q6 stays out of `all` but can be run standalone).
+                </p>
+
+                <!-- Known boundaries -->
+                <div class="wf-caveat">
+                    <strong>Known boundaries, published up front:</strong>
+                    ① currently <strong>no exactly-once / checkpoint</strong> (best-effort; reliability is on the roadmap) —
+                    the only capability gap vs Flink, and the real boundary is multi-node HA, not throughput;
+                    ② q14 is the weakest vs VVR (still 6.06× over OSS), attributed to Calculation-style string processing;
+                    ③ q18 window-state memory (RSS≈27.9GB @100M) is a known issue; spill + memory caps in wp-reactor v2.0.8 already cut it by ~25%;
+                    ④ numbers above use the blackhole-sink metric (pure compute ceiling) — if alerts land on real sinks,
+                    measure with your own alert rate;
+                    ⑤ ecosystem breadth (connectors, community rules) trails Flink — a decade of accumulation is a real moat.
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Native Section -->
+        <section
+            id="ai-native"
+            class="section"
+            style="
+                background: linear-gradient(
+                    180deg,
+                    #0f1419 0%,
+                    var(--bg-body) 100%
+                );
+            "
+        >
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">WarpFusion is an AI-Native Engine</h2>
+                    <p class="section-subtitle">
+                        AI Native ≠ a built-in LLM: engine configuration, rule authoring, verification and
+                        measurement can all be done through AI
+                    </p>
+                </div>
+
+                <div class="wf-lead" style="text-align: center; max-width: 800px; margin: 0 auto">
+                    <strong>Configuration</strong> (wfusion.toml, AI-generated), <strong>authoring</strong> (a few lines of WFL),
+                    <strong>verification</strong> (wfl test / intent receipts), <strong>measurement</strong> (wfgen perf-diag --gate) —
+                    every stage exposes machine-readable interfaces and receipts, so the loop
+                    “AI generates → the engine receipts what's wrong → AI fixes → re-verify” can run on its own.
+                    Humans define intent and acceptance criteria.
+                </div>
+
+
+
+                <!-- 6 levels -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    AI-native rule development loop
+                </h3>
+                <div class="wf-ai-grid">
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">COMPILE-TIME CHECKS</div>
+                        <h4>wfl lint / wfl explain</h4>
+                        <p>Syntax and type errors are caught before anything runs; the compiled rule shape is readable by humans and AI alike.</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">SEMANTIC SELF-PROOF</div>
+                        <h4>wfl test <span style="font-weight: 400">(contract tests)</span></h4>
+                        <p><code>expect</code> is an independent semantic oracle, executed in-process in seconds; change a rule without updating the expectation → FAIL.</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">ADVERSARIAL TEST GENERATION</div>
+                        <h4>wfl test --gen-negatives</h4>
+                        <p>Machine-derives counterexamples statically from rule structure, with assertions independent of AI-written expects — breaking the “AI wrote it, AI proved it” loop.</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">INTENT VERIFICATION</div>
+                        <h4>wfl intent (.wfi samples)</h4>
+                        <p>Proves the intent itself is right: a positive sample that misses → FAIL (false negative); a negative sample that hits → FAIL (false positive).</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">REPLAY / ORACLE DIFF</div>
+                        <h4>wfl replay / wfl verify</h4>
+                        <p>Replay real streams and compare every alert with the oracle, with score / time tolerance.</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">PERFORMANCE GATE</div>
+                        <h4>wfgen perf-diag --gate</h4>
+                        <p>Correct semantics are not enough — release only when performance is acceptable: absolute thresholds plus relative regression guards that cannot silently no-op.</p>
+                    </div>
+                </div>
+
+                <!-- Ecosystem -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    Ecosystem Facilities
+                </h3>
+                <div class="connector-grid">
+                    <div class="connector-card">
+                        <div class="connector-icon">S</div>
+                        <div class="connector-name">wf-skills skill pack</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            Rule authoring / schema / config / test pipeline / perf benchmark / integration —
+                            one-command install into Claude Code or Codex
+                        </p>
+                    </div>
+                    <div class="connector-card">
+                        <div class="connector-icon">R</div>
+                        <div class="connector-name">wf-rules rule corpus</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            18 real .wfl detection rules organized by attack stage — few-shot corpus and regression baseline
+                        </p>
+                    </div>
+                    <div class="connector-card">
+                        <div class="connector-icon">E</div>
+                        <div class="connector-name">Editor / LSP</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            tree-sitter-wfl highlighting + WFL LSP (diagnostics / go-to / completion) —
+                            one feedback channel shared by AI and humans
+                        </p>
+                    </div>
+                    <div class="connector-card">
+                        <div class="connector-icon">D</div>
+                        <div class="connector-name">wfgen deterministic data</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            Byte-identical with the same count + seed; hit / near-miss / miss samples for
+                            regression and AI practice
+                        </p>
+                    </div>
+                </div>
+
+                <div class="wf-caveat">
+                    <strong>Honest boundaries:</strong> ① <strong>AI-generated ≠ verified</strong> — detection rule bugs are silent
+                    (false negatives / positives never error), so generated rules must pass <code>wfl test</code> and enter regression;
+                    ② the loop <strong>does not auto-fix rules</strong> — it only proves where a rule is right or wrong;
+                    auto-fixing is a policy layer above the receipts;
+                    ③ L2 negative generation covers simple bind guards only; complex guards are honestly skipped, never faked;
+                    ④ current status is alpha (2026-09); a unified combined-receipt command is still in progress.
+                </div>
+            </div>
+        </section>
+
+        <!-- Scenarios -->
+        <section id="scenarios" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Application Domains</h2>
+                    <p class="section-subtitle">
+                        The stream-processing shapes in NEXMark Q1–Q22 map to four real-world scenarios
+                    </p>
+                </div>
+                <div class="features-grid">
+                    <div class="card">
+                        <div class="wf-scene-icon">🛡️</div>
+                        <h3 class="card-title">SIEM / Security</h3>
+                        <p class="card-description">
+                            Sequence matching, behavior stats and Top-N, contextual joins — attack chains,
+                            alert dedup, entity behavior analytics.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="wf-scene-icon">💳</div>
+                        <h3 class="card-title">Fraud &amp; risk</h3>
+                        <p class="card-description">
+                            Last state per entity, Top-N, rate windows — watchlist matching, anomaly ranking,
+                            real-time rate limiting.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="wf-scene-icon">📈</div>
+                        <h3 class="card-title">AIOps / Observability</h3>
+                        <p class="card-description">
+                            Sliding / session-window spikes, processing-time throttling — metric anomalies,
+                            dedup, error-rate surges correlating with latency.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="wf-scene-icon">🔗</div>
+                        <h3 class="card-title">Realtime warehouse / ETL</h3>
+                        <p class="card-description">
+                            Projection, filtering, enrichment, sinking — field normalization, log
+                            standardization, hot/cold layering.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started / CTA -->
+        <section
+            id="getting-started"
+            class="section"
+            style="
+                background: linear-gradient(
+                    180deg,
+                    var(--bg-body) 0%,
+                    #0f1419 100%
+                );
+            "
+        >
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Get Started with WarpFusion</h2>
+                    <p class="section-subtitle">
+                        Run a real example in three steps: install wfusion → clone the example → run nginx_log_stats
+                    </p>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">1 · Install wfusion (ships wfl / wfgen)</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>curl -sSf https://get.warpparse.ai/inst-x.sh | bash -s -- wfusion alpha</code></pre>
+                    </div>
+                </div>
+                <div class="code-block" style="margin-top: 1.5rem">
+                    <div class="code-header">
+                        <span class="code-title">2 · Clone the example repo</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>git clone https://github.com/wp-labs/wf-examples
+cd wf-examples/nginx_log_stats</code></pre>
+                    </div>
+                </div>
+                <div class="code-block" style="margin-top: 1.5rem">
+                    <div class="code-header">
+                        <span class="code-title">3 · Run the example (live mode)</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>./run.sh          # wfusion daemon + traffic injection (Ctrl-C to stop)
+./view.sh         # second terminal: live dashboard http://localhost:8123/view/</code></pre>
+                    </div>
+                </div>
+                <p class="wf-note">
+                    Details (rule walkthrough / field conventions / smoke validation) live in nginx_log_stats/README.md;
+                    wfusion / wfgen must be on PATH — the one-liner installer sets that up by default.
+                </p>
+
+                <div class="btn-group justify-center mt-4">
+                    <a
+                        href="https://github.com/wp-labs/warp-fusion"
+                        target="_blank"
+                        class="btn btn-primary"
+                        >GitHub</a
+                    >
+                    <a
+                        href="https://wp-labs.github.io/wp-docs"
+                        target="_blank"
+                        class="btn btn-secondary"
+                        >Docs</a
+                    >
+                    <a
+                        href="index.html"
+                        class="btn btn-secondary"
+                        >WarpParse (ETL Engine)</a
+                    >
+                </div>
+
+                <p class="wf-note">
+                    Data ingestion: the upstream WarpParse pipeline (WPL / OML adapters) normalizes and parses logs,
+                    then streams over <strong>Arrow IPC over TCP</strong> — no parsing, type-preserving, end to end.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <a href="#top" class="logo">
+                            <img
+                                src="icons/wp.png"
+                                alt="WarpFusion Logo"
+                                class="logo-img"
+                            />
+                            <span>WarpFusion</span>
+                        </a>
+                        <p>
+                            Realtime correlation engine: pattern matching across events and windows.
+                            Engine / CLI (wfusion / wfl / wfgen): github.com/wp-labs/warp-fusion ·
+                            Core runtime: github.com/wp-labs/wp-reactor
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Engine</h4>
+                        <ul class="footer-links">
+                            <li><a href="#what">Features</a></li>
+                            <li><a href="#advantage">Rule Capabilities</a></li>
+                            <li><a href="#benchmark">Performance</a></li>
+                            <li><a href="#getting-started">Start</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Language</h4>
+                        <ul class="footer-links">
+                            <li><a href="#what">WFL (five primitives)</a></li>
+                            <li><a href="#ai-native">AI Native dev loop</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Products</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html">WarpParse (ETL)</a></li>
+                            <li>
+                                <a
+                                    href="https://github.com/wp-labs/warp-fusion"
+                                    target="_blank"
+                                    >GitHub</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="https://wp-labs.github.io/wp-docs"
+                                    target="_blank"
+                                    >Docs</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>&copy; 2026 WP Labs. All rights reserved.</span>
+                    <span>Built with Rust for Performance</span>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            // WarpFusion page scripts
+            function copyWfText(btn) {
+                const text = btn.getAttribute('data-copy') || '';
+                navigator.clipboard.writeText(text).then(function () {
+                    btn.classList.add('copied');
+                    setTimeout(function () {
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const ctx = document.getElementById('nexmarkChart');
+                if (!ctx || typeof Chart === 'undefined') {
+                    return;
+                }
+
+                const labels = ['q1','q2','q3','q4','q5','q7','q8','q9','q10','q11','q12','q13','q14','q15','q16','q17','q18','q19','q20','q21','q22'];
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'WarpFusion EPS',
+                                data: [16850363, 31078008, 22183478, 3738638, 1998737, 9293974, 28969548, 7962629, 17299653, 10854288, 10892485, 8202970, 8798983, 7385812, 5924391, 8363724, 3092075, 7859815, 17272687, 13666841, 10328808],
+                                backgroundColor: 'rgba(87, 148, 242, 0.85)',
+                                borderColor: '#5794f2',
+                                borderWidth: 1,
+                                borderRadius: 3
+                            },
+                            {
+                                label: 'Flink OSS RPS',
+                                data: [1753002, 1927154, 1176664, 180693, 273496, 79526, 1253321, 43020, 526357, 244868, 822680, null, 1451316, 544339, 108980, 972318, 173928, 170565, 74591, 786850, 1054519],
+                                backgroundColor: 'rgba(52, 211, 153, 0.75)',
+                                borderColor: '#34d399',
+                                borderWidth: 1,
+                                borderRadius: 3
+                            },
+                            {
+                                label: 'Alibaba VVR RPS',
+                                data: [4381353, 6568576, 4638649, 636468, 279684, 299547, 3340125, 375146, 1953049, 685011, 2703360, null, 4997002, 2340057, 296478, 3693308, 1038044, 1051293, 431999, 2519336, 3202254],
+                                backgroundColor: 'rgba(251, 191, 36, 0.75)',
+                                borderColor: '#fbbf24',
+                                borderWidth: 1,
+                                borderRadius: 3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: { color: '#c9d1d9', padding: 15, font: { size: 12 } }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(13, 17, 23, 0.95)',
+                                titleColor: '#c9d1d9',
+                                bodyColor: '#c9d1d9',
+                                borderColor: '#30363d',
+                                borderWidth: 1,
+                                padding: 12,
+                                callbacks: {
+                                    label: function (item) {
+                                        const v = item.parsed.y;
+                                        return item.dataset.label + ': ' + (v ? Number(v).toLocaleString('en-US') : '(no baseline)') + ' events/s';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: false,
+                                grid: { display: false },
+                                ticks: { color: '#8b949e', autoSkip: false, maxRotation: 45, minRotation: 0 }
+                            },
+                            y: {
+                                type: 'logarithmic',
+                                grid: { color: 'rgba(48, 54, 61, 0.5)', drawBorder: false },
+                                ticks: {
+                                    color: '#8b949e',
+                                    callback: function (v) {
+                                        return v >= 1000000 ? (v / 1000000) + 'M' : (v >= 1000 ? (v / 1000) + 'K' : v);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+        <script>
+            // 轻量语法高亮：对纯文本代码块按行 tokenize（命令 / flag / URL / 注释 / 管道）
+            (function () {
+                var esc = function (s) {
+                    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                };
+                document.querySelectorAll('.code-content pre code').forEach(function (el) {
+                    if (el.querySelector('span')) return; // 已含高亮 span（如 WFL 规则示例）跳过
+                    var html = el.textContent.split('\n').map(function (line) {
+                        var t = esc(line);
+                        if (/^\s*#/.test(t)) {
+                            return '<span class="tok-c">' + t + '</span>';
+                        }
+                        t = t.replace(/^(\s*)([.\/\w-]+)/, '$1<span class="tok-k">$2</span>');
+                        t = t.replace(/(https?:\/\/[^\s<]+)/g, '<span class="tok-u">$1</span>');
+                        t = t.replace(/(^|\s)(-{1,2}[\w.-]+)/g, '$1<span class="tok-f">$2</span>');
+                        t = t.replace(/(\s)(\|)(\s)/g, '$1<span class="tok-p">$2</span>$3');
+                        t = t.replace(/(\s)(#.*)$/, '$1<span class="tok-c">$2</span>');
+                        return t;
+                    }).join('\n');
+                    el.innerHTML = html;
+                });
+            })();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,1233 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="WarpFusion - 用 Rust 构建的实时关联计算引擎：WFL 声明式规则、NEXMark 全查询领先 Flink、AI Native 规则开发闭环、单二进制零依赖"
+        />
+        <title>WarpFusion - 实时关联计算引擎</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+        <style>
+            /* ===== WarpFusion 页面补充样式（延续 WP 视觉体系） ===== */
+            .wf-lead {
+                font-size: 1.15rem;
+                color: var(--text-secondary);
+                line-height: 1.9;
+            }
+
+            .wf-note {
+                margin-top: 1rem;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                text-align: center;
+            }
+
+            /* 正文表格（复用 perf-table 家族） */
+            .perf-table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .perf-table td.center,
+            .perf-table th.center {
+                text-align: center;
+            }
+
+            .perf-table .wf-strong td {
+                background: rgba(87, 148, 242, 0.08);
+            }
+
+            .wf-chip {
+                display: inline-block;
+                padding: 0.15rem 0.55rem;
+                border-radius: 100px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                background: rgba(59, 130, 246, 0.15);
+                color: var(--primary-light);
+                border: 1px solid rgba(59, 130, 246, 0.3);
+            }
+
+            .wf-chip.ok {
+                background: rgba(34, 197, 94, 0.12);
+                color: #22c55e;
+                border-color: rgba(34, 197, 94, 0.35);
+            }
+
+            .wf-chip.warn {
+                background: rgba(234, 179, 8, 0.12);
+                color: #fbbf24;
+                border-color: rgba(234, 179, 8, 0.35);
+            }
+
+            .wf-chip.no {
+                background: rgba(148, 163, 184, 0.12);
+                color: #94a3b8;
+                border-color: rgba(148, 163, 184, 0.3);
+            }
+
+            /* AI 能力分级卡片 */
+            .wf-ai-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .wf-ai-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 1.5rem;
+                transition: all 0.3s ease;
+            }
+
+            .wf-ai-card:hover {
+                border-color: var(--primary);
+                box-shadow: var(--shadow-glow);
+                transform: translateY(-3px);
+            }
+
+            .wf-ai-card .wf-ai-step {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: var(--primary-light);
+                letter-spacing: 0.05em;
+            }
+
+            .wf-ai-card h4 {
+                margin: 0.5rem 0 0.75rem;
+                font-size: 1.05rem;
+                color: var(--text-primary);
+            }
+
+            .wf-ai-card p {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                line-height: 1.7;
+                margin: 0;
+            }
+
+            .wf-ai-card code {
+                font-size: 0.8rem;
+                color: #a5d6ff;
+            }
+
+            /* 语言能力矩阵首列高亮 */
+            .perf-table td:first-child {
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+
+            /* 契约 / 口径警示块 */
+            .wf-caveat {
+                background: rgba(255, 152, 0, 0.08);
+                border: 1px solid rgba(234, 179, 8, 0.25);
+                border-left: 3px solid #fbbf24;
+                border-radius: 8px;
+                padding: 1rem 1.25rem;
+                margin: 1.5rem 0;
+                font-size: 0.875rem;
+                color: var(--text-secondary);
+                line-height: 1.8;
+            }
+
+            .wf-caveat strong {
+                color: #fbbf24;
+            }
+
+            /* hero 三列快速指标 */
+            .hero-stats .stat-label {
+                max-width: 220px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* 迷你图“越低越好”语义标注 */
+            .mini-chart-title .mini-better {
+                margin-left: 0.5rem;
+                font-size: 0.68rem;
+                font-weight: 700;
+                color: #22c55e;
+            }
+
+            /* 迷你图比例轨：条在轨内按真实比例铺开 */
+            .wf-track {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                height: 16px;
+                border-radius: 3px;
+                background: rgba(255, 255, 255, 0.07);
+                overflow: hidden;
+            }
+
+            .wf-track .mini-bar {
+                min-width: 0;
+                height: 100%;
+                border-radius: 3px 0 0 3px;
+            }
+
+            /* 代码块轻量语法高亮 token 色 */
+            .code-content .tok-c {
+                color: #6e7681;
+                font-style: italic;
+            }
+
+            .code-content .tok-k {
+                color: #79c0ff;
+                font-weight: 600;
+            }
+
+            .code-content .tok-f {
+                color: #a5d6ff;
+            }
+
+            .code-content .tok-p {
+                color: #ff7b72;
+            }
+
+            .code-content .tok-u {
+                color: #7ee787;
+            }
+
+            .wf-scene-icon {
+                font-size: 1.6rem;
+                margin-bottom: 0.75rem;
+            }
+
+            @media (max-width: 768px) {
+                .hero-stats {
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 1rem;
+                }
+                .hero-mini-charts {
+                    flex-direction: column;
+                }
+            }
+
+            /* 特性卡标识：彩色字母 / 数字（第 1–6 位各一色，页面内生效） */
+            .features-grid > .card:nth-child(1) .card-icon {
+                background: rgba(96, 165, 250, 0.16);
+                color: #60a5fa;
+                box-shadow: 0 0 18px rgba(96, 165, 250, 0.25);
+            }
+            .features-grid > .card:nth-child(2) .card-icon {
+                background: rgba(167, 139, 250, 0.16);
+                color: #a78bfa;
+                box-shadow: 0 0 18px rgba(167, 139, 250, 0.25);
+            }
+            .features-grid > .card:nth-child(3) .card-icon {
+                background: rgba(52, 211, 153, 0.16);
+                color: #34d399;
+                box-shadow: 0 0 18px rgba(52, 211, 153, 0.25);
+            }
+            .features-grid > .card:nth-child(4) .card-icon {
+                background: rgba(251, 191, 36, 0.16);
+                color: #fbbf24;
+                box-shadow: 0 0 18px rgba(251, 191, 36, 0.25);
+            }
+            .features-grid > .card:nth-child(5) .card-icon {
+                background: rgba(251, 113, 133, 0.16);
+                color: #fb7185;
+                box-shadow: 0 0 18px rgba(251, 113, 133, 0.25);
+            }
+            .features-grid > .card:nth-child(6) .card-icon {
+                background: rgba(34, 211, 238, 0.16);
+                color: #22d3ee;
+                box-shadow: 0 0 18px rgba(34, 211, 238, 0.25);
+            }
+        </style>
+    </head>
+    <body class="has-site-header">
+        <!-- Header -->
+        <header class="header site-header">
+            <div class="container">
+                <div class="site-row-top">
+                    <a href="index.html" class="logo site-logo">
+                        <img
+                            src="icons/wp.png"
+                            alt="WP Labs Logo"
+                            class="logo-img"
+                        />
+                        <span>WP Labs</span>
+                    </a>
+                    <nav class="site-products" aria-label="产品切换">
+                        <a href="index_zh.html" class="site-product">WarpParse</a>
+                        <a href="warp-fusion.html" class="site-product active">WarpFusion</a>
+                    </nav>
+                    <div class="site-langs">
+                        <a href="warp-fusion.html" class="site-lang active">中</a>
+                        <span class="site-lang-sep">/</span>
+                        <a href="warp-fusion-en.html" class="site-lang">EN</a>
+                    </div>
+                </div>
+                <div class="site-row-sub">
+                    <nav class="nav" id="mainNav">
+                        <a href="#what" class="nav-link">核心特性</a>
+                        <a href="#advantage" class="nav-link">规则能力</a>
+                        <a href="#benchmark" class="nav-link">处理性能</a>
+                        <a href="#ai-native" class="nav-link">AI Native</a>
+                        <a href="#scenarios" class="nav-link">应用领域</a>
+                        <a href="#getting-started" class="nav-link nav-blog">开始</a>
+                    </nav>
+                    <div class="btn-group desktop-only site-actions">
+                        <a
+                            href="https://github.com/wp-labs/warp-fusion"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-secondary btn-xs"
+                            >GitHub</a
+                        >
+                        <a
+                            href="https://wp-labs.github.io/wp-docs"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-secondary btn-xs"
+                            >Docs</a
+                        >
+                    </div>
+                    <button
+                        class="mobile-menu-btn"
+                        id="mobileMenuBtn"
+                        aria-label="菜单"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="top" class="hero">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span>实时关联计算引擎</span>
+                        <span>Rust · 单二进制 · AI Native</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="hero-line-1"
+                            >WarpFusion
+                            <span class="gradient-text">快如闪电</span></span
+                        >
+                        <span class="hero-line-2" style="color: #fff"
+                            >AI Native 实时计算引擎</span
+                        >
+                    </h1>
+                    <p class="hero-description">
+                        输入结构化事件流，输出可解释、带评分的关联结果。
+                        跨事件、跨窗口的模式匹配 —— 攻击链、缺失检测、行为画像、实时频控，
+                        一个二进制跑完，规则几行写完、写完即验、热加载生效。
+                    </p>
+
+                    <!-- Quick Stats -->
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">24.3×</div>
+                            <div class="stat-label">
+                                NEXMark 几何平均领先 Flink OSS
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">6.8×</div>
+                            <div class="stat-label">
+                                NEXMark 几何平均领先 VVR
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3100万</div>
+                            <div class="stat-label">
+                                单机 8 核单查询吞吐峰值（EPS）
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Install Code -->
+                    <div class="install-code">
+                        <code>
+                            <span class="cmd">curl</span>
+                            <span class="flag">-sSf</span>
+                            <span class="url"
+                                >https://get.warpparse.ai/inst-x.sh</span
+                            >
+                            <span class="pipe">|</span>
+                            <span class="cmd">bash</span>
+                            <span class="flag">-s -- wfusion alpha</span>
+                        </code>
+                        <button
+                            class="copy-btn"
+                            onclick="copyWfText(this)"
+                            data-copy="curl -sSf https://get.warpparse.ai/inst-x.sh | bash -s -- wfusion alpha"
+                            title="复制"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <rect
+                                    x="9"
+                                    y="9"
+                                    width="13"
+                                    height="13"
+                                    rx="2"
+                                    ry="2"
+                                ></rect>
+                                <path
+                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Hero Mini Charts -->
+                    <div class="hero-mini-charts">
+                        <div class="mini-chart">
+                            <div class="mini-chart-title">
+                                平均 EPS · NEXMark（算术平均）
+                                <span class="mini-unit">events/s</span>
+                            </div>
+                            <div class="mini-bars">
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">WarpFusion</span>
+                                    <div class="mini-bar wp" style="width: 100%">
+                                        <span>1219万</span>
+                                    </div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Flink OSS</span>
+                                    <div class="mini-bar vector" style="width: 5.6%">
+                                        <span style="font-size: 0.6rem">68万</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-chart">
+                            <div class="mini-chart-title">
+                                CPU 平台资源（OSS 为 3 台合计）
+                                <span class="mini-unit">vCPU</span
+                                ><span class="mini-better">越低越好</span>
+                            </div>
+                            <div class="mini-bars">
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">WarpFusion</span>
+                                    <div class="wf-track">
+                                        <div class="mini-bar wp" style="width: 66.7%">
+                                            <span>8</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Flink OSS</span>
+                                    <div class="wf-track">
+                                        <div class="mini-bar vector" style="width: 100%">
+                                            <span>12</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mini-chart">
+                            <div class="mini-chart-title">
+                                内存平台资源（OSS 为 3 台合计）
+                                <span class="mini-unit">GB</span
+                                ><span class="mini-better">越低越好</span>
+                            </div>
+                            <div class="mini-bars">
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">WarpFusion</span>
+                                    <div class="wf-track">
+                                        <div class="mini-bar wp" style="width: 66.7%">
+                                            <span>≈32*</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mini-bar-row">
+                                    <span class="mini-label">Flink OSS</span>
+                                    <div class="wf-track">
+                                        <div class="mini-bar vector" style="width: 100%">
+                                            <span>48</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-chart-note">
+                        平均 EPS：NEXMark 100M 条 / 查询 · Linux 8 核 · 2026-08-27（wp-reactor v2.0.7）· 对照组来自阿里云《Nexmark 性能白皮书》算术平均；
+                        CPU / 内存为测试平台资源要求：WarpFusion 单机 8 核 ≈32GB*，Flink OSS 为 3 台 ecs.g6a.xlarge（每台 4 vCPU / 16 GiB）合计 12 vCPU / 48 GiB；
+                        *≈32GB 为按同型号云服务器与 q18 RSS 实测（≈28GB 可跑完）的推断口径
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- License Badge -->
+        <div class="license-section" style="text-align: center; padding: 1.5rem 0; background: var(--bg-secondary);">
+            <span class="wf-chip">Elastic License 2.0（ELv2）</span>
+            <span class="wf-chip ok">企业内部自用免费</span>
+            <span class="wf-chip no">source-available · 单机版</span>
+        </div>
+
+        <!-- What is WarpFusion -->
+        <section id="what" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">核心特性</h2>
+                </div>
+
+                <div class="features-grid">
+                    <div class="card">
+                        <div class="card-icon">M</div>
+                        <h3 class="card-title">跨事件的模式匹配</h3>
+                        <p class="card-description">
+                            能力内核是跨多条事件、跨时间窗口的关联计算，而非单条过滤：
+                            输入结构化事件流，输出满足关联条件的告警 / 评分 / 结构化数据。
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">L</div>
+                        <h3 class="card-title">WFL 声明式语言</h3>
+                        <p class="card-description">
+                            五原语（Bind / Match / Stats / Join / Yield）说清「要找什么」；
+                            三文件模型把「数据长什么样 / 匹配什么 / 怎么跑」分离，各角色各改各的。
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">B</div>
+                        <h3 class="card-title">单二进制 · 零依赖</h3>
+                        <p class="card-description">
+                            Rust 编写，一个二进制跑完完整链路：不依赖 Kafka、etcd 或数据库，
+                            一台 8GB 节点即可承载约千条规则，空载内存目标 &lt;100MB。
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">T</div>
+                        <h3 class="card-title">规则自带测试</h3>
+                        <p class="card-description">
+                            `test` 块写在规则文件里：命中 / 未命中一键验证，秒级反馈；
+                            replay / verify / wfgen 构成完整验证闭环，写完即验证，不靠祈祷。
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">A</div>
+                        <h3 class="card-title">AI Native</h3>
+                        <p class="card-description">
+                            语言为 AI 生成而设计：小表面积、显式语义、机器可读回执，
+                            「AI 写规则 → 引擎证明对错 → 回执驱动自迭代」是一等公民工作流。
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">R</div>
+                        <h3 class="card-title">可解释 · 带评分</h3>
+                        <p class="card-description">
+                            实体建模 entity() + 数值评分 score() + stat.* 证据字段，
+                            把「为什么触发」输出为可审计的告警证据，而非黑盒命中。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 品类边界 -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    它是什么、不是什么 —— 品类边界
+                </h3>
+                <div class="perf-table-wrapper" style="margin-top: 1rem">
+                    <table class="perf-table">
+                        <thead>
+                            <tr>
+                                <th>是：实时关联计算 / 模式匹配引擎</th>
+                                <th>不是（请诚实回避）</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>跨数据源、跨时间窗口、跨步骤的有状态关联</td>
+                                <td>通用分布式流计算平台（无分布式协调 / checkpoint）</td>
+                            </tr>
+                            <tr>
+                                <td>WFL 声明式规则 + 自带测试闭环 + 热加载</td>
+                                <td>数据仓库 / 交互式分析引擎（无行保留聚合，交下游 SIEM）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advantages Section -->
+        <section
+            id="advantage"
+            class="section"
+            style="
+                background: linear-gradient(
+                    180deg,
+                    #0f1419 0%,
+                    var(--bg-body) 100%
+                );
+            "
+        >
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">规则能力</h2>
+                    <p class="section-subtitle">
+                        WFL 把检测语义做成语言一等公民：时序链、缺失检测、实体建模、评分、窗口统计与关联 ——
+                        一条规则说清「要找什么」
+                    </p>
+                </div>
+
+                <!-- WFL Code -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    五原语 · WFL —— 一条规则说清一条攻击链
+                </h3>
+                <div class="code-comparison">
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">chain_attack.wfl</span
+                            ><span class="code-badge wpl">规则即测试载体</span>
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="comment">// 同一 IP：30 分钟内既扫 5 个端口、又失败登录 3 次 → 评分 90</span>
+<span class="keyword">rule</span> chain_attack {
+    events {
+        scan  : conn_events && action == <span class="string">"syn"</span>
+        login : conn_events && action == <span class="string">"login_fail"</span>
+    }
+    match&lt;sip:30m&gt; {
+        on event {
+            scan  | count >= 5;
+            login | count >= 3;
+        }
+    } -&gt; <span class="function">score</span>(90.0)
+    entity(ip, scan.sip)
+    yield network_alerts (sip = scan.sip, alert_type = <span class="string">"chain_attack"</span>)
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-title">同一文件内的 test</span
+                            ><span class="code-badge ok" style="background: rgba(34, 197, 94, 0.15); color: #22c55e">写完即验</span>
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="comment">// expect 是独立语义 oracle：AI 改了规则没改期望 → FAIL</span>
+<span class="keyword">test</span> full_chain <span class="keyword">for</span> chain_attack {
+  input {
+    row(scan,  sip = <span class="string">"10.0.0.1"</span>, action = <span class="string">"syn"</span>,        event_time = <span class="string">"2026-01-01T00:00:00Z"</span>);
+    row(login, sip = <span class="string">"10.0.0.1"</span>, action = <span class="string">"login_fail"</span>, event_time = <span class="string">"2026-01-01T00:00:05Z"</span>);
+  }
+  expect {
+    hits == 1;
+    hit[0].score == 90.0;
+    hit[0].entity_id == <span class="string">"10.0.0.1"</span>;
+  }
+}
+<span class="comment">// wfl test rules/chain_attack.wfl --schemas "schemas/*.wfs"</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+                <p class="wf-lead" style="text-align: center; margin-top: 2rem">
+                    三文件模型：<code>.wfs</code>（数据长什么样）· <code>.wfl</code>（匹配什么模式）·
+                    <code>.toml</code>（怎么跑：source / sink / 窗口内存 / watermark）
+                </p>
+
+                <!-- 语言能力矩阵 -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    语言表达力对照：WFL vs 主流检测 DSL
+                </h3>
+                <p class="wf-lead" style="text-align: center">
+                    ✅=语言层支持 · 🟡=部分 / 规划中 · ✗=不支持（对照对象：YARA-L 2.0、EQL、Sigma、SPL、KQL）
+                </p>
+                <div class="perf-table-wrapper" style="margin-top: 1rem">
+                    <table class="perf-table">
+                        <thead>
+                            <tr>
+                                <th>能力</th>
+                                <th class="center">WFL</th>
+                                <th class="center">YARA-L</th>
+                                <th class="center">EQL</th>
+                                <th class="center">Sigma</th>
+                                <th class="center">SPL</th>
+                                <th class="center">KQL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>多步时序链</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✅</td><td class="center">✅</td><td class="center">✗</td><td class="center">✅</td><td class="center">✗</td></tr>
+                            <tr><td>OR 分支时序</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>双阶段匹配（实时 / 关闭求值）</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>缺失检测（A→NOT B）</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✅</td><td class="center">✅</td><td class="center">✗</td><td class="center">✅</td><td class="center">✗</td></tr>
+                            <tr><td>会话窗口 / 跳窗（HOP）</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">部分</td><td class="center">✗</td></tr>
+                            <tr><td>声明式窗口统计</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✅</td><td class="center">✅</td></tr>
+                            <tr><td>反连接 / 外部关联 / Join 时点语义</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">部分</td><td class="center">✗</td><td class="center">✗</td><td class="center">✅</td><td class="center">✅</td></tr>
+                            <tr><td>数值风险评分 score()</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>一等实体声明 entity()</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>输出契约版本化 yield target@vN</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>规则级资源预算 limits</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">平台配置</td><td class="center">平台配置</td></tr>
+                            <tr><td>Conformance 门禁</td><td class="center"><span class="wf-chip ok">✅</span></td><td class="center">平台回放</td><td class="center">平台测试</td><td class="center">✗</td><td class="center">平台测试</td><td class="center">平台测试</td></tr>
+                            <tr><td>分项可解释评分（规划中）</td><td class="center"><span class="wf-chip warn">🟡</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td></tr>
+                            <tr><td>基线偏离（规划中）</td><td class="center"><span class="wf-chip warn">🟡</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">需 MLTK</td><td class="center">需 Fusion ML</td></tr>
+                            <tr><td>行保留聚合（eventstats）</td><td class="center"><span class="wf-chip no">✗ 有意不做</span></td><td class="center">✗</td><td class="center">✗</td><td class="center">✗</td><td class="center">✅</td><td class="center">✅</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEXMark Benchmark Section -->
+        <section id="benchmark" class="section performance-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">处理性能</h2>
+                    <p class="section-subtitle">
+                        WarpFusion vs Flink OSS（1.20.4）· 阿里云实时计算 Flink VVR（vvr-11.5-jdk11-flink-1.20）
+                    </p>
+                </div>
+
+                <div class="wf-caveat">
+                    <strong>口径先行（引用本页数据请保留这段注脚）：</strong>
+                    性能数据为引擎在 NEXMark 合成负载与指定配置下的自测跑批：100M 条事件 / 查询、
+                    Linux 8 核（与 VVR 同型号云服务器）、本地文件汇（blackhole 等价）、
+                    2026-08-27 权威轮、核心运行时 wp-reactor v2.0.7（配套 WarpFusion 工具 0.5.x），21/21 查询 [clean]。对照组来自阿里云公开发布的
+                    《Nexmark 性能白皮书》。WarpFusion EPS（哨兵口径）与白皮书 RPS 计量方式不同，
+                    资源计量亦不对等（8 核 vs 8 CU / 3×12 vCPU 三节点）——<strong>结论作量级参照，
+                    非逐位比较、非生产 SLA 承诺</strong>。
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card metric-primary">
+                        <div class="metric-value">24.3×</div>
+                        <div class="metric-label">几何平均 vs Flink OSS</div>
+                        <div class="metric-desc">算术平均 44.7×（上限语境）</div>
+                    </div>
+                    <div class="metric-card metric-secondary">
+                        <div class="metric-value">6.8×</div>
+                        <div class="metric-label">几何平均 vs 阿里 VVR</div>
+                        <div class="metric-desc">算术平均 10.1×（上限语境）</div>
+                    </div>
+                    <div class="metric-card metric-accent">
+                        <div class="metric-value">231×</div>
+                        <div class="metric-label">单查询最高领先（q20 vs OSS）</div>
+                        <div class="metric-desc">q9 vs OSS 185× · q7 vs OSS 117×</div>
+                    </div>
+                    <div class="metric-card metric-success">
+                        <div class="metric-value">20/20</div>
+                        <div class="metric-label">有基线查询全部领先</div>
+                        <div class="metric-desc">wp-reactor v2.0.7 · 100M · blackhole 汇</div>
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <div class="resource-charts-grid" style="grid-template-columns: 1fr">
+                    <div class="resource-chart-card">
+                        <div class="chart-card-header">
+                            <h4>NEXMark Q1–Q22 逐查询吞吐对比（对数 · 条/秒）</h4>
+                            <p>
+                                每个查询一组三根柱：WarpFusion / Flink OSS / 阿里 VVR 在同一查询上的吞吐
+                                （对数刻度，间距即量级差距，柱高越长越快）。q6 白皮书未发布；q13 无对比基线、仅有 WarpFusion 柱。
+                                21 条查询全部在图上，逐项数值见下方全量表。
+                            </p>
+                        </div>
+                        <div class="chart-container" style="height: 460px">
+                            <canvas id="nexmarkChart"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: linear-gradient(135deg, #5794f2 0%, #8b5cf6 100%)"></span>
+                                <span>WarpFusion（EPS，100M 实测）</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: linear-gradient(135deg, #34d399 0%, #059669 100%)"></span>
+                                <span>Flink OSS（RPS，白皮书）</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)"></span>
+                                <span>阿里 VVR（RPS，白皮书）</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Table -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    逐查询全量对照表
+                </h3>
+                <div class="perf-table-wrapper" style="margin-top: 1rem">
+                    <table class="perf-table">
+                        <thead>
+                            <tr>
+                                <th>Query</th>
+                                <th style="text-align: right">WarpFusion EPS</th>
+                                <th style="text-align: right">Flink OSS RPS</th>
+                                <th style="text-align: right">阿里 VVR RPS</th>
+                                <th style="text-align: right">vs OSS</th>
+                                <th style="text-align: right">vs VVR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>q1</td><td style="text-align: right">16,850,363</td><td style="text-align: right">1,753,002</td><td style="text-align: right">4,381,353</td><td style="text-align: right">9.62×</td><td style="text-align: right">3.85×</td></tr>
+                            <tr><td>q2</td><td style="text-align: right">31,078,008</td><td style="text-align: right">1,927,154</td><td style="text-align: right">6,568,576</td><td style="text-align: right">16.13×</td><td style="text-align: right">4.73×</td></tr>
+                            <tr><td>q3</td><td style="text-align: right">22,183,478</td><td style="text-align: right">1,176,664</td><td style="text-align: right">4,638,649</td><td style="text-align: right">18.84×</td><td style="text-align: right">4.79×</td></tr>
+                            <tr><td>q4</td><td style="text-align: right">3,738,638</td><td style="text-align: right">180,693</td><td style="text-align: right">636,468</td><td style="text-align: right">20.69×</td><td style="text-align: right">5.87×</td></tr>
+                            <tr><td>q5</td><td style="text-align: right">1,998,737</td><td style="text-align: right">273,496</td><td style="text-align: right">279,684</td><td style="text-align: right">7.31×</td><td style="text-align: right">7.15×</td></tr>
+                            <tr><td>q7</td><td style="text-align: right">9,293,974</td><td style="text-align: right">79,526</td><td style="text-align: right">299,547</td><td style="text-align: right">116.74×</td><td style="text-align: right">31.03×</td></tr>
+                            <tr><td>q8</td><td style="text-align: right">28,969,548</td><td style="text-align: right">1,253,321</td><td style="text-align: right">3,340,125</td><td style="text-align: right">23.12×</td><td style="text-align: right">8.67×</td></tr>
+                            <tr><td>q9</td><td style="text-align: right">7,962,629</td><td style="text-align: right">43,020</td><td style="text-align: right">375,146</td><td style="text-align: right">185.08×</td><td style="text-align: right">21.22×</td></tr>
+                            <tr><td>q10</td><td style="text-align: right">17,299,653</td><td style="text-align: right">526,357</td><td style="text-align: right">1,953,049</td><td style="text-align: right">32.82×</td><td style="text-align: right">8.85×</td></tr>
+                            <tr><td>q11</td><td style="text-align: right">10,854,288</td><td style="text-align: right">244,868</td><td style="text-align: right">685,011</td><td style="text-align: right">44.36×</td><td style="text-align: right">15.84×</td></tr>
+                            <tr><td>q12</td><td style="text-align: right">10,892,485</td><td style="text-align: right">822,680</td><td style="text-align: right">2,703,360</td><td style="text-align: right">13.23×</td><td style="text-align: right">4.03×</td></tr>
+                            <tr><td>q13</td><td style="text-align: right">8,202,970</td><td style="text-align: right">—</td><td style="text-align: right">—</td><td style="text-align: right">—</td><td style="text-align: right">—</td></tr>
+                            <tr class="wf-strong"><td>q14（最弱优势项）</td><td style="text-align: right">8,798,983</td><td style="text-align: right">1,451,316</td><td style="text-align: right">4,997,002</td><td style="text-align: right">6.06×</td><td style="text-align: right">1.76×</td></tr>
+                            <tr><td>q15</td><td style="text-align: right">7,385,812</td><td style="text-align: right">544,339</td><td style="text-align: right">2,340,057</td><td style="text-align: right">13.57×</td><td style="text-align: right">3.15×</td></tr>
+                            <tr><td>q16</td><td style="text-align: right">5,924,391</td><td style="text-align: right">108,980</td><td style="text-align: right">296,478</td><td style="text-align: right">54.36×</td><td style="text-align: right">19.96×</td></tr>
+                            <tr><td>q17</td><td style="text-align: right">8,363,724</td><td style="text-align: right">972,318</td><td style="text-align: right">3,693,308</td><td style="text-align: right">8.60×</td><td style="text-align: right">2.26×</td></tr>
+                            <tr><td>q18</td><td style="text-align: right">3,092,075</td><td style="text-align: right">173,928</td><td style="text-align: right">1,038,044</td><td style="text-align: right">17.78×</td><td style="text-align: right">2.98×</td></tr>
+                            <tr><td>q19</td><td style="text-align: right">7,859,815</td><td style="text-align: right">170,565</td><td style="text-align: right">1,051,293</td><td style="text-align: right">46.08×</td><td style="text-align: right">7.48×</td></tr>
+                            <tr class="wf-strong"><td>q20（snapshot join）</td><td style="text-align: right">17,272,687</td><td style="text-align: right">74,591</td><td style="text-align: right">431,999</td><td style="text-align: right">231.49×</td><td style="text-align: right">39.98×</td></tr>
+                            <tr><td>q21</td><td style="text-align: right">13,666,841</td><td style="text-align: right">786,850</td><td style="text-align: right">2,519,336</td><td style="text-align: right">17.38×</td><td style="text-align: right">5.43×</td></tr>
+                            <tr><td>q22</td><td style="text-align: right">10,328,808</td><td style="text-align: right">1,054,519</td><td style="text-align: right">3,202,254</td><td style="text-align: right">9.79×</td><td style="text-align: right">3.23×</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="wf-note">
+                    单位均为 条/秒。EPS 与 RPS 口径不同，倍数仅作量级参照。q6 白皮书未发布；
+                    WarpFusion all 跑批为 21 条查询（q6 移出 all、单跑保留）。
+                </p>
+
+                <!-- Known boundaries -->
+                <div class="wf-caveat">
+                    <strong>一并公开的边界（不做过度承诺）：</strong>
+                    ① 当前 <strong>无 exactly-once / checkpoint</strong>（best-effort，可靠性在路线图）——
+                    这是相对 Flink 唯一的能力缺口，真正的边界在多节点高可用而非吞吐；
+                    ② q14 是相对 VVR 的最弱项（仍领先 OSS 6.06×），归因于 Calculation 类字符串计算；
+                    ③ q18 状态窗内存（RSS≈27.9GB @100M）为已知问题，wp-reactor v2.0.8 起 spill + 内存上限已使其下降约 25%；
+                    ④ 以上为 blackhole 汇口径（纯算力上限），告警密集落 sink 请按自身告警率实测；
+                    ⑤ 生态广度（connector、社区规则库）不及 Flink，十年积累是真实护城河。
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Native Section -->
+        <section
+            id="ai-native"
+            class="section"
+            style="
+                background: linear-gradient(
+                    180deg,
+                    #0f1419 0%,
+                    var(--bg-body) 100%
+                );
+            "
+        >
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">WarpFusion 是 AI Native 引擎</h2>
+                    <p class="section-subtitle">
+                        AI Native ≠ 内置大模型：引擎配置、规则编写、验证、度量——通过 AI 都能完成
+                    </p>
+                </div>
+
+                <div class="wf-lead" style="text-align: center; max-width: 800px; margin: 0 auto">
+                    <strong>配置</strong>（wfusion.toml，AI 生成）、<strong>编写</strong>（几行 WFL）、<strong>验证</strong>（wfl test / intent 回执）、<strong>度量</strong>（wfgen perf-diag --gate）——
+                    四个环节都有机器可读的接口与回执，于是「AI 生成 → 引擎回执指出差在哪 → AI 据回执修改 → 再验证」可以自动跑起来，
+                    人只负责定义意图与验收标准。
+                </div>
+
+
+
+                <!-- 6 levels -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    AI 原生规则开发闭环
+                </h3>
+                <div class="wf-ai-grid">
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">编译期检查</div>
+                        <h4>wfl lint / wfl explain</h4>
+                        <p>语法 / 类型错误在运行前拦住；编译后规则结构人 / AI 可读。</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">语义自证</div>
+                        <h4>wfl test <span style="font-weight: 400">（契约测试）</span></h4>
+                        <p><code>expect</code> 是独立语义 oracle，引擎状态机进程内执行、秒级反馈；AI 改规则没改期望 → FAIL。</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">对抗测试生成</div>
+                        <h4>wfl test --gen-negatives</h4>
+                        <p>机器从规则结构静态反演反例，断言独立于 AI 写的 expect —— 打破「AI 写规则 + AI 自证」。</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">检测意图验证</div>
+                        <h4>wfl intent（.wfi 样本）</h4>
+                        <p>证明「意图本身对」：正样本 0 命中 → 漏报 FAIL；负样本命中 → 误报 FAIL。</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">真实回放 / 对拍</div>
+                        <h4>wfl replay / wfl verify</h4>
+                        <p>真实数据流 + oracle 逐条比对，支持 score / time 容差。</p>
+                    </div>
+                    <div class="wf-ai-card">
+                        <div class="wf-ai-step">性能护栏</div>
+                        <h4>wfgen perf-diag --gate</h4>
+                        <p>语义对还不够，性能可接受才放行：绝对阈值兜底 + 相对基线防回归，门禁防静默失效。</p>
+                    </div>
+                </div>
+
+                <!-- Ecosystem -->
+                <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
+                    生态设施
+                </h3>
+                <div class="connector-grid">
+                    <div class="connector-card">
+                        <div class="connector-icon">S</div>
+                        <div class="connector-name">wf-skills 技能包</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            规则编写 / schema / 配置 / 测试管线 / 性能基准 / 集成接入，一键装入 Claude Code 或 Codex
+                        </p>
+                    </div>
+                    <div class="connector-card">
+                        <div class="connector-icon">R</div>
+                        <div class="connector-name">wf-rules 规则语料</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            18 条按攻击阶段组织的真实 .wfl 检测规则，few-shot 语料 + 回归基线
+                        </p>
+                    </div>
+                    <div class="connector-card">
+                        <div class="connector-icon">E</div>
+                        <div class="connector-name">编辑器 / LSP</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            tree-sitter-wfl 语法高亮 + WFL LSP（诊断 / 跳转 / 补全），AI 与人共用反馈通道
+                        </p>
+                    </div>
+                    <div class="connector-card">
+                        <div class="connector-icon">D</div>
+                        <div class="connector-name">wfgen 确定性数据</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            同 count + seed 字节级确定；命中 / 近失 / 未命中三类样本，供回归与 AI 练习
+                        </p>
+                    </div>
+                </div>
+
+                <div class="wf-caveat">
+                    <strong>诚实的边界：</strong>① <strong>AI 生成 ≠ 免验证</strong>——检测规则出错是静默的（漏报 / 误报不报错），
+                    生成规则必须跑 <code>wfl test</code> 并纳入回归；② 本闭环<strong>不做自动修规则</strong>——只承诺回执能证明
+                    「对在哪、错在哪」，自动修复是回执之上的策略层；③ L2 反例生成只覆盖简单 bind guard，复合 guard 如实跳过、
+                    不虚报覆盖；④ 当前为 alpha（2026-09），统一合并回执命令仍在演进。
+                </div>
+            </div>
+        </section>
+
+        <!-- Scenarios -->
+        <section id="scenarios" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">应用领域</h2>
+                    <p class="section-subtitle">
+                        NEXMark Q1–Q22 覆盖的流处理形态，正好映射到四类真实场景
+                    </p>
+                </div>
+                <div class="features-grid">
+                    <div class="card">
+                        <div class="wf-scene-icon">🛡️</div>
+                        <h3 class="card-title">SIEM / 安全检测</h3>
+                        <p class="card-description">
+                            序列匹配、行为统计与 Top-N、上下文关联 —— 攻击链检测、告警归并、实体行为分析。
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="wf-scene-icon">💳</div>
+                        <h3 class="card-title">风控反欺诈</h3>
+                        <p class="card-description">
+                            每实体最后状态、Top-N、速率窗口 —— 名单匹配、异常排行、实时频控。
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="wf-scene-icon">📈</div>
+                        <h3 class="card-title">AIOps / 可观测</h3>
+                        <p class="card-description">
+                            滑窗 / 会话窗突增、处理时间频控 —— 指标异常、限流去重、错误率突增联动延迟抬升。
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="wf-scene-icon">🔗</div>
+                        <h3 class="card-title">实时数仓 / ETL</h3>
+                        <p class="card-description">
+                            投影、过滤、富化、落盘 —— 字段归一化、日志标准化、热冷分层。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started / CTA -->
+        <section
+            id="getting-started"
+            class="section"
+            style="
+                background: linear-gradient(
+                    180deg,
+                    var(--bg-body) 0%,
+                    #0f1419 100%
+                );
+            "
+        >
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">开始使用 WarpFusion</h2>
+                    <p class="section-subtitle">
+                        三步跑通一个真实示例：安装 wfusion → 克隆示例 → 运行 nginx_log_stats
+                    </p>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-title">1 · 下载安装 wfusion（含 wfl / wfgen）</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>curl -sSf https://get.warpparse.ai/inst-x.sh | bash -s -- wfusion alpha</code></pre>
+                    </div>
+                </div>
+                <div class="code-block" style="margin-top: 1.5rem">
+                    <div class="code-header">
+                        <span class="code-title">2 · 克隆示例仓库</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>git clone https://github.com/wp-labs/wf-examples
+cd wf-examples/nginx_log_stats</code></pre>
+                    </div>
+                </div>
+                <div class="code-block" style="margin-top: 1.5rem">
+                    <div class="code-header">
+                        <span class="code-title">3 · 运行示例（持续模式）</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>./run.sh          # wfusion daemon + 流量注入（Ctrl-C 停止）
+./view.sh         # 另开终端：实时看板 http://localhost:8123/view/</code></pre>
+                    </div>
+                </div>
+                <p class="wf-note">
+                    示例详情（规则解读 / 字段口径 / 冒烟验证）见 nginx_log_stats/README.md；需要 wfusion / wfgen 在 PATH 中，一键安装默认装入。
+                </p>
+
+                <div class="btn-group justify-center mt-4">
+                    <a
+                        href="https://github.com/wp-labs/warp-fusion"
+                        target="_blank"
+                        class="btn btn-primary"
+                        >GitHub</a
+                    >
+                    <a
+                        href="https://wp-labs.github.io/wp-docs"
+                        target="_blank"
+                        class="btn btn-secondary"
+                        >文档</a
+                    >
+                    <a
+                        href="index_zh.html"
+                        class="btn btn-secondary"
+                        >WarpParse（ETL 引擎）</a
+                    >
+                </div>
+
+                <p class="wf-note">
+                    数据接入：上游 WarpParse（WPL / OML 适配器）解析归一化后，
+                    经 <strong>Arrow IPC over TCP</strong> 直连 —— 全程免解析、类型保真。
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <a href="#top" class="logo">
+                            <img
+                                src="icons/wp.png"
+                                alt="WarpFusion Logo"
+                                class="logo-img"
+                            />
+                            <span>WarpFusion</span>
+                        </a>
+                        <p>
+                            实时关联计算引擎：跨事件、跨窗口的模式匹配。
+                            引擎 / CLI（wfusion / wfl / wfgen）：github.com/wp-labs/warp-fusion ·
+                            核心运行时：github.com/wp-labs/wp-reactor
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">引擎</h4>
+                        <ul class="footer-links">
+                            <li><a href="#what">核心特性</a></li>
+                            <li><a href="#advantage">规则能力</a></li>
+                            <li><a href="#benchmark">处理性能</a></li>
+                            <li><a href="#getting-started">开始</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">语言</h4>
+                        <ul class="footer-links">
+                            <li><a href="#what">WFL（五原语）</a></li>
+                            <li><a href="#ai-native">AI Native 开发闭环</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">产品</h4>
+                        <ul class="footer-links">
+                            <li><a href="index_zh.html">WarpParse（ETL）</a></li>
+                            <li>
+                                <a
+                                    href="https://github.com/wp-labs/warp-fusion"
+                                    target="_blank"
+                                    >GitHub</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    href="https://wp-labs.github.io/wp-docs"
+                                    target="_blank"
+                                    >Docs</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>&copy; 2026 WP Labs. All rights reserved.</span>
+                    <span>Built with Rust for Performance</span>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            // WarpFusion 页面专用脚本
+            function copyWfText(btn) {
+                const text = btn.getAttribute('data-copy') || '';
+                navigator.clipboard.writeText(text).then(function () {
+                    btn.classList.add('copied');
+                    setTimeout(function () {
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const ctx = document.getElementById('nexmarkChart');
+                if (!ctx || typeof Chart === 'undefined') {
+                    return;
+                }
+
+                const labels = ['q1','q2','q3','q4','q5','q7','q8','q9','q10','q11','q12','q13','q14','q15','q16','q17','q18','q19','q20','q21','q22'];
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'WarpFusion EPS',
+                                data: [16850363, 31078008, 22183478, 3738638, 1998737, 9293974, 28969548, 7962629, 17299653, 10854288, 10892485, 8202970, 8798983, 7385812, 5924391, 8363724, 3092075, 7859815, 17272687, 13666841, 10328808],
+                                backgroundColor: 'rgba(87, 148, 242, 0.85)',
+                                borderColor: '#5794f2',
+                                borderWidth: 1,
+                                borderRadius: 3
+                            },
+                            {
+                                label: 'Flink OSS RPS',
+                                data: [1753002, 1927154, 1176664, 180693, 273496, 79526, 1253321, 43020, 526357, 244868, 822680, null, 1451316, 544339, 108980, 972318, 173928, 170565, 74591, 786850, 1054519],
+                                backgroundColor: 'rgba(52, 211, 153, 0.75)',
+                                borderColor: '#34d399',
+                                borderWidth: 1,
+                                borderRadius: 3
+                            },
+                            {
+                                label: '阿里 VVR RPS',
+                                data: [4381353, 6568576, 4638649, 636468, 279684, 299547, 3340125, 375146, 1953049, 685011, 2703360, null, 4997002, 2340057, 296478, 3693308, 1038044, 1051293, 431999, 2519336, 3202254],
+                                backgroundColor: 'rgba(251, 191, 36, 0.75)',
+                                borderColor: '#fbbf24',
+                                borderWidth: 1,
+                                borderRadius: 3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: { color: '#c9d1d9', padding: 15, font: { size: 12 } }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(13, 17, 23, 0.95)',
+                                titleColor: '#c9d1d9',
+                                bodyColor: '#c9d1d9',
+                                borderColor: '#30363d',
+                                borderWidth: 1,
+                                padding: 12,
+                                callbacks: {
+                                    label: function (item) {
+                                        const v = item.parsed.y;
+                                        return item.dataset.label + ': ' + (v ? Number(v).toLocaleString('en-US') : '（无基线）') + ' 条/秒';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: false,
+                                grid: { display: false },
+                                ticks: { color: '#8b949e', autoSkip: false, maxRotation: 45, minRotation: 0 }
+                            },
+                            y: {
+                                type: 'logarithmic',
+                                grid: { color: 'rgba(48, 54, 61, 0.5)', drawBorder: false },
+                                ticks: {
+                                    color: '#8b949e',
+                                    callback: function (v) {
+                                        return v >= 1000000 ? (v / 1000000) + 'M' : (v >= 1000 ? (v / 1000) + 'K' : v);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+        <script>
+            // 轻量语法高亮：对纯文本代码块按行 tokenize（命令 / flag / URL / 注释 / 管道）
+            (function () {
+                var esc = function (s) {
+                    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                };
+                document.querySelectorAll('.code-content pre code').forEach(function (el) {
+                    if (el.querySelector('span')) return; // 已含高亮 span（如 WFL 规则示例）跳过
+                    var html = el.textContent.split('\n').map(function (line) {
+                        var t = esc(line);
+                        if (/^\s*#/.test(t)) {
+                            return '<span class="tok-c">' + t + '</span>';
+                        }
+                        t = t.replace(/^(\s*)([.\/\w-]+)/, '$1<span class="tok-k">$2</span>');
+                        t = t.replace(/(https?:\/\/[^\s<]+)/g, '<span class="tok-u">$1</span>');
+                        t = t.replace(/(^|\s)(-{1,2}[\w.-]+)/g, '$1<span class="tok-f">$2</span>');
+                        t = t.replace(/(\s)(\|)(\s)/g, '$1<span class="tok-p">$2</span>$3');
+                        t = t.replace(/(\s)(#.*)$/, '$1<span class="tok-c">$2</span>');
+                        return t;
+                    }).join('\n');
+                    el.innerHTML = html;
+                });
+            })();
+        </script>
+    </body>
+</html>

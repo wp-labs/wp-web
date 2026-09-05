@@ -3188,3 +3188,184 @@ a.connector-card {
     }
 }
 
+/* ============================================
+   Two-Tier Site Header（产品级导航 + 内容级导航）
+   ============================================ */
+
+.header.site-header {
+    height: auto;
+}
+
+.site-header .container {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.site-row-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 54px;
+}
+
+.site-row-sub {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 58px;
+    border-top: 1px solid rgba(48, 54, 61, 0.65);
+}
+
+.site-logo .logo-img {
+    width: 30px;
+    height: 30px;
+}
+
+.site-products {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.site-product {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 0.4rem 1.1rem;
+    border-radius: 100px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.site-product:hover {
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+
+.site-product.active {
+    color: #fff;
+    background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.22) 0%,
+        rgba(168, 85, 247, 0.22) 100%
+    );
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.2);
+}
+
+.site-langs {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.site-lang {
+    color: var(--text-muted);
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.site-lang:hover {
+    color: var(--text-primary);
+}
+
+.site-lang.active {
+    color: #fff;
+    background: rgba(59, 130, 246, 0.22);
+}
+
+.site-lang.disabled {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.site-lang-sep {
+    color: var(--border-light);
+}
+
+.site-actions {
+    margin-left: auto;
+}
+
+.site-row-sub .nav {
+    gap: 1.6rem;
+}
+
+.has-site-header .hero {
+    padding-top: 118px;
+}
+
+.has-site-header section[id] {
+    scroll-margin-top: 130px;
+}
+
+@media (max-width: 1024px) {
+    .site-row-sub .nav {
+        gap: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .has-site-header .header {
+        padding: 0;
+    }
+
+    .site-row-top {
+        height: 52px;
+    }
+
+    .site-row-sub {
+        height: 52px;
+        justify-content: flex-end;
+    }
+
+    .has-site-header .hero {
+        padding-top: 112px;
+    }
+
+    .has-site-header section[id] {
+        scroll-margin-top: 122px;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-logo {
+        display: none;
+    }
+
+    .site-product {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.8rem;
+    }
+
+    .site-row-top {
+        gap: 0.4rem;
+    }
+}
+
+/* 品牌字标：logo + WP Labs（两级导航首行） */
+.site-logo {
+    font-size: 1.05rem;
+    gap: 0.6rem;
+}
+
+.site-logo span {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+@media (max-width: 480px) {
+    .site-logo {
+        display: flex;
+    }
+
+    .site-logo span {
+        display: none;
+    }
+}
+

@@ -13,81 +13,89 @@
         <link rel="icon" type="image/png" href="favicon.png" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     </head>
-    <body>
+    <body class="has-site-header">
         <!-- Header -->
-        <header class="header">
-            <div class="container header-inner">
-                <a href="#" class="logo">
-                    <img
-                        src="icons/wp.png"
-                        alt="WarpParse Logo"
-                        class="logo-img"
-                    />
-                    <span>WarpParse</span>
-                </a>
-                <nav class="nav" id="mainNav">
-                    <a href="#features" class="nav-link">Features</a>
-                    <a href="#performance" class="nav-link">Throughput</a>
-                    <a href="#wpl" class="nav-link">WPL</a>
-                    <a href="#connectors" class="nav-link">Connectors</a>
-                    <a href="blog/index.html" class="nav-link nav-blog">Blog</a>
-                </nav>
-                <div class="btn-group desktop-only">
-                    <a
-                        href="https://github.com/wp-labs"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn btn-secondary btn-xs"
-                        >GitHub</a
-                    >
-                    <a
-                        href="https://wp-labs.github.io/wp-docs"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn btn-secondary btn-xs"
-                        >Docs</a
-                    >
-                    <a
-                        href="https://editor.warpparse.ai"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn btn-secondary btn-xs"
-                        >Editor</a
-                    >
-                    <a
-                        href="https://monitor.alpha.warpparse.ai"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn btn-secondary btn-xs"
-                        >Monitor</a
-                    >
-                    <div class="dropdown">
-                        <button class="btn btn-secondary btn-xs dropdown-toggle" id="moreMenuBtn">
-                            More
-                            <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-                                <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
-                        </button>
-                        <div class="dropdown-menu" id="moreMenu">
-                            <a href="https://example.warpparse.ai" target="_blank" rel="noopener noreferrer" class="dropdown-item">Example</a>
-                            <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank" rel="noopener noreferrer" class="dropdown-item">Download</a>
+        <header class="header site-header">
+            <div class="container">
+                <div class="site-row-top">
+                    <a href="index.html" class="logo site-logo">
+                        <img
+                            src="icons/wp.png"
+                            alt="WP Labs Logo"
+                            class="logo-img"
+                        />
+                        <span>WP Labs</span>
+                    </a>
+                    <nav class="site-products" aria-label="Products">
+                        <a href="index.html" class="site-product active">WarpParse</a>
+                        <a href="warp-fusion-en.html" class="site-product">WarpFusion</a>
+                    </nav>
+                    <div class="site-langs">
+                        <a href="index_zh.html" class="site-lang">中</a>
+                        <span class="site-lang-sep">/</span>
+                        <a href="index.html" class="site-lang active">EN</a>
+                    </div>
+                </div>
+                <div class="site-row-sub">
+                    <nav class="nav" id="mainNav">
+                        <a href="#features" class="nav-link">Features</a>
+                        <a href="#performance" class="nav-link">Throughput</a>
+                        <a href="#wpl" class="nav-link">WPL</a>
+                        <a href="#connectors" class="nav-link">Connectors</a>
+                        <a href="blog/index.html" class="nav-link nav-blog">Blog</a>
+                    </nav>
+                    <div class="btn-group desktop-only site-actions">
+                        <a
+                            href="https://github.com/wp-labs"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-secondary btn-xs"
+                            >GitHub</a
+                        >
+                        <a
+                            href="https://wp-labs.github.io/wp-docs"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-secondary btn-xs"
+                            >Docs</a
+                        >
+                        <a
+                            href="https://editor.warpparse.ai"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-secondary btn-xs"
+                            >Editor</a
+                        >
+                        <a
+                            href="https://monitor.alpha.warpparse.ai"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-secondary btn-xs"
+                            >Monitor</a
+                        >
+                        <div class="dropdown">
+                            <button class="btn btn-secondary btn-xs dropdown-toggle" id="moreMenuBtn">
+                                More
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                                    <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu" id="moreMenu">
+                                <a href="https://example.warpparse.ai" target="_blank" rel="noopener noreferrer" class="dropdown-item">Example</a>
+                                <a href="https://github.com/wp-labs/warp-parse/releases" target="_blank" rel="noopener noreferrer" class="dropdown-item">Download</a>
+                            </div>
                         </div>
                     </div>
-                    <a
-                        href="index_zh.html"
-                        class="btn btn-secondary btn-xs"
-                        >中文</a
+                    <button
+                        class="mobile-menu-btn"
+                        id="mobileMenuBtn"
+                        aria-label="Menu"
                     >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
-                <button
-                    class="mobile-menu-btn"
-                    id="mobileMenuBtn"
-                    aria-label="Menu"
-                >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </div>
         </header>
 
