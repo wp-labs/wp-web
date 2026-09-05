@@ -98,6 +98,7 @@ rules 档 EPS=150000 vs 基线 200000（回退 25.0%，允许 ≤20.0%）
 |---|---|
 | **`wf-skills` 技能包** | 面向 Claude Code / Codex 的规则开发技能（规则编写与 lint、`.wfs` schema、运行配置、测试管线调试、性能基准验证、系统集成接入等），一键安装进 `~/.claude/skills` 或 `~/.codex/skills` |
 | **`wf-rules` 规则语料** | 18 条真实 `.wfl` 检测规则，按攻击阶段组织（侦察 / 初始访问 / 横向移动 / C2 / 外传 / 链式组合等），作为 few-shot 语料与回归基线 |
+| **`wf-examples` 示例仓库** | 可直接运行的最小业务示例（`nginx_log_stats`：stats 窗口统计 + 5xx 突发告警 + 实时看板），上手 / 联调入口（github.com/wp-labs/wf-examples） |
 | **编辑器 / LSP** | `tree-sitter-wfl` 语法高亮（Zed 扩展）+ WFL LSP（诊断 / 跳转 / 补全），在编辑器内即时校验——AI 与人共用同一反馈通道 |
 | **`wfgen` 确定性数据生成** | 同 `count + seed` 字节级确定；`.wfg` 场景文件生成带**命中 / 近失 / 未命中**三类样本——既是回归样本，也是 AI 练习与验收的数据源 |
 

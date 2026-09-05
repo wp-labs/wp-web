@@ -324,10 +324,8 @@
                         >
                     </h1>
                     <p class="hero-description">
-                        Feed it structured event streams; get back explainable, scored correlation results.
-                        Cross-event, cross-window pattern matching — attack chains, missing-event detection,
-                        behavior profiling, real-time rate limiting — all in one binary: rules in a few lines,
-                        verified the moment they are written, hot-reloaded without restarts.
+                        Feed structured event streams in, get explainable, scored correlation results out.
+                        Cross-event, cross-window pattern matching.
                     </p>
 
                     <!-- Quick Stats -->
@@ -451,7 +449,7 @@
                                     <span class="mini-label">WarpFusion</span>
                                     <div class="wf-track">
                                         <div class="mini-bar wp" style="width: 66.7%">
-                                            <span>≈32*</span>
+                                            <span>≈32</span>
                                         </div>
                                     </div>
                                 </div>
@@ -467,9 +465,7 @@
                         </div>
                     </div>
                     <div class="hero-chart-note">
-                        Avg EPS: NEXMark 100M events/query · Linux 8 cores · 2026-08-27 (wp-reactor v2.0.7) arithmetic mean · baseline from Alibaba Cloud Nexmark whitepaper.
-                        CPU / memory = test-platform resource requirements: WarpFusion single host 8 cores ≈32GB*; Flink OSS = 3 × ecs.g6a.xlarge (4 vCPU / 16 GiB each), 12 vCPU / 48 GiB total.
-                        *≈32GB inferred from the same cloud server model and q18 RSS ≈28GB
+                        Avg EPS: NEXMark 100M events/query · Linux 8 cores · 2026-08-27 (wp-reactor v2.0.7) arithmetic mean · baseline from Alibaba Cloud Nexmark whitepaper
                     </div>
                 </div>
             </div>
@@ -494,23 +490,23 @@
                         <div class="card-icon">M</div>
                         <h3 class="card-title">Cross-event pattern matching</h3>
                         <p class="card-description">
-                            The core capability is correlation across events and time windows — not per-event filtering:
-                            structured streams in, explainable alerts / scores / structured data out.
+                            Correlation across multiple events and time windows — structured event streams in,
+                            alerts / scores / structured data that match the conditions out.
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">L</div>
                         <h3 class="card-title">WFL declarative language</h3>
                         <p class="card-description">
-                            Five primitives (Bind / Match / Stats / Join / Yield) say what you are looking for;
-                            the three-file model separates what data looks like / what to match / how to run.
+                            Five primitives (Bind / Match / Stats / Join / Yield); the three-file model separates
+                            data definitions / matching rules / resource requirements.
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">B</div>
                         <h3 class="card-title">Single binary · zero dependencies</h3>
                         <p class="card-description">
-                            Written in Rust — one binary runs the whole pipeline with no Kafka, etcd or database:
+                            Written in Rust — one binary runs the whole pipeline with no Kafka:
                             roughly a thousand rules on a single 8GB node, idle memory target &lt;100MB.
                         </p>
                     </div>
@@ -518,24 +514,24 @@
                         <div class="card-icon">T</div>
                         <h3 class="card-title">Rules ship with tests</h3>
                         <p class="card-description">
-                            `test` blocks live inside the rule file: hit / miss paths verified with one command,
-                            feedback in seconds; replay / verify / wfgen close the loop. Write, verify — no praying.
+                            `test` blocks live inside the rule file: hit / miss paths are verified;
+                            replay / verify / wfgen close the loop.
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">A</div>
                         <h3 class="card-title">AI Native</h3>
                         <p class="card-description">
-                            The language is designed for AI generation: small surface area, explicit semantics,
-                            machine-readable receipts — “AI writes the rule, the engine proves it, receipts drive iteration”.
+                            The language is designed for AI generation: explicit semantics, machine-readable receipts —
+                            “AI writes the rule, the engine proves it, receipts drive iteration” as a first-class workflow.
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">R</div>
                         <h3 class="card-title">Interpretable · scored</h3>
                         <p class="card-description">
-                            Entity modeling entity() + numeric scoring score() + stat.* evidence fields turn
-                            “why did this fire” into auditable alert evidence instead of a black box.
+                            Entity modeling entity() + numeric scoring score() + stat.* evidence fields
+                            produce auditable alert evidence.
                         </p>
                     </div>
                 </div>
@@ -555,11 +551,11 @@
                         <tbody>
                             <tr>
                                 <td>Stateful correlation across sources, windows and steps</td>
-                                <td>General-purpose distributed stream processing (no distributed coordination / checkpoint)</td>
+                                <td>General-purpose distributed stream processing (no distributed coordination)</td>
                             </tr>
                             <tr>
                                 <td>WFL declarative rules + built-in test loop + hot reload</td>
-                                <td>Data warehouse / interactive analytics engine (no eventstats; hand that to a downstream SIEM)</td>
+                                <td>Data warehouse / interactive analytics engine</td>
                             </tr>
                         </tbody>
                     </table>
@@ -638,10 +634,6 @@
                         </div>
                     </div>
                 </div>
-                <p class="wf-lead" style="text-align: center; margin-top: 2rem">
-                    Three-file model: <code>.wfs</code> (what data looks like) · <code>.wfl</code> (what pattern to match) ·
-                    <code>.toml</code> (how to run: source / sink / window memory / watermark)
-                </p>
 
                 <!-- 语言能力矩阵 -->
                 <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
@@ -737,8 +729,7 @@
                         <div class="chart-card-header">
                             <h4>NEXMark Q1–Q22 per-query throughput (log scale · events/s)</h4>
                             <p>
-                                One group per query with three bars: WarpFusion / Flink OSS / Alibaba VVR on the same query
-                                (log scale — bar gaps are order-of-magnitude gaps; taller is faster). q6 was not published in
+                                Log scale — bar gaps are order-of-magnitude gaps, taller is faster. q6 was not published in
                                 the whitepaper; q13 has no baseline and only shows the WarpFusion bar.
                                 All 21 queries are here; exact values are in the full table below.
                             </p>
@@ -845,16 +836,6 @@
                     </p>
                 </div>
 
-                <div class="wf-lead" style="text-align: center; max-width: 800px; margin: 0 auto">
-                    <strong>Configuration</strong> (wfusion.toml, AI-generated), <strong>authoring</strong> (a few lines of WFL),
-                    <strong>verification</strong> (wfl test / intent receipts), <strong>measurement</strong> (wfgen perf-diag --gate) —
-                    every stage exposes machine-readable interfaces and receipts, so the loop
-                    “AI generates → the engine receipts what's wrong → AI fixes → re-verify” can run on its own.
-                    Humans define intent and acceptance criteria.
-                </div>
-
-
-
                 <!-- 6 levels -->
                 <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
                     AI-native rule development loop
@@ -913,6 +894,14 @@
                         </p>
                     </div>
                     <div class="connector-card">
+                        <div class="connector-icon">W</div>
+                        <div class="connector-name">wf-examples repo</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            Runnable minimal business examples (nginx_log_stats: stats-window aggregation + 5xx surge
+                            alerts + live dashboard) — the place to start integrating — github.com/wp-labs/wf-examples
+                        </p>
+                    </div>
+                    <div class="connector-card">
                         <div class="connector-icon">E</div>
                         <div class="connector-name">Editor / LSP</div>
                         <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
@@ -928,15 +917,6 @@
                             regression and AI practice
                         </p>
                     </div>
-                </div>
-
-                <div class="wf-caveat">
-                    <strong>Honest boundaries:</strong> ① <strong>AI-generated ≠ verified</strong> — detection rule bugs are silent
-                    (false negatives / positives never error), so generated rules must pass <code>wfl test</code> and enter regression;
-                    ② the loop <strong>does not auto-fix rules</strong> — it only proves where a rule is right or wrong;
-                    auto-fixing is a policy layer above the receipts;
-                    ③ L2 negative generation covers simple bind guards only; complex guards are honestly skipped, never faked;
-                    ④ current status is alpha (2026-09); a unified combined-receipt command is still in progress.
                 </div>
             </div>
         </section>

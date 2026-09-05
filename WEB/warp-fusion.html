@@ -325,8 +325,7 @@
                     </h1>
                     <p class="hero-description">
                         输入结构化事件流，输出可解释、带评分的关联结果。
-                        跨事件、跨窗口的模式匹配 —— 攻击链、缺失检测、行为画像、实时频控，
-                        一个二进制跑完，规则几行写完、写完即验、热加载生效。
+                        跨事件、跨窗口的模式匹配。
                     </p>
 
                     <!-- Quick Stats -->
@@ -450,7 +449,7 @@
                                     <span class="mini-label">WarpFusion</span>
                                     <div class="wf-track">
                                         <div class="mini-bar wp" style="width: 66.7%">
-                                            <span>≈32*</span>
+                                            <span>≈32</span>
                                         </div>
                                     </div>
                                 </div>
@@ -466,9 +465,7 @@
                         </div>
                     </div>
                     <div class="hero-chart-note">
-                        平均 EPS：NEXMark 100M 条 / 查询 · Linux 8 核 · 2026-08-27（wp-reactor v2.0.7）· 对照组来自阿里云《Nexmark 性能白皮书》算术平均；
-                        CPU / 内存为测试平台资源要求：WarpFusion 单机 8 核 ≈32GB*，Flink OSS 为 3 台 ecs.g6a.xlarge（每台 4 vCPU / 16 GiB）合计 12 vCPU / 48 GiB；
-                        *≈32GB 为按同型号云服务器与 q18 RSS 实测（≈28GB 可跑完）的推断口径
+                        平均 EPS：NEXMark 100M 条 / 查询 · Linux 8 核 · 2026-08-27（wp-reactor v2.0.7）· 对照组来自阿里云《Nexmark 性能白皮书》算术平均
                     </div>
                 </div>
             </div>
@@ -493,23 +490,23 @@
                         <div class="card-icon">M</div>
                         <h3 class="card-title">跨事件的模式匹配</h3>
                         <p class="card-description">
-                            能力内核是跨多条事件、跨时间窗口的关联计算，而非单条过滤：
-                            输入结构化事件流，输出满足关联条件的告警 / 评分 / 结构化数据。
+                            跨多条事件、跨时间窗口的关联计算，输入结构化事件流，
+                            输出满足关联条件的告警 / 评分 / 结构化数据。
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">L</div>
                         <h3 class="card-title">WFL 声明式语言</h3>
                         <p class="card-description">
-                            五原语（Bind / Match / Stats / Join / Yield）说清「要找什么」；
-                            三文件模型把「数据长什么样 / 匹配什么 / 怎么跑」分离，各角色各改各的。
+                            五原语（Bind / Match / Stats / Join / Yield）；
+                            三文件模型为「数据定义 / 匹配规则 / 资源需求」分离。
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">B</div>
                         <h3 class="card-title">单二进制 · 零依赖</h3>
                         <p class="card-description">
-                            Rust 编写，一个二进制跑完完整链路：不依赖 Kafka、etcd 或数据库，
+                            Rust 编写，一个二进制跑完完整链路：不依赖 Kafka，
                             一台 8GB 节点即可承载约千条规则，空载内存目标 &lt;100MB。
                         </p>
                     </div>
@@ -517,16 +514,16 @@
                         <div class="card-icon">T</div>
                         <h3 class="card-title">规则自带测试</h3>
                         <p class="card-description">
-                            `test` 块写在规则文件里：命中 / 未命中一键验证，秒级反馈；
-                            replay / verify / wfgen 构成完整验证闭环，写完即验证，不靠祈祷。
+                            `test` 块写在规则文件里：命中 / 未命中验证；
+                            replay / verify / wfgen 构成完整验证闭环。
                         </p>
                     </div>
                     <div class="card">
                         <div class="card-icon">A</div>
                         <h3 class="card-title">AI Native</h3>
                         <p class="card-description">
-                            语言为 AI 生成而设计：小表面积、显式语义、机器可读回执，
-                            「AI 写规则 → 引擎证明对错 → 回执驱动自迭代」是一等公民工作流。
+                            语言为 AI 生成而设计：显式语义、机器可读回执，
+                            「AI 写规则 → 引擎证明对错 → 回执驱动自迭代」一等公民工作流。
                         </p>
                     </div>
                     <div class="card">
@@ -534,7 +531,7 @@
                         <h3 class="card-title">可解释 · 带评分</h3>
                         <p class="card-description">
                             实体建模 entity() + 数值评分 score() + stat.* 证据字段，
-                            把「为什么触发」输出为可审计的告警证据，而非黑盒命中。
+                            输出为可审计的告警证据。
                         </p>
                     </div>
                 </div>
@@ -554,11 +551,11 @@
                         <tbody>
                             <tr>
                                 <td>跨数据源、跨时间窗口、跨步骤的有状态关联</td>
-                                <td>通用分布式流计算平台（无分布式协调 / checkpoint）</td>
+                                <td>通用分布式流计算平台（无分布式协调）</td>
                             </tr>
                             <tr>
                                 <td>WFL 声明式规则 + 自带测试闭环 + 热加载</td>
-                                <td>数据仓库 / 交互式分析引擎（无行保留聚合，交下游 SIEM）</td>
+                                <td>数据仓库 / 交互式分析引擎</td>
                             </tr>
                         </tbody>
                     </table>
@@ -637,10 +634,6 @@
                         </div>
                     </div>
                 </div>
-                <p class="wf-lead" style="text-align: center; margin-top: 2rem">
-                    三文件模型：<code>.wfs</code>（数据长什么样）· <code>.wfl</code>（匹配什么模式）·
-                    <code>.toml</code>（怎么跑：source / sink / 窗口内存 / watermark）
-                </p>
 
                 <!-- 语言能力矩阵 -->
                 <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
@@ -734,8 +727,7 @@
                         <div class="chart-card-header">
                             <h4>NEXMark Q1–Q22 逐查询吞吐对比（对数 · 条/秒）</h4>
                             <p>
-                                每个查询一组三根柱：WarpFusion / Flink OSS / 阿里 VVR 在同一查询上的吞吐
-                                （对数刻度，间距即量级差距，柱高越长越快）。q6 白皮书未发布；q13 无对比基线、仅有 WarpFusion 柱。
+                                对数刻度，间距即量级差距，柱高越长越快。q6 白皮书未发布；q13 无对比基线、仅有 WarpFusion 柱。
                                 21 条查询全部在图上，逐项数值见下方全量表。
                             </p>
                         </div>
@@ -838,14 +830,6 @@
                     </p>
                 </div>
 
-                <div class="wf-lead" style="text-align: center; max-width: 800px; margin: 0 auto">
-                    <strong>配置</strong>（wfusion.toml，AI 生成）、<strong>编写</strong>（几行 WFL）、<strong>验证</strong>（wfl test / intent 回执）、<strong>度量</strong>（wfgen perf-diag --gate）——
-                    四个环节都有机器可读的接口与回执，于是「AI 生成 → 引擎回执指出差在哪 → AI 据回执修改 → 再验证」可以自动跑起来，
-                    人只负责定义意图与验收标准。
-                </div>
-
-
-
                 <!-- 6 levels -->
                 <h3 style="margin-top: 3rem; text-align: center; color: var(--text-primary)">
                     AI 原生规则开发闭环
@@ -903,6 +887,14 @@
                         </p>
                     </div>
                     <div class="connector-card">
+                        <div class="connector-icon">W</div>
+                        <div class="connector-name">wf-examples 示例仓库</div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
+                            可直接运行的最小业务示例（nginx_log_stats：stats 窗口统计 + 5xx 突发告警 + 实时看板），
+                            上手 / 联调从这里开始 — github.com/wp-labs/wf-examples
+                        </p>
+                    </div>
+                    <div class="connector-card">
                         <div class="connector-icon">E</div>
                         <div class="connector-name">编辑器 / LSP</div>
                         <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem">
@@ -916,13 +908,6 @@
                             同 count + seed 字节级确定；命中 / 近失 / 未命中三类样本，供回归与 AI 练习
                         </p>
                     </div>
-                </div>
-
-                <div class="wf-caveat">
-                    <strong>诚实的边界：</strong>① <strong>AI 生成 ≠ 免验证</strong>——检测规则出错是静默的（漏报 / 误报不报错），
-                    生成规则必须跑 <code>wfl test</code> 并纳入回归；② 本闭环<strong>不做自动修规则</strong>——只承诺回执能证明
-                    「对在哪、错在哪」，自动修复是回执之上的策略层；③ L2 反例生成只覆盖简单 bind guard，复合 guard 如实跳过、
-                    不虚报覆盖；④ 当前为 alpha（2026-09），统一合并回执命令仍在演进。
                 </div>
             </div>
         </section>
